@@ -2,7 +2,7 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>靈魂地圖｜全方位生命靈數解析</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔮</text></svg>">
     
@@ -241,7 +241,7 @@
                 </div>
 
                 <div class="space-y-4">
-                    <!-- 修正：先天數文字移除（不重複） -->
+                    <!-- 先天數顯示區塊 -->
                     <div class="bg-white p-6 rounded-2xl shadow-md border-l-4 border-green-400">
                         <h4 class="text-lg font-bold text-gray-700 mb-1"><i class="fas fa-seedling text-green-400 mr-2"></i>先天數 (Innate)</h4>
                         <p class="text-sm text-gray-400 mb-2">來自出生日期的原始能量</p>
@@ -351,7 +351,6 @@
                 </div>
 
                 <!-- 連線與缺數 (併排顯示) -->
-                <!-- 修正：確保 ID 唯一，讓 JS 能正確填入資料 -->
                 <div class="grid lg:grid-cols-2 gap-8">
                     <!-- 連線 -->
                     <div class="bg-white rounded-3xl shadow-xl p-8 h-full">
@@ -651,115 +650,124 @@
                 return;
             }
 
-            const date = new Date(dateInput);
-            const year = date.getFullYear();
-            const month = date.getMonth() + 1;
-            const day = date.getDate();
+            try {
+                // ✅ 修正：避免時區問題
+                const [year, month, day] = dateInput.split('-').map(Number);
+                
+                // ✅ 驗證日期
+                if (!year || !month || !day || month < 1 || month > 12 || day < 1 || day > 31) {
+                    alert('請選擇有效的日期');
+                    return;
+                }
 
-            // A. 計算核心數字
-            let sumAllDigits = 0;
-            String(year).split('').forEach(n => sumAllDigits += parseInt(n));
-            String(month < 10 ? '0'+month : month).split('').forEach(n => sumAllDigits += parseInt(n));
-            String(day < 10 ? '0'+day : day).split('').forEach(n => sumAllDigits += parseInt(n));
-            
-            let lifePath = reduceToSingleOrMaster(sumAllDigits);
-            
-            let talentArr = [];
-            if (sumAllDigits > 9) {
-                let s = String(sumAllDigits);
-                talentArr.push(parseInt(s[0]));
-                talentArr.push(parseInt(s[1]));
-            } else {
-                talentArr.push(sumAllDigits); 
-            }
+                // A. 計算核心數字
+                let sumAllDigits = 0;
+                String(year).split('').forEach(n => sumAllDigits += parseInt(n));
+                String(month < 10 ? '0'+month : month).split('').forEach(n => sumAllDigits += parseInt(n));
+                String(day < 10 ? '0'+day : day).split('').forEach(n => sumAllDigits += parseInt(n));
+                
+                let lifePath = reduceToSingleOrMaster(sumAllDigits);
+                
+                let talentArr = [];
+                if (sumAllDigits > 9) {
+                    let s = String(sumAllDigits);
+                    talentArr.push(parseInt(s[0]));
+                    talentArr.push(parseInt(s[1]));
+                } else {
+                    talentArr.push(sumAllDigits); 
+                }
 
-            let birthDayNum = reduceToSingle(day);
-            let zodiacNum = getZodiacNum(month, day);
-            
-            // ★ 先天數邏輯：取唯一值、去除0、排序
-            const fullDateStr = `${year}${month < 10 ? '0' + month : month}${day < 10 ? '0' + day : day}`;
-            const innateDigits = [...new Set(fullDateStr.split('')
-                .map(Number)
-                .filter(n => n !== 0))]
-                .sort((a, b) => a - b); 
-            
-            const innateDisplayStr = innateDigits.join(', ');
-            
-            const currentYear = 2025;
-            let yearSum = reduceToSingle(day) + reduceToSingle(month) + reduceToSingle(currentYear);
-            let yearNum = reduceToSingle(yearSum);
+                let birthDayNum = reduceToSingle(day);
+                let zodiacNum = getZodiacNum(month, day);
+                
+                // ★ 先天數邏輯：取唯一值、去除0、排序
+                const fullDateStr = `${year}${month < 10 ? '0' + month : month}${day < 10 ? '0' + day : day}`;
+                const innateDigits = [...new Set(fullDateStr.split('')
+                    .map(Number)
+                    .filter(n => n !== 0))]
+                    .sort((a, b) => a - b); 
+                
+                const innateDisplayStr = innateDigits.join(', ');
+                
+                const currentYear = 2025;
+                let yearSum = reduceToSingle(day) + reduceToSingle(month) + reduceToSingle(currentYear);
+                let yearNum = reduceToSingle(yearSum);
 
-            // B. 統計九宮格圈數
-            let counts = {1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0};
-            for (let c of fullDateStr) {
-                let n = parseInt(c);
-                if (n !== 0) counts[n]++;
-            }
-            let baseNum = reduceToSingle(lifePath);
-            counts[baseNum]++;
-            talentArr.forEach(t => { if(t!==0) counts[t]++; });
-            counts[birthDayNum]++;
-            if(zodiacNum !== 0) counts[zodiacNum]++;
+                // B. 統計九宮格圈數
+                let counts = {1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0};
+                for (let c of fullDateStr) {
+                    let n = parseInt(c);
+                    if (n !== 0) counts[n]++;
+                }
+                let baseNum = reduceToSingle(lifePath);
+                counts[baseNum]++;
+                talentArr.forEach(t => { if(t!==0) counts[t]++; });
+                counts[birthDayNum]++;
+                if(zodiacNum !== 0) counts[zodiacNum]++;
 
-            // C. 更新 UI
-            document.getElementById('resultArea').classList.remove('hidden');
-            
-            document.getElementById('mainNum').innerHTML = lifePath + (lifePath > 9 ? `<span class="text-sm text-gray-400 ml-1">(${reduceToSingle(lifePath)})</span>` : "");
-            document.getElementById('birthDayNum').innerText = birthDayNum;
-            document.getElementById('talentNum').innerText = talentArr.join(' , ');
-            document.getElementById('zodiacNum').innerText = zodiacNum;
-            document.getElementById('innateStr').innerText = innateDisplayStr;
-            
-            let missingArr = [];
-            for(let i=1; i<=9; i++) { if(counts[i] === 0) missingArr.push(i); }
-            document.getElementById('missingStr').innerText = missingArr.length > 0 ? missingArr.join(' , ') : "無缺數 (全連線)";
-            
-            document.getElementById('yearNum').innerText = yearNum;
-            document.getElementById('yearTheme').innerText = yearThemes[yearNum].split('：')[0];
+                // C. 更新 UI
+                document.getElementById('resultArea').classList.remove('hidden');
+                
+                document.getElementById('mainNum').innerHTML = lifePath + (lifePath > 9 ? `<span class="text-sm text-gray-400 ml-1">(${reduceToSingle(lifePath)})</span>` : "");
+                document.getElementById('birthDayNum').innerText = birthDayNum;
+                document.getElementById('talentNum').innerText = talentArr.join(' , ');
+                document.getElementById('zodiacNum').innerText = zodiacNum;
+                document.getElementById('innateStr').innerText = innateDisplayStr;
+                
+                let missingArr = [];
+                for(let i=1; i<=9; i++) { if(counts[i] === 0) missingArr.push(i); }
+                document.getElementById('missingStr').innerText = missingArr.length > 0 ? missingArr.join(' , ') : "無缺數 (全連線)";
+                
+                document.getElementById('yearNum').innerText = yearNum;
+                document.getElementById('yearTheme').innerText = yearThemes[yearNum].split('：')[0];
 
-            drawGrid(counts);
-            drawLinesAndInfo(counts);
+                drawGrid(counts);
+                drawLinesAndInfo(counts);
 
-            let lookupKey = lifePath; 
-            if (!numberMeanings[lookupKey]) lookupKey = reduceToSingle(lifePath);
-            
-            const info = numberMeanings[lookupKey];
-            document.getElementById('roleTitle').innerText = `${lifePath} 號人：${info.title}`;
-            document.getElementById('roleTags').innerHTML = info.tags.map(t => `<span class="bg-mystic-100 text-mystic-700 px-3 py-1 rounded-full text-xs font-bold">#${t}</span>`).join('');
-            
-            // 更新詳細分析內容
-            document.getElementById('roleStrengths').innerText = info.strengths;
-            document.getElementById('roleShadows').innerText = info.shadows;
-            document.getElementById('roleAction').innerText = info.action;
-            document.getElementById('roleBiz').innerText = info.biz;
-            document.getElementById('roleRelation').innerText = info.relation;
-            document.getElementById('roleMission').innerText = info.mission;
-            
+                let lookupKey = lifePath; 
+                if (!numberMeanings[lookupKey]) lookupKey = reduceToSingle(lifePath);
+                
+                const info = numberMeanings[lookupKey];
+                document.getElementById('roleTitle').innerText = `${lifePath} 號人：${info.title}`;
+                document.getElementById('roleTags').innerHTML = info.tags.map(t => `<span class="bg-mystic-100 text-mystic-700 px-3 py-1 rounded-full text-xs font-bold">#${t}</span>`).join('');
+                
+                // 更新詳細分析內容
+                document.getElementById('roleStrengths').innerText = info.strengths;
+                document.getElementById('roleShadows').innerText = info.shadows;
+                document.getElementById('roleAction').innerText = info.action;
+                document.getElementById('roleBiz').innerText = info.biz;
+                document.getElementById('roleRelation').innerText = info.relation;
+                document.getElementById('roleMission').innerText = info.mission;
 
-            // 創業建議
-            const bizKey = reduceToSingle(lifePath); 
-            document.getElementById('bizAdvice').innerText = bizMessages[bizKey];
+                // 創業建議
+                const bizKey = reduceToSingle(lifePath); 
+                document.getElementById('bizAdvice').innerText = bizMessages[bizKey];
 
-            const missingContainer = document.getElementById('missingAdviceContainer');
-            missingContainer.innerHTML = '';
-            if (missingArr.length === 0) {
-                missingContainer.innerHTML = `<div class="col-span-2 text-center p-4 text-green-600 font-bold">恭喜！你的能量圓滿，沒有缺數。</div>`;
-            } else {
-                missingArr.forEach(num => {
-                    const data = missingData[num];
-                    missingContainer.innerHTML += `
-                        <div class="bg-gray-50 border border-gray-200 rounded-xl p-5 hover:bg-white hover:shadow-md transition-all">
-                            <div class="flex items-center gap-3 mb-2">
-                                <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center font-bold text-gray-600">${num}</div>
-                                <h5 class="font-bold text-gray-700">空缺課題：${data.trait}</h5>
+                const missingContainer = document.getElementById('missingAdviceContainer');
+                missingContainer.innerHTML = '';
+                if (missingArr.length === 0) {
+                    missingContainer.innerHTML = `<div class="col-span-2 text-center p-4 text-green-600 font-bold">恭喜！你的能量圓滿，沒有缺數。</div>`;
+                } else {
+                    missingArr.forEach(num => {
+                        const data = missingData[num];
+                        missingContainer.innerHTML += `
+                            <div class="bg-gray-50 border border-gray-200 rounded-xl p-5 hover:bg-white hover:shadow-md transition-all">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center font-bold text-gray-600">${num}</div>
+                                    <h5 class="font-bold text-gray-700">空缺課題：${data.trait}</h5>
+                                </div>
+                                <p class="text-sm text-gray-500 mb-3">${data.desc}</p>
+                                <div class="text-sm bg-white p-3 rounded-lg border border-gray-100 text-gray-600">
+                                    <i class="fas fa-bolt text-yellow-500 mr-1"></i> <strong>行動建議：</strong>${data.action}
+                                </div>
                             </div>
-                            <p class="text-sm text-gray-500 mb-3">${data.desc}</p>
-                            <div class="text-sm bg-white p-3 rounded-lg border border-gray-100 text-gray-600">
-                                <i class="fas fa-bolt text-yellow-500 mr-1"></i> <strong>行動建議：</strong>${data.action}
-                            </div>
-                        </div>
-                    `;
-                });
+                        `;
+                    });
+                }
+                
+            } catch (error) {
+                console.error('計算錯誤:', error);
+                alert('計算過程發生錯誤，請重新選擇日期');
             }
         }
 
@@ -829,3 +837,4 @@
     </script>
 </body>
 </html>
+

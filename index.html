@@ -69,6 +69,7 @@
             background-size: 20px 20px;
         }
 
+        /* Grid Styles */
         .numerology-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -157,6 +158,7 @@
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.5);
         }
+
     </style>
 </head>
 <body class="text-gray-700">
@@ -220,6 +222,7 @@
 
             <!-- 2. 九宮格與基礎資訊 -->
             <div class="grid md:grid-cols-2 gap-8 fade-in-up" style="animation-delay: 0.2s;">
+                <!-- Left: Grid -->
                 <div class="bg-white rounded-3xl shadow-xl p-6 md:p-10 flex flex-col items-center justify-center relative">
                     <h3 class="text-xl font-serif font-bold text-gray-800 mb-6 absolute top-6 left-8 border-l-4 border-mystic-500 pl-3">能量命盤</h3>
                     <div class="numerology-grid mt-8" id="gridContainer">
@@ -240,8 +243,8 @@
                     </div>
                 </div>
 
+                <!-- Right: Details -->
                 <div class="space-y-4">
-                    <!-- 先天數顯示區塊 -->
                     <div class="bg-white p-6 rounded-2xl shadow-md border-l-4 border-green-400">
                         <h4 class="text-lg font-bold text-gray-700 mb-1"><i class="fas fa-seedling text-green-400 mr-2"></i>先天數 (Innate)</h4>
                         <p class="text-sm text-gray-400 mb-2">來自出生日期的原始能量</p>
@@ -262,6 +265,24 @@
                             <span class="text-sm text-indigo-800" id="yearTheme"></span>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <!-- ★★★ 新增：生命數字金字塔 (Triangle) ★★★ -->
+            <div class="bg-white rounded-3xl shadow-xl p-8 fade-in-up border border-gray-100" style="animation-delay: 0.25s;">
+                <div class="flex items-center gap-3 mb-6 border-b pb-4">
+                    <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center text-red-600">
+                        <i class="fas fa-pyramid text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-serif font-bold text-gray-800">生命金字塔</h3>
+                        <div class="text-sm text-gray-400">人生階段與核心性格分析</div>
+                    </div>
+                </div>
+                
+                <div class="w-full overflow-x-auto flex justify-center">
+                    <!-- SVG Triangle Container -->
+                    <div id="triangleContainer" class="min-w-[600px] md:min-w-[800px]"></div>
                 </div>
             </div>
 
@@ -287,7 +308,6 @@
 
                     <!-- Body -->
                     <div class="p-8 space-y-8">
-                        
                         <!-- 靈魂性格與潛在挑戰 -->
                         <div class="grid md:grid-cols-2 gap-6">
                             <div class="bg-green-50 p-5 rounded-xl border border-green-100">
@@ -323,7 +343,6 @@
                             <h5 class="font-bold text-lg mb-2 flex items-center"><i class="fas fa-star mr-2 text-yellow-300"></i>本世人生課題</h5>
                             <p class="text-purple-100 italic leading-relaxed" id="roleMission"></p>
                         </div>
-
                     </div>
                 </div>
 
@@ -350,9 +369,8 @@
                     </div>
                 </div>
 
-                <!-- 連線與缺數 (併排顯示) -->
+                <!-- 連線與缺數 -->
                 <div class="grid lg:grid-cols-2 gap-8">
-                    <!-- 連線 -->
                     <div class="bg-white rounded-3xl shadow-xl p-8 h-full">
                         <div class="flex items-center gap-3 mb-6">
                             <div class="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-600">
@@ -360,11 +378,8 @@
                             </div>
                             <h3 class="text-xl font-serif font-bold text-gray-800">天賦連線解析</h3>
                         </div>
-                        <div id="linesContainer" class="space-y-4">
-                            <!-- Dynamic Content -->
-                        </div>
+                        <div id="linesContainer" class="space-y-4"></div>
                     </div>
-                    <!-- 缺數 -->
                     <div class="bg-white rounded-3xl shadow-xl p-8 border-l-8 border-gray-300 h-full">
                         <div class="flex items-center gap-3 mb-6">
                             <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600">
@@ -372,9 +387,7 @@
                             </div>
                             <h3 class="text-xl font-serif font-bold text-gray-800">靈魂補完計畫 (空缺數)</h3>
                         </div>
-                        <div id="missingAdviceContainer" class="space-y-4">
-                            <!-- Dynamic Content -->
-                        </div>
+                        <div id="missingAdviceContainer" class="space-y-4"></div>
                     </div>
                 </div>
 
@@ -382,14 +395,13 @@
         </div>
 
         <div class="mt-12 text-center text-gray-400 text-sm pb-8">
-            <p>© 2025 靈魂地圖計算器 | 耀文行動商城</p>
+            <p>© 2025 靈魂地圖計算器 | 耀文行動商城 </p>
         </div>
 
     </main>
 
     <script>
         // ========== 資料庫 Data ========== //
-        
         const bizMessages = {
             1: "作為天生的開創者，替別人打工往往限制了你的格局。你擁有獨立創業的靈魂，與其在體制內撞牆，不如建立一個屬於自己的事業系統。尋找一個能讓你「自主」但又能運用槓桿力量的平台，是你通往財富自由的捷徑。",
             2: "你的財富密碼在於「連結」與「合作」。單打獨鬥不是你的強項，但若你能找到一個強大的團隊系統，透過幫助他人成功來成就自己，你的收穫將是倍增的。你需要的是一個能夠「借力使力」的互助型事業模式。",
@@ -403,153 +415,117 @@
         };
 
         const missingData = {
-            1: {
-                trait: "自信不足、依賴性強",
-                desc: "你可能習慣隱藏自己，不敢為自己發聲，總等待別人來做決定。",
-                action: "練習「當責」。試著主導一個小計畫或副業，在安全的環境下練習做決策。當你發現自己能掌控局面時，自信心會大幅提升。"
-            },
-            2: {
-                trait: "忽略細節、較不敏感",
-                desc: "你可能習慣獨來獨往，覺得與人溝通很累，容易忽略他人的感受。",
-                action: "參與「團隊合作」。加入一個重視互助的社群或系統，強迫自己練習傾聽與配合。你會發現，有時候配合別人反而能讓事情更順利。"
-            },
-            3: {
-                trait: "表達壓抑、缺乏創意",
-                desc: "你可能覺得自己很無趣，或者害怕上台說話，有想法卻不知如何表達。",
-                action: "練習「分享」。試著在社群媒體分享你的生活或產品體驗。不用完美，真實就好。透過不斷的輸出來鍛鍊你的表達肌群。"
-            },
-            4: {
-                trait: "缺乏安全感、執行力弱",
-                desc: "你可能做事容易虎頭蛇尾，對未來充滿不確定感，卻又不敢踏出改變的一步。",
-                action: "建立「系統」。不要靠意志力，要靠流程。尋找一個已經被驗證成功的SOP來執行，讓規律帶給你安全感，並轉化為具體成果。"
-            },
-            5: {
-                trait: "害怕改變、生活單調",
-                desc: "你可能過著一成不變的生活，雖然覺得無聊，但更害怕未知。",
-                action: "設定「冒險日」。每週做一件沒做過的事。考慮接觸像電子商務這樣的新趨勢，讓你的生活與世界接軌，打破僵化的舒適圈。"
-            },
-            6: {
-                trait: "情感疏離、責任感淡",
-                desc: "你可能比較自我，覺得別人的事與你無關，或者害怕承擔責任。",
-                action: "練習「付出」。主動去關心你的客戶或夥伴，不求回報地提供價值。你會發現，當你開始為別人負責時，你的生命重量會完全不同。"
-            },
-            7: {
-                trait: "思考淺層、容易輕信",
-                desc: "你可能懶得思考太複雜的事，或者容易被表象迷惑，缺乏判斷力。",
-                action: "深入「研究」。不要只看表面，去研究商業模式背後的邏輯。當你搞懂了遊戲規則，你會發現很多機會其實藏在細節裡。"
-            },
-            8: {
-                trait: "金錢匱乏、缺乏野心",
-                desc: "你可能覺得錢夠用就好，或者潛意識排斥談論金錢與權力。",
-                action: "重塑「財商」。閱讀理財書籍，了解被動收入的概念。承認自己對豐盛的渴望，並開始接觸能創造現金流的工具。"
-            },
-            9: {
-                trait: "現實主義、缺乏夢想",
-                desc: "你可能過於務實，覺得夢想不能當飯吃，對社會議題較為冷感。",
-                action: "尋找「意義」。試著把你的工作與助人連結起來。當你的努力能讓別人的生活變得更好，你會找到前所未有的動力。"
-            }
+            1: { trait: "自信不足、依賴性強", desc: "你可能習慣隱藏自己，不敢為自己發聲，總等待別人來做決定。", action: "練習「當責」。試著主導一個小計畫或副業，在安全的環境下練習做決策。當你發現自己能掌控局面時，自信心會大幅提升。" },
+            2: { trait: "忽略細節、較不敏感", desc: "你可能習慣獨來獨往，覺得與人溝通很累，容易忽略他人的感受。", action: "參與「團隊合作」。加入一個重視互助的社群或系統，強迫自己練習傾聽與配合。你會發現，有時候配合別人反而能讓事情更順利。" },
+            3: { trait: "表達壓抑、缺乏創意", desc: "你可能覺得自己很無趣，或者害怕上台說話，有想法卻不知如何表達。", action: "練習「分享」。試著在社群媒體分享你的生活或產品體驗。不用完美，真實就好。透過不斷的輸出來鍛鍊你的表達肌群。" },
+            4: { trait: "缺乏安全感、執行力弱", desc: "你可能做事容易虎頭蛇尾，對未來充滿不確定感，卻又不敢踏出改變的一步。", action: "建立「系統」。不要靠意志力，要靠流程。尋找一個已經被驗證成功的SOP來執行，讓規律帶給你安全感，並轉化為具體成果。" },
+            5: { trait: "害怕改變、生活單調", desc: "你可能過著一成不變的生活，雖然覺得無聊，但更害怕未知。", action: "設定「冒險日」。每週做一件沒做過的事。考慮接觸像電子商務這樣的新趨勢，讓你的生活與世界接軌，打破僵化的舒適圈。" },
+            6: { trait: "情感疏離、責任感淡", desc: "你可能比較自我，覺得別人的事與你無關，或者害怕承擔責任。", action: "練習「付出」。主動去關心你的客戶或夥伴，不求回報地提供價值。你會發現，當你開始為別人負責時，你的生命重量會完全不同。" },
+            7: { trait: "思考淺層、容易輕信", desc: "你可能懶得思考太複雜的事，或者容易被表象迷惑，缺乏判斷力。", action: "深入「研究」。不要只看表面，去研究商業模式背後的邏輯。當你搞懂了遊戲規則，你會發現很多機會其實藏在細節裡。" },
+            8: { trait: "金錢匱乏、缺乏野心", desc: "你可能覺得錢夠用就好，或者潛意識排斥談論金錢與權力。", action: "重塑「財商」。閱讀理財書籍，了解被動收入的概念。承認自己對豐盛的渴望，並開始接觸能創造現金流的工具。" },
+            9: { trait: "現實主義、缺乏夢想", desc: "你可能過於務實，覺得夢想不能當飯吃，對社會議題較為冷感。", action: "尋找「意義」。試著把你的工作與助人連結起來。當你的努力能讓別人的生活變得更好，你會找到前所未有的動力。" }
         };
 
         const numberMeanings = {
             1: {
                 title: "開創者 (The Pioneer)",
                 tags: ["獨立", "開創", "自信", "果斷"],
-                strengths: "你是天生的領袖，擁有強烈的行動力與開創精神。面對新挑戰時，你總是充滿勇氣，不畏艱難。你喜歡主導局面，擁有將「無」變為「有」的創造能量。",
-                shadows: "容易陷入獨斷獨行、過度自我中心，聽不進他人意見。有時會因為太過急躁而顯得侵略性太強，導致人際摩擦。內心深處其實害怕失敗。",
+                strengths: "你是天生的領袖，擁有強烈的行動力與開創精神。面對新挑戰時，你總是充滿勇氣，不畏艱難。",
+                shadows: "容易陷入獨斷獨行、過度自我中心，聽不進他人意見。有時會因為太過急躁而顯得侵略性太強，導致人際摩擦。",
                 action: "練習「積極聆聽」，在做決定前多停三秒鐘。學習將你的領導力轉化為賦能他人的力量，而不是單純的發號施令。",
-                biz: "非常適合**獨立創業、擔任高階主管或專案負責人**。你有能力從零開始建立系統，適合需要「開疆闢土」的商業模式。你的自信能吸引跟隨者，善用這點建立個人品牌。",
+                biz: "非常適合**獨立創業、擔任高階主管或專案負責人**。你有能力從零開始建立系統，適合需要「開疆闢土」的商業模式。",
                 relation: "在關係中學習柔軟與妥協。你是保護者，但不要變成控制者。給予伴侶或夥伴表達空間，會讓關係更穩固。",
                 mission: "本世的課題是「確立自我價值」。你來這裡是為了學習如何正確運用力量，成為一個不僅能領導自己，也能照亮他人的真領袖。"
             },
             2: {
                 title: "協調者 (The Peacemaker)",
                 tags: ["細膩", "協調", "依賴", "敏銳"],
-                strengths: "你是最佳的幕後推手與和平使者。極佳的同理心與感受力讓你擅長察言觀色，是團隊中的潤滑劑。你懂得細節的重要性，能補足他人的粗心。",
+                strengths: "你是最佳的幕後推手與和平使者。極佳的同理心與感受力讓你擅長察言觀色，是團隊中的潤滑劑。",
                 shadows: "容易優柔寡斷、缺乏主見，為了討好別人而委屈自己。情緒起伏受環境影響大，有時會過度依賴他人給予安全感。",
                 action: "建立自我界線，練習溫柔而堅定地說「不」。學習區分哪些情緒是自己的，哪些是別人的，不要照單全收。",
-                biz: "適合**公關、客服、人資或團隊協作型事業**。在商業中，你是完美的「連結者」(Connector)，善於媒合資源與人脈，適合透過建立團隊槓桿來獲利。",
+                biz: "適合**公關、客服、人資或團隊協作型事業**。在商業中，你是完美的「連結者」，善於媒合資源與人脈。",
                 relation: "你很體貼，但要注意不要在關係中失去自我。建立平等的互動模式，不要總是用討好來換取愛。",
-                mission: "本世的課題是「在合作中保有獨立」。你來學習如何在支持他人的同時，也能看見並重視自己的需求，達成真正的平衡。"
+                mission: "本世的課題是「在合作中保有獨立」。你來學習如何在支持他人的同時，也能看見並重視自己的需求。"
             },
             3: {
                 title: "表達者 (The Communicator)",
                 tags: ["創意", "樂觀", "表達", "多變"],
-                strengths: "你是天生的表演者，自帶聚光燈。腦袋充滿點子，嘴巴停不下來，總能用幽默化解尷尬。你擁有將複雜事物簡單化、趣味化的天賦。",
-                shadows: "容易三分鐘熱度、虎頭蛇尾。有時會為了效果而誇大其詞，或者用嘻嘻哈哈來逃避深層的情緒問題。注意力容易分散。",
+                strengths: "你是天生的表演者，自帶聚光燈。腦袋充滿點子，嘴巴停不下來，總能用幽默化解尷尬。",
+                shadows: "容易三分鐘熱度、虎頭蛇尾。有時會為了效果而誇大其詞，或者用嘻嘻哈哈來逃避深層的情緒問題。",
                 action: "學習「聚焦」，把一個創意完整落實到底。練習深層的溝通，而不只是表面的社交辭令。",
-                biz: "適合**行銷、演講、銷售、內容創作或社群經營**。你的影響力就是你的財富，善用「分享」而非「推銷」的方式，能讓你建立龐大的粉絲或客戶群。",
+                biz: "適合**行銷、演講、銷售、內容創作或社群經營**。你的影響力就是你的財富，善用「分享」而非「推銷」的方式。",
                 relation: "你的熱情很吸引人，但要注意承諾的兌現。在關係中展現真實脆弱的一面，會讓人覺得你更可靠。",
-                mission: "本世的課題是「傳遞快樂與真理」。你來這裡是為了學習如何運用創意的力量，帶給世界正向的影響，並學會對自己的言行負責。"
+                mission: "本世的課題是「傳遞快樂與真理」。你來這裡是為了學習如何運用創意的力量，帶給世界正向的影響。"
             },
             4: {
                 title: "建設者 (The Builder)",
                 tags: ["穩重", "規律", "務實", "固執"],
-                strengths: "你是社會的基石，最可靠的伙伴。重視規律、程序與穩定，有強大的執行力，能把空中樓閣變成堅固大樓。你做事有條理，讓人很放心。",
-                shadows: "不知變通、過於保守，對未知充滿恐懼。容易因為過度追求安全感而錯失良機。有時會顯得太過嚴肅或固執。",
-                action: "練習接受生活中的「彈性」與「小混亂」。嘗試跳出舒適圈，哪怕只是一點點改變。相信自己有應變的能力。",
-                biz: "適合**系統建立、財務規劃、組織管理或工程領域**。在創業或副業選擇上，你適合有「完整教育系統」與「被動收入模式」的平台，因為你追求的是長遠的穩定。",
+                strengths: "你是社會的基石，最可靠的伙伴。重視規律、程序與穩定，有強大的執行力，能把空中樓閣變成堅固大樓。",
+                shadows: "不知變通、過於保守，對未知充滿恐懼。容易因為過度追求安全感而錯失良機。",
+                action: "練習接受生活中的「彈性」與「小混亂」。嘗試跳出舒適圈，哪怕只是一點點改變。",
+                biz: "適合**系統建立、財務規劃、組織管理或工程領域**。你適合有「完整教育系統」與「被動收入模式」的平台。",
                 relation: "給伴侶多一點浪漫與驚喜，不要總是談論柴米油鹽。你的忠誠是優點，但彈性會讓關係更甜蜜。",
-                mission: "本世的課題是「建立內在的安全感」。你來學習物質與心靈的穩定，並明白真正的安全感來自於內心的強大，而非外在的控制。"
+                mission: "本世的課題是「建立內在的安全感」。你來學習物質與心靈的穩定，並明白真正的安全感來自於內心的強大。"
             },
             5: {
                 title: "冒險者 (The Adventurer)",
                 tags: ["自由", "冒險", "靈活", "魅力"],
-                strengths: "你為自由而生，靈魂裡寫著「不自由毋寧死」。熱愛新鮮事物，適應力極強，口才好且魅力十足，能輕易與各行各業的人打成一片。",
-                shadows: "衝動、博而不精、逃避責任。不喜歡被承諾束縛，容易給人花心或不穩定的印象。過度追求刺激可能導致混亂。",
+                strengths: "你為自由而生，靈魂裡寫著「不自由毋寧死」。熱愛新鮮事物，適應力極強，口才好且魅力十足。",
+                shadows: "衝動、博而不精、逃避責任。不喜歡被承諾束縛，容易給人花心或不穩定的印象。",
                 action: "學習「自律」，因為自律才能換來真正的自由。為自己設定階段性目標，練習在承諾中找到自由的空間。",
-                biz: "適合**業務、市場開發、旅遊或跨國事業**。你適合無國界、時間彈性的商業模式。善用你的適應力與口才，在快速變化的市場中搶得先機。",
+                biz: "適合**業務、市場開發、旅遊或跨國事業**。你適合無國界、時間彈性的商業模式。善用你的適應力與口才。",
                 relation: "在關係中，你需要空間，但也需要給對方安全感。學習分享你的冒險，讓伴侶成為你的玩伴而非獄卒。",
-                mission: "本世的課題是「負責任的自由」。你來體驗世界的豐富，並學習如何運用自由意志來創造有意義的人生，而非隨波逐流。"
+                mission: "本世的課題是「負責任的自由」。你來體驗世界的豐富，並學習如何運用自由意志來創造有意義的人生。"
             },
             6: {
                 title: "奉獻者 (The Nurturer)",
                 tags: ["關懷", "責任", "完美", "奉獻"],
-                strengths: "你是愛的代言人，重視家庭與承諾。有強烈的責任感，喜歡照顧別人，具有療癒他人的天賦。你對美與和諧有很高的標準。",
-                shadows: "挑剔、完美主義，容易情感勒索（「我對你這麼好，你怎麼可以...」）。過度犧牲自己後產生怨懟，習慣用付出換取被需要感。",
-                action: "學會「愛自己」，把焦點放回自己身上。接受不完美，明白每個人都有自己的課題，你不需要拯救所有人。",
-                biz: "適合**服務業、教育、醫療、美容或諮詢業**。在商業上，你適合建立以「關懷」與「服務」為核心的團隊，你的用心會為你帶來高忠誠度的客戶與夥伴。",
-                relation: "不要愛得太窒息。給予對方成長的空間，相信對方有能力處理自己的問題。健康的關係是互相支持而非單向依賴。",
-                mission: "本世的課題是「無條件的愛」。先愛自己，再愛他人。學習在付出與接受之間取得平衡，讓愛成為滋養而非負擔。"
+                strengths: "你是愛的代言人，重視家庭與承諾。有強烈的責任感，喜歡照顧別人，具有療癒他人的天賦。",
+                shadows: "挑剔、完美主義，容易情感勒索。過度犧牲自己後產生怨懟，習慣用付出換取被需要感。",
+                action: "學會「愛自己」，把焦點放回自己身上。接受不完美，明白每個人都有自己的課題。",
+                biz: "適合**服務業、教育、醫療、美容或諮詢業**。在商業上，你適合建立以「關懷」與「服務」為核心的團隊。",
+                relation: "不要愛得太窒息。給予對方成長的空間，相信對方有能力處理自己的問題。",
+                mission: "本世的課題是「無條件的愛」。先愛自己，再愛他人。學習在付出與接受之間取得平衡。"
             },
             7: {
                 title: "探索者 (The Seeker)",
                 tags: ["博學", "理性", "孤高", "直覺"],
-                strengths: "你是天生的思想家，擁有看穿表象的X光眼。喜歡探究本質，邏輯與直覺並重。你享受獨處，精神層次豐富，不隨波逐流。",
-                shadows: "猜忌多疑、冷漠疏離、容易鑽牛角尖。因為標準太高而顯得傲慢，容易切斷與他人的連結，活在自己的象牙塔裡。",
-                action: "練習「信任」與「開放」。試著表達內心的感受，而不只是想法。多接觸大自然，讓腦袋休息，連結身體的感覺。",
-                biz: "適合**分析師、顧問、研究員或專業技術領域**。你有能力看懂複雜的制度與趨勢，適合從事需要「策略佈局」與「專業知識」的事業。",
-                relation: "你需要獨處空間，但別忘了與人連結。找一個能從精神層面與你對話的伴侶。學習展現脆弱，會讓你更真實。",
-                mission: "本世的課題是「追尋真理與信任」。你來探索宇宙的奧秘，並學習將智慧分享給世人，同時在人際中學會信任與溫暖。"
+                strengths: "你是天生的思想家，擁有看穿表象的X光眼。喜歡探究本質，邏輯與直覺並重。你享受獨處，精神層次豐富。",
+                shadows: "猜忌多疑、冷漠疏離、容易鑽牛角尖。因為標準太高而顯得傲慢，容易切斷與他人的連結。",
+                action: "練習「信任」與「開放」。試著表達內心的感受，而不只是想法。多接觸大自然，連結身體的感覺。",
+                biz: "適合**分析師、顧問、研究員或專業技術領域**。你有能力看懂複雜的制度與趨勢，適合從事需要「策略佈局」的事業。",
+                relation: "你需要獨處空間，但別忘了與人連結。找一個能從精神層面與你對話的伴侶。",
+                mission: "本世的課題是「追尋真理與信任」。你來探索宇宙的奧秘，並學習將智慧分享給世人。"
             },
             8: {
                 title: "實踐者 (The Powerhouse)",
                 tags: ["霸氣", "掌控", "富足", "野心"],
-                strengths: "你擁有將夢想顯化為物質的能力。天生的老闆格局，對商業與金錢嗅覺敏銳。你意志力堅強，能承受高壓，渴望成功與影響力。",
-                shadows: "唯利是圖、控制狂、給自己和他人過大壓力。容易用金錢衡量一切價值。誠實與道德是你必須堅守的底線。",
+                strengths: "你擁有將夢想顯化為物質的能力。天生的老闆格局，對商業與金錢嗅覺敏銳。你意志力堅強，能承受高壓。",
+                shadows: "唯利是圖、控制狂、給自己和他人過大壓力。容易用金錢衡量一切價值。",
                 action: "學習「放鬆」與「授權」。明白真正的力量來自於內心的平靜。將你的野心轉化為造福他人的願景。",
-                biz: "適合**企業家、金融投資、高階管理或系統擁有者**。你適合玩「大遊戲」，善用資源整合與槓桿原理，建立龐大的商業帝國或組織。",
-                relation: "在關係中放下控制欲，展現溫柔的一面。別把伴侶當員工管理。學習欣賞對方的本質，而非外在條件。",
-                mission: "本世的課題是「豐盛與平衡」。你來學習如何正確運用權力與金錢，並明白外在的成就是為了服務內在的圓滿與他人的福祉。"
+                biz: "適合**企業家、金融投資、高階管理或系統擁有者**。你適合玩「大遊戲」，善用資源整合與槓桿原理。",
+                relation: "在關係中放下控制欲，展現溫柔的一面。別把伴侶當員工管理。",
+                mission: "本世的課題是「豐盛與平衡」。你來學習如何正確運用權力與金錢，並明白外在的成就是為了服務內在的圓滿。"
             },
             9: {
                 title: "人道者 (The Humanitarian)",
                 tags: ["慈悲", "智慧", "夢想", "大愛"],
-                strengths: "你是數字的終點，擁有博愛精神與宏觀視野。你關注社會公益，樂於分享，擁有強大的感染力與號召力。你的夢想通常與世界有關。",
-                shadows: "不切實際、空想、濫情。容易承擔不屬於自己的責任，或者因為理想幻滅而變得憤世嫉俗。缺乏金錢觀念。",
+                strengths: "你是數字的終點，擁有博愛精神與宏觀視野。你關注社會公益，樂於分享，擁有強大的感染力與號召力。",
+                shadows: "不切實際、空想、濫情。容易承擔不屬於自己的責任，或者因為理想幻滅而變得憤世嫉俗。",
                 action: "學習「落地」與「放下」。將遠大的夢想拆解為具體的執行步驟。放下過去的包袱，專注當下的創造。",
                 biz: "適合**公益組織、教育培訓、藝術或激勵導師**。你適合從事「助人成功」的事業，當你的事業能幫助越多人，你的成就就越大。",
-                relation: "不要把伴侶理想化，接受真實的對方。學習在關係中保持界線，不要為了大愛而忽略了身邊最親近的人。",
+                relation: "不要把伴侶理想化，接受真實的對方。學習在關係中保持界線。",
                 mission: "本世的課題是「服務與放下」。你來學習無私的奉獻，並在服務人群的過程中，完成自己靈魂的進化與圓滿。"
             },
-             11: {
+            11: {
                 title: "通靈者 (The Illuminator)",
                 tags: ["直覺", "靈感", "啟發", "敏感"],
-                strengths: "作為卓越數，你擁有雙倍的1號能量與2號的特質。直覺力驚人，常能接收到宇宙的訊息。你是精神世界的信差，極具個人魅力。",
-                shadows: "神經質、情緒極度不穩、自我懷疑。容易在自大與自卑之間擺盪。過度敏感導致容易受傷。",
+                strengths: "作為卓越數，你擁有雙倍的1號能量與2號的特質。直覺力驚人，常能接收到宇宙的訊息。",
+                shadows: "神經質、情緒極度不穩、自我懷疑。容易在自大與自卑之間擺盪。",
                 action: "學習「情緒接地」。透過運動、接觸自然來穩定能量。相信你的直覺，但用理智去驗證與執行。",
-                biz: "適合**靈性導師、心理學家、發明家或願景領袖**。你適合從事能「啟發人心」的事業，你的直覺能帶領團隊避開風險，看見未來。",
-                relation: "你需要一個能理解你靈性層次的伴侶。學習溝通你內心的直覺感受，而不是期待對方會讀心術。",
-                mission: "本世的課題是「成為光之通道」。將高頻的靈感與智慧落實到地球，啟發他人覺醒，並保持自身的平衡。"
+                biz: "適合**靈性導師、心理學家、發明家或願景領袖**。你適合從事能「啟發人心」的事業。",
+                relation: "你需要一個能理解你靈性層次的伴侶。學習溝通你內心的直覺感受。",
+                mission: "本世的課題是「成為光之通道」。將高頻的靈感與智慧落實到地球，啟發他人覺醒。"
             },
             22: {
                 title: "築夢大師 (The Master Builder)",
@@ -643,6 +619,229 @@
              return num;
         }
 
+// ★★★ 最終排版修正版 V4：解決文字壓線、優化空間佈局 ★★★
+        function drawTriangle(dateObj) {
+            const yearStr = dateObj.getFullYear().toString();
+            const monthStr = (dateObj.getMonth() + 1).toString().padStart(2, '0');
+            const dayStr = dateObj.getDate().toString().padStart(2, '0');
+
+            // 1. 基礎數字 A~H
+            const A = parseInt(dayStr[0]);
+            const B = parseInt(dayStr[1]);
+            const C = parseInt(monthStr[0]);
+            const D = parseInt(monthStr[1]);
+            const E = parseInt(yearStr[0]);
+            const F = parseInt(yearStr[1]);
+            const G = parseInt(yearStr[2]);
+            const H = parseInt(yearStr[3]);
+
+            // 2. 第一層
+            const I = reduceToSingle(A + B); 
+            const J = reduceToSingle(C + D); 
+            const K = reduceToSingle(E + F); 
+            const L = reduceToSingle(G + H); 
+
+            // 3. 第二層
+            const M = reduceToSingle(I + J); 
+            const N = reduceToSingle(K + L); 
+
+            // 4. 第三層
+            const O = reduceToSingle(M + N); 
+
+            // 5. 進階計算
+            const Q = reduceToSingle(N + O);
+            const P = reduceToSingle(M + O);
+            const R = reduceToSingle(Q + P);
+
+            const T = reduceToSingle(I + M);
+            const S = reduceToSingle(J + M);
+            const U = reduceToSingle(T + S);
+
+            const V = reduceToSingle(K + N);
+            const W = reduceToSingle(L + N);
+            const X = reduceToSingle(V + W);
+
+            // --- SVG 畫布設定 (寬度加大至1000以容納兩側文字) ---
+            const w = 1100; 
+            const h = 850; 
+            const cx = w / 2;
+            const cy = h / 2; 
+            
+            const colorRed = "#b91c1c"; 
+            const colorText = "#2d3748"; 
+            const colorLineGray = "#cbd5e0"; 
+
+            let svg = `<svg width="100%" height="100%" viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg">`;
+            
+            svg += `
+                <style>
+                    .t-font { font-family: 'Noto Serif TC', serif; text-anchor: middle; dominant-baseline: middle; }
+                    .t-num-lg { font-size: 64px; font-weight: 900; fill: ${colorText}; }
+                    .t-num-md { font-size: 52px; font-weight: 900; fill: ${colorText}; }
+                    .t-num-sm { font-size: 48px; font-weight: 900; fill: ${colorText}; }
+                    .t-label-red { font-size: 32px; fill: ${colorRed}; font-weight: bold; writing-mode: vertical-rl; text-orientation: upright; }
+                    .t-label-title { font-size: 36px; fill: #9b2c2c; font-weight: bold; }
+                    .t-label-blue { font-size: 20px; fill: #3182ce; font-weight: bold; }
+                    .t-label-gray { font-size: 14px; fill: #718096; }
+                    .t-circle-text { font-size: 24px; fill: #2c5282; font-weight: bold;}
+                    .t-circle { fill: #ebf8ff; stroke: #4299e1; stroke-width: 1.5; }
+                </style>
+            `;
+
+            // --- 幾何座標計算 ---
+            // 六角形半徑稍微縮小，留空間給外圍文字
+            const hr = 290; // 垂直高度半徑 (控制上下尖端)
+            const hw = 360; // ★關鍵修改：水平寬度半徑 (拉寬左右，原約250)
+            
+            // 三角形參數
+            const triH = 300; 
+            const triBaseHalf = 200; 
+            const yTop = cy - 150; 
+            const yBot = cy + 150; 
+            const triLeftX = cx - triBaseHalf;
+            const triRightX = cx + triBaseHalf;
+
+            const yLine1 = yTop + 100; 
+            const yLine2 = yTop + 200; 
+
+            // --- 1. 繪製六角形外框 ---
+           
+            const hx = [
+                cx, cy - hr,          // 0,1 Top (頂點)
+                cx + hw, cy - hr/2,   // 2,3 Top Right (右上轉折)
+                cx + hw, cy + hr/2,   // 4,5 Bottom Right (右下轉折)
+                cx, cy + hr,          // 6,7 Bottom (底點)
+                cx - hw, cy + hr/2,   // 8,9 Bottom Left (左下轉折)
+                cx - hw, cy - hr/2    // 10,11 Top Left (左上轉折)
+            ];
+            
+            svg += `<polygon points="${hx.join(' ')}" fill="none" stroke="${colorLineGray}" stroke-width="2" />`;
+            // 節點
+            for(let i=0; i<12; i+=2) {
+                svg += `<rect x="${hx[i]-8}" y="${hx[i+1]-8}" width="16" height="16" transform="rotate(45 ${hx[i]} ${hx[i+1]})" fill="#e2e8f0" />`;
+            }
+
+            // --- 2. 繪製紅色三角形 ---
+            svg += `<path d="M${cx} ${yTop} L${triLeftX} ${yBot} L${triRightX} ${yBot} Z" 
+                     fill="#fff5f5" stroke="${colorRed}" stroke-width="6" stroke-linejoin="round" />`;
+            
+            // 內部線條
+            const wLine1 = (yLine1 - yTop) * (triBaseHalf / triH);
+            const wLine2 = (yLine2 - yTop) * (triBaseHalf / triH);
+
+            svg += `<line x1="${cx - wLine1}" y1="${yLine1}" x2="${cx + wLine1}" y2="${yLine1}" stroke="${colorRed}" stroke-width="6" />`;
+            svg += `<line x1="${cx - wLine2}" y1="${yLine2}" x2="${cx + wLine2}" y2="${yLine2}" stroke="${colorRed}" stroke-width="6" />`;
+            svg += `<line x1="${cx}" y1="${yLine1}" x2="${cx}" y2="${yBot}" stroke="${colorRed}" stroke-width="6" />`;
+
+            // --- 3. 填入三角形數字 ---
+            svg += `<text x="${cx}" y="${yTop + 60}" class="t-font t-num-lg">${O}</text>`;
+            svg += `<text x="${cx}" y="${yTop + 90}" class="t-font t-label-gray">主要性格</text>`;
+
+            const midTextY = (yLine1 + yLine2) / 2 + 5;
+            svg += `<text x="${cx - 60}" y="${midTextY}" class="t-font t-num-md">${M}</text>`;
+            svg += `<text x="${cx + 60}" y="${midTextY}" class="t-font t-num-md">${N}</text>`;
+
+            const botTextY = (yLine2 + yBot) / 2;
+            svg += `<text x="${cx - 110}" y="${botTextY}" class="t-font t-num-sm">${I}</text>`;
+            svg += `<text x="${cx - 40}" y="${botTextY}" class="t-font t-num-sm">${J}</text>`;
+            svg += `<text x="${cx - 75}" y="${yBot - 15}" class="t-font t-label-gray" style="font-size:16px;">外顯性格</text>`;
+
+            svg += `<text x="${cx + 40}" y="${botTextY}" class="t-font t-num-sm">${K}</text>`;
+            svg += `<text x="${cx + 110}" y="${botTextY}" class="t-font t-num-sm">${L}</text>`;
+            svg += `<text x="${cx + 75}" y="${yBot - 15}" class="t-font t-label-gray" style="font-size:16px;">內在性格</text>`;
+
+
+            // --- 4. 底部日期方框 ---
+            const boxSize = 36; 
+            const gapSmall = 8;
+            const gapBig = 26; 
+            const boxStartY = yBot + 15; 
+            let currentX = cx - 190; 
+
+            const dateNums = [A, B, C, D, E, F, G, H];
+            dateNums.forEach((n, i) => {
+                svg += `<rect x="${currentX}" y="${boxStartY}" width="${boxSize}" height="${boxSize}" fill="none" stroke="#2d3748" stroke-width="1.5" />`;
+                svg += `<text x="${currentX + boxSize/2}" y="${boxStartY + boxSize/2 + 2}" class="t-font" style="font-size:20px; fill:#2b6cb0;">${n}</text>`;
+                currentX += boxSize;
+                if (i === 1 || i === 3) currentX += gapBig; 
+                else currentX += gapSmall;
+            });
+            
+            const labelY = boxStartY + boxSize + 15;
+            svg += `<text x="${cx - 148}" y="${labelY}" class="t-font t-label-gray">日期</text>`;
+            svg += `<text x="${cx - 43}" y="${labelY}" class="t-font t-label-gray">月份</text>`;
+            svg += `<text x="${cx + 95}" y="${labelY}" class="t-font t-label-gray">西元年份</text>`;
+
+
+            // --- 5. 外圍圓圈 (修正：更靠近三角形，避免壓到六角形) ---
+            // 靠內縮距離，原 260 -> 改 220
+            const sideOffset = 220; 
+
+            // 上方 (下屬/兒女) - 倒三角
+            const topBaseY = yTop - 40;
+            svg += `<circle cx="${cx}" cy="${topBaseY - 45}" r="22" class="t-circle" />`;
+            svg += `<text x="${cx}" y="${topBaseY - 43}" class="t-font t-circle-text">${R}</text>`;
+            svg += `<circle cx="${cx - 35}" cy="${topBaseY}" r="22" class="t-circle" />`;
+            svg += `<text x="${cx - 35}" y="${topBaseY + 2}" class="t-font t-circle-text">${Q}</text>`;
+            svg += `<circle cx="${cx + 35}" cy="${topBaseY}" r="22" class="t-circle" />`;
+            svg += `<text x="${cx + 35}" y="${topBaseY + 2}" class="t-font t-circle-text">${P}</text>`;
+
+            // 左側 (工作/朋友) - 正三角
+            const leftCenterX = cx - sideOffset; 
+            const leftCenterY = cy + 20;
+            svg += `<circle cx="${leftCenterX}" cy="${leftCenterY - 40}" r="22" class="t-circle" />`;
+            svg += `<text x="${leftCenterX}" y="${leftCenterY - 38}" class="t-font t-circle-text">${U}</text>`;
+            svg += `<circle cx="${leftCenterX - 30}" cy="${leftCenterY + 10}" r="22" class="t-circle" />`;
+            svg += `<text x="${leftCenterX - 30}" y="${leftCenterY + 12}" class="t-font t-circle-text">${T}</text>`;
+            svg += `<circle cx="${leftCenterX + 30}" cy="${leftCenterY + 10}" r="22" class="t-circle" />`;
+            svg += `<text x="${leftCenterX + 30}" y="${leftCenterY + 12}" class="t-font t-circle-text">${S}</text>`;
+
+            // 右側 (晚年/家庭) - 正三角
+            const rightCenterX = cx + sideOffset;
+            const rightCenterY = cy + 20;
+            svg += `<circle cx="${rightCenterX}" cy="${rightCenterY - 40}" r="22" class="t-circle" />`;
+            svg += `<text x="${rightCenterX}" y="${rightCenterY - 38}" class="t-font t-circle-text">${X}</text>`;
+            svg += `<circle cx="${rightCenterX - 30}" cy="${rightCenterY + 10}" r="22" class="t-circle" />`;
+            svg += `<text x="${rightCenterX - 30}" y="${rightCenterY + 12}" class="t-font t-circle-text">${V}</text>`;
+            svg += `<circle cx="${rightCenterX + 30}" cy="${rightCenterY + 10}" r="22" class="t-circle" />`;
+            svg += `<text x="${rightCenterX + 30}" y="${rightCenterY + 12}" class="t-font t-circle-text">${W}</text>`;
+
+
+            // --- 6. 標籤文字 (修正位置) ---
+            
+            // 頂端標題 (往上移)
+            svg += `<text x="${cx}" y="${hx[1] - 60}" class="t-font t-label-title">領導力</text>`;
+            svg += `<text x="${cx}" y="${hx[1] - 25}" class="t-font t-label-blue">成年中期<tspan x="${cx}" dy="1.2em">40-65 歲</tspan></text>`;
+
+            // 底部標題 (往下移)
+            svg += `<text x="${cx}" y="${hx[7] + 40}" class="t-font t-label-blue">學齡初期<tspan x="${cx}" dy="1.2em">3-5 歲</tspan></text>`;
+
+            // ★ 修正：左右側直書標題 (完全移到六角形外側)
+            // 左側 通用力 (x = 100左右)
+            svg += `<text x="${cx - 400}" y="${cy}" class="t-font t-label-red">通用力</text>`;
+            // 右側 專業力 (x = 900左右)
+            svg += `<text x="${cx + 400}" y="${cy}" class="t-font t-label-red">專業力</text>`;
+
+            // 六角形頂點文字 (往外推，避免壓線)
+            // 左上
+            svg += `<text x="${hx[10] - 40}" y="${hx[11]}" class="t-font t-label-blue" text-anchor="end">成年早期<tspan x="${hx[10] - 40}" dy="1.2em">18-40 歲</tspan></text>`;
+            // 右上
+            svg += `<text x="${hx[2] + 40}" y="${hx[3]}" class="t-font t-label-blue" text-anchor="start">成年晚期<tspan x="${hx[2] + 40}" dy="1.2em">65 歲後</tspan></text>`;
+            
+            // 左下 (青年期)
+            svg += `<text x="${hx[8] - 40}" y="${hx[9] + 20}" class="t-font t-label-blue" text-anchor="end">青年期<tspan x="${hx[8] - 40}" dy="1.2em">12-18 歲</tspan></text>`;
+            // 右下 (嬰兒期)
+            svg += `<text x="${hx[4] + 40}" y="${hx[5] + 20}" class="t-font t-label-blue" text-anchor="start">嬰兒期<tspan x="${hx[4] + 40}" dy="1.2em">0-1 歲</tspan></text>`;
+
+            // 底部兩側 (學齡期/兒童期)
+            svg += `<text x="${cx - 240}" y="${hx[7] - 20}" class="t-font t-label-blue" text-anchor="end">學齡期 5-12 歲</text>`;
+            svg += `<text x="${cx + 240}" y="${hx[7] - 20}" class="t-font t-label-blue" text-anchor="start">兒童期 1-3 歲</text>`;
+
+            svg += `</svg>`;
+            
+            document.getElementById('triangleContainer').innerHTML = svg;
+        }
+
         function calculate() {
             const dateInput = document.getElementById('birthdate').value;
             if (!dateInput) {
@@ -650,124 +849,112 @@
                 return;
             }
 
-            try {
-                // ✅ 修正：避免時區問題
-                const [year, month, day] = dateInput.split('-').map(Number);
-                
-                // ✅ 驗證日期
-                if (!year || !month || !day || month < 1 || month > 12 || day < 1 || day > 31) {
-                    alert('請選擇有效的日期');
-                    return;
-                }
+            const date = new Date(dateInput);
+            const year = date.getFullYear();
+            const month = date.getMonth() + 1;
+            const day = date.getDate();
 
-                // A. 計算核心數字
-                let sumAllDigits = 0;
-                String(year).split('').forEach(n => sumAllDigits += parseInt(n));
-                String(month < 10 ? '0'+month : month).split('').forEach(n => sumAllDigits += parseInt(n));
-                String(day < 10 ? '0'+day : day).split('').forEach(n => sumAllDigits += parseInt(n));
-                
-                let lifePath = reduceToSingleOrMaster(sumAllDigits);
-                
-                let talentArr = [];
-                if (sumAllDigits > 9) {
-                    let s = String(sumAllDigits);
-                    talentArr.push(parseInt(s[0]));
-                    talentArr.push(parseInt(s[1]));
-                } else {
-                    talentArr.push(sumAllDigits); 
-                }
+            // A. 計算核心數字
+            let sumAllDigits = 0;
+            String(year).split('').forEach(n => sumAllDigits += parseInt(n));
+            String(month < 10 ? '0'+month : month).split('').forEach(n => sumAllDigits += parseInt(n));
+            String(day < 10 ? '0'+day : day).split('').forEach(n => sumAllDigits += parseInt(n));
+            
+            let lifePath = reduceToSingleOrMaster(sumAllDigits);
+            
+            let talentArr = [];
+            if (sumAllDigits > 9) {
+                let s = String(sumAllDigits);
+                talentArr.push(parseInt(s[0]));
+                talentArr.push(parseInt(s[1]));
+            } else {
+                talentArr.push(sumAllDigits); 
+            }
 
-                let birthDayNum = reduceToSingle(day);
-                let zodiacNum = getZodiacNum(month, day);
-                
-                // ★ 先天數邏輯：取唯一值、去除0、排序
-                const fullDateStr = `${year}${month < 10 ? '0' + month : month}${day < 10 ? '0' + day : day}`;
-                const innateDigits = [...new Set(fullDateStr.split('')
-                    .map(Number)
-                    .filter(n => n !== 0))]
-                    .sort((a, b) => a - b); 
-                
-                const innateDisplayStr = innateDigits.join(', ');
-                
-                const currentYear = 2025;
-                let yearSum = reduceToSingle(day) + reduceToSingle(month) + reduceToSingle(currentYear);
-                let yearNum = reduceToSingle(yearSum);
+            let birthDayNum = reduceToSingle(day);
+            let zodiacNum = getZodiacNum(month, day);
+            
+            const fullDateStr = `${year}${month < 10 ? '0' + month : month}${day < 10 ? '0' + day : day}`;
+            const innateDigits = [...new Set(fullDateStr.split('')
+                .map(Number)
+                .filter(n => n !== 0))]
+                .sort((a, b) => a - b); 
+            
+            const innateDisplayStr = innateDigits.join(', ');
+            
+            const currentYear = 2025;
+            let yearSum = reduceToSingle(day) + reduceToSingle(month) + reduceToSingle(currentYear);
+            let yearNum = reduceToSingle(yearSum);
 
-                // B. 統計九宮格圈數
-                let counts = {1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0};
-                for (let c of fullDateStr) {
-                    let n = parseInt(c);
-                    if (n !== 0) counts[n]++;
-                }
-                let baseNum = reduceToSingle(lifePath);
-                counts[baseNum]++;
-                talentArr.forEach(t => { if(t!==0) counts[t]++; });
-                counts[birthDayNum]++;
-                if(zodiacNum !== 0) counts[zodiacNum]++;
+            // B. 統計九宮格圈數
+            let counts = {1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0};
+            for (let c of fullDateStr) {
+                let n = parseInt(c);
+                if (n !== 0) counts[n]++;
+            }
+            let baseNum = reduceToSingle(lifePath);
+            counts[baseNum]++;
+            talentArr.forEach(t => { if(t!==0) counts[t]++; });
+            counts[birthDayNum]++;
+            if(zodiacNum !== 0) counts[zodiacNum]++;
 
-                // C. 更新 UI
-                document.getElementById('resultArea').classList.remove('hidden');
-                
-                document.getElementById('mainNum').innerHTML = lifePath + (lifePath > 9 ? `<span class="text-sm text-gray-400 ml-1">(${reduceToSingle(lifePath)})</span>` : "");
-                document.getElementById('birthDayNum').innerText = birthDayNum;
-                document.getElementById('talentNum').innerText = talentArr.join(' , ');
-                document.getElementById('zodiacNum').innerText = zodiacNum;
-                document.getElementById('innateStr').innerText = innateDisplayStr;
-                
-                let missingArr = [];
-                for(let i=1; i<=9; i++) { if(counts[i] === 0) missingArr.push(i); }
-                document.getElementById('missingStr').innerText = missingArr.length > 0 ? missingArr.join(' , ') : "無缺數 (全連線)";
-                
-                document.getElementById('yearNum').innerText = yearNum;
-                document.getElementById('yearTheme').innerText = yearThemes[yearNum].split('：')[0];
+            // C. 更新 UI
+            document.getElementById('resultArea').classList.remove('hidden');
+            
+            document.getElementById('mainNum').innerHTML = lifePath + (lifePath > 9 ? `<span class="text-sm text-gray-400 ml-1">(${reduceToSingle(lifePath)})</span>` : "");
+            document.getElementById('birthDayNum').innerText = birthDayNum;
+            document.getElementById('talentNum').innerText = talentArr.join(' , ');
+            document.getElementById('zodiacNum').innerText = zodiacNum;
+            document.getElementById('innateStr').innerText = innateDisplayStr;
+            
+            let missingArr = [];
+            for(let i=1; i<=9; i++) { if(counts[i] === 0) missingArr.push(i); }
+            document.getElementById('missingStr').innerText = missingArr.length > 0 ? missingArr.join(' , ') : "無缺數 (全連線)";
+            
+            document.getElementById('yearNum').innerText = yearNum;
+            document.getElementById('yearTheme').innerText = yearThemes[yearNum].split('：')[0];
 
-                drawGrid(counts);
-                drawLinesAndInfo(counts);
+            drawGrid(counts);
+            drawLinesAndInfo(counts);
+            drawTriangle(date); 
 
-                let lookupKey = lifePath; 
-                if (!numberMeanings[lookupKey]) lookupKey = reduceToSingle(lifePath);
-                
-                const info = numberMeanings[lookupKey];
-                document.getElementById('roleTitle').innerText = `${lifePath} 號人：${info.title}`;
-                document.getElementById('roleTags').innerHTML = info.tags.map(t => `<span class="bg-mystic-100 text-mystic-700 px-3 py-1 rounded-full text-xs font-bold">#${t}</span>`).join('');
-                
-                // 更新詳細分析內容
-                document.getElementById('roleStrengths').innerText = info.strengths;
-                document.getElementById('roleShadows').innerText = info.shadows;
-                document.getElementById('roleAction').innerText = info.action;
-                document.getElementById('roleBiz').innerText = info.biz;
-                document.getElementById('roleRelation').innerText = info.relation;
-                document.getElementById('roleMission').innerText = info.mission;
+            let lookupKey = lifePath; 
+            if (!numberMeanings[lookupKey]) lookupKey = reduceToSingle(lifePath);
+            
+            const info = numberMeanings[lookupKey];
+            document.getElementById('roleTitle').innerText = `${lifePath} 號人：${info.title}`;
+            document.getElementById('roleTags').innerHTML = info.tags.map(t => `<span class="bg-mystic-100 text-mystic-700 px-3 py-1 rounded-full text-xs font-bold">#${t}</span>`).join('');
+            
+            document.getElementById('roleStrengths').innerText = info.strengths;
+            document.getElementById('roleShadows').innerText = info.shadows;
+            document.getElementById('roleAction').innerText = info.action;
+            document.getElementById('roleBiz').innerText = info.biz;
+            document.getElementById('roleRelation').innerText = info.relation;
+            document.getElementById('roleMission').innerText = info.mission;
 
-                // 創業建議
-                const bizKey = reduceToSingle(lifePath); 
-                document.getElementById('bizAdvice').innerText = bizMessages[bizKey];
+            const bizKey = reduceToSingle(lifePath); 
+            document.getElementById('bizAdvice').innerText = bizMessages[bizKey];
 
-                const missingContainer = document.getElementById('missingAdviceContainer');
-                missingContainer.innerHTML = '';
-                if (missingArr.length === 0) {
-                    missingContainer.innerHTML = `<div class="col-span-2 text-center p-4 text-green-600 font-bold">恭喜！你的能量圓滿，沒有缺數。</div>`;
-                } else {
-                    missingArr.forEach(num => {
-                        const data = missingData[num];
-                        missingContainer.innerHTML += `
-                            <div class="bg-gray-50 border border-gray-200 rounded-xl p-5 hover:bg-white hover:shadow-md transition-all">
-                                <div class="flex items-center gap-3 mb-2">
-                                    <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center font-bold text-gray-600">${num}</div>
-                                    <h5 class="font-bold text-gray-700">空缺課題：${data.trait}</h5>
-                                </div>
-                                <p class="text-sm text-gray-500 mb-3">${data.desc}</p>
-                                <div class="text-sm bg-white p-3 rounded-lg border border-gray-100 text-gray-600">
-                                    <i class="fas fa-bolt text-yellow-500 mr-1"></i> <strong>行動建議：</strong>${data.action}
-                                </div>
+            const missingContainer = document.getElementById('missingAdviceContainer');
+            missingContainer.innerHTML = '';
+            if (missingArr.length === 0) {
+                missingContainer.innerHTML = `<div class="col-span-2 text-center p-4 text-green-600 font-bold">恭喜！你的能量圓滿，沒有缺數。</div>`;
+            } else {
+                missingArr.forEach(num => {
+                    const data = missingData[num];
+                    missingContainer.innerHTML += `
+                        <div class="bg-gray-50 border border-gray-200 rounded-xl p-5 hover:bg-white hover:shadow-md transition-all">
+                            <div class="flex items-center gap-3 mb-2">
+                                <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center font-bold text-gray-600">${num}</div>
+                                <h5 class="font-bold text-gray-700">空缺課題：${data.trait}</h5>
                             </div>
-                        `;
-                    });
-                }
-                
-            } catch (error) {
-                console.error('計算錯誤:', error);
-                alert('計算過程發生錯誤，請重新選擇日期');
+                            <p class="text-sm text-gray-500 mb-3">${data.desc}</p>
+                            <div class="text-sm bg-white p-3 rounded-lg border border-gray-100 text-gray-600">
+                                <i class="fas fa-bolt text-yellow-500 mr-1"></i> <strong>行動建議：</strong>${data.action}
+                            </div>
+                        </div>
+                    `;
+                });
             }
         }
 
@@ -837,4 +1024,3 @@
     </script>
 </body>
 </html>
-

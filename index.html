@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>靈魂地圖｜全方位生命靈數解析</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔮</text></svg>">
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="透過生命靈數、九宮格命盤與星座數，深度解析你的靈魂藍圖、天賦連線與人生課題。探索專屬於你的財富機遇與成長策略。">
+    <meta name="keywords" content="生命靈數,靈數計算,九宮格,命盤,星座數,天賦數,流年運勢,numerology">
+    <meta name="author" content="靈魂地圖">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://你的網址.com/">
+    <meta property="og:title" content="靈魂地圖｜全方位生命靈數解析">
+    <meta property="og:description" content="透過生命靈數、九宮格命盤與星座數，深度解析你的靈魂藍圖、天賦連線與人生課題。">
+    <meta property="og:image" content="https://你的網址.com/img/number.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="zh_TW">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://你的網址.com/">
+    <meta name="twitter:title" content="靈魂地圖｜全方位生命靈數解析">
+    <meta name="twitter:description" content="透過生命靈數、九宮格命盤與星座數，深度解析你的靈魂藍圖、天賦連線與人生課題。">
+    <meta name="twitter:image" content="https://你的網址.com/img/number.jpg">
+  
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;900&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        mystic: {
+                            50: '#fbf7ff',
+                            100: '#f5eaff',
+                            200: '#ecd4ff',
+                            300: '#deb0ff',
+                            400: '#cd81ff',
+                            500: '#b84dff',
+                            600: '#a62bff',
+                            700: '#9213eb',
+                            800: '#7a10c2',
+                            900: '#640f99',
+                        },
+                        gold: {
+                            500: '#d69e2e',
+                            600: '#b7791f',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Noto Serif TC"', 'serif'],
+                        sans: ['Lato', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #fbf7ff;
+            background-image: radial-gradient(#ecd4ff 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        .numerology-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            grid-auto-flow: column; 
+            gap: 1.5rem;
+            position: relative;
+            max-width: 320px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .grid-cell {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.8);
+            border: 2px solid #e9d8fd;
+            color: #d6bcfa;
+            position: relative;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 10;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .grid-cell.active {
+            border-color: #9213eb;
+            color: #7a10c2;
+            background-color: #fff;
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.2);
+            transform: scale(1.05);
+        }
+
+        .circle-ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 2px solid;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            opacity: 0.6;
+        }
+        .ring-1 { width: 120%; height: 120%; border-color: #f687b3; }
+        .ring-2 { width: 140%; height: 140%; border-color: #f6ad55; }
+        .ring-3 { width: 160%; height: 160%; border-color: #63b3ed; }
+        .ring-4 { width: 180%; height: 180%; border-color: #68d391; }
+
+        .lines-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .connection-line {
+            stroke-width: 6;
+            stroke-linecap: round;
+            opacity: 0;
+            animation: drawLine 1.5s forwards ease-in-out;
+        }
+        
+        @keyframes drawLine {
+            to { opacity: 0.5; }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+    </style>
+</head>
+<body class="text-gray-700">
+
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="bg-mystic-600 text-white p-2 rounded-lg">
+                    <i class="fas fa-star-and-crescent text-xl"></i>
+                </div>
+                <h1 class="text-xl md:text-2xl font-serif font-bold text-gray-800 tracking-wide">靈魂地圖 <span class="text-xs text-mystic-500 font-sans ml-1">Inner Number</span></h1>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-5xl mx-auto px-4 py-10">
+        
+        <!-- Input Section -->
+        <div class="glass-card rounded-3xl shadow-xl p-8 mb-10 text-center border-t-4 border-mystic-500 relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-pink-400 via-mystic-500 to-blue-400"></div>
+            <h2 class="text-3xl font-serif font-bold mb-3 text-gray-800">探索你的靈魂藍圖</h2>
+            <p class="text-gray-500 mb-8 font-light">請選擇出生日期，系統將自動解析</p>
+            
+            <div class="flex flex-col justify-center items-center gap-4">
+                <div class="relative group w-full max-w-md mx-auto">
+                    <div class="absolute -inset-0.5 bg-gradient-to-r from-mystic-400 to-pink-400 rounded-xl blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
+                    <input type="date" id="birthdate" onchange="calculate()" oninput="calculate()" class="relative w-full px-6 py-4 rounded-xl border-0 bg-white text-xl text-center shadow-sm ring-1 ring-gray-200 focus:ring-2 focus:ring-mystic-500 outline-none text-gray-700 cursor-pointer placeholder-gray-400">
+                </div>
+                <div class="text-sm text-gray-400 mt-2">
+                    <i class="fas fa-check-circle mr-1"></i> 選擇日期後，下方立即顯示結果
+                </div>
+            </div>
+        </div>
+
+        <!-- Result Section -->
+        <div id="resultArea" class="hidden space-y-12 transition-all duration-500">
+            
+            <!-- 1. 核心數字卡片 -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 fade-in-up" style="animation-delay: 0.1s;">
+                <div class="bg-white p-5 rounded-2xl shadow-md border-b-4 border-mystic-500 text-center hover:shadow-lg transition-shadow">
+                    <div class="text-xs text-gray-400 uppercase tracking-wider mb-1">Life Path Number</div>
+                    <div class="text-sm font-bold text-gray-600 mb-2">生命靈數</div>
+                    <div class="text-4xl font-serif font-black text-mystic-600" id="mainNum">-</div>
+                </div>
+                <div class="bg-white p-5 rounded-2xl shadow-md border-b-4 border-pink-400 text-center hover:shadow-lg transition-shadow">
+                    <div class="text-xs text-gray-400 uppercase tracking-wider mb-1">Birthday Number</div>
+                    <div class="text-sm font-bold text-gray-600 mb-2">生日數</div>
+                    <div class="text-4xl font-serif font-black text-pink-500" id="birthDayNum">-</div>
+                </div>
+                <div class="bg-white p-5 rounded-2xl shadow-md border-b-4 border-blue-400 text-center hover:shadow-lg transition-shadow">
+                    <div class="text-xs text-gray-400 uppercase tracking-wider mb-1">Talent Number</div>
+                    <div class="text-sm font-bold text-gray-600 mb-2">天賦數</div>
+                    <div class="text-4xl font-serif font-black text-blue-500" id="talentNum">-</div>
+                </div>
+                <div class="bg-white p-5 rounded-2xl shadow-md border-b-4 border-yellow-400 text-center hover:shadow-lg transition-shadow">
+                    <div class="text-xs text-gray-400 uppercase tracking-wider mb-1">Zodiac Number</div>
+                    <div class="text-sm font-bold text-gray-600 mb-2">星座數</div>
+                    <div class="text-4xl font-serif font-black text-yellow-500" id="zodiacNum">-</div>
+                </div>
+            </div>
+
+            <!-- 2. 九宮格與基礎資訊 -->
+            <div class="grid md:grid-cols-2 gap-8 fade-in-up" style="animation-delay: 0.2s;">
+                <div class="bg-white rounded-3xl shadow-xl p-6 md:p-10 flex flex-col items-center justify-center relative">
+                    <h3 class="text-xl font-serif font-bold text-gray-800 mb-6 absolute top-6 left-8 border-l-4 border-mystic-500 pl-3">能量命盤</h3>
+                    <div class="numerology-grid mt-8" id="gridContainer">
+                        <svg class="lines-overlay" id="linesSvg"></svg>
+                        <div class="grid-cell" id="cell-1">1</div>
+                        <div class="grid-cell" id="cell-2">2</div>
+                        <div class="grid-cell" id="cell-3">3</div>
+                        <div class="grid-cell" id="cell-4">4</div>
+                        <div class="grid-cell" id="cell-5">5</div>
+                        <div class="grid-cell" id="cell-6">6</div>
+                        <div class="grid-cell" id="cell-7">7</div>
+                        <div class="grid-cell" id="cell-8">8</div>
+                        <div class="grid-cell" id="cell-9">9</div>
+                    </div>
+                    <div class="mt-6 text-xs text-gray-400 bg-gray-50 py-2 px-4 rounded-full">
+                        <i class="fas fa-info-circle mr-1"></i> 
+                        圈數來源：先天數、生命靈數、天賦數、生日數、星座數
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <!-- 修正：先天數文字移除（不重複） -->
+                    <div class="bg-white p-6 rounded-2xl shadow-md border-l-4 border-green-400">
+                        <h4 class="text-lg font-bold text-gray-700 mb-1"><i class="fas fa-seedling text-green-400 mr-2"></i>先天數 (Innate)</h4>
+                        <p class="text-sm text-gray-400 mb-2">來自出生日期的原始能量</p>
+                        <div class="text-xl font-mono text-gray-800 tracking-widest break-words" id="innateStr">-</div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl shadow-md border-l-4 border-gray-400">
+                        <h4 class="text-lg font-bold text-gray-700 mb-1"><i class="fas fa-ghost text-gray-400 mr-2"></i>空缺數 (Missing)</h4>
+                        <p class="text-sm text-gray-400 mb-2">今生需要修煉的隱藏課題</p>
+                        <div class="text-gray-600 font-bold tracking-widest" id="missingStr">無</div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl shadow-md border-l-4 border-indigo-400">
+                        <h4 class="text-lg font-bold text-gray-700 mb-1"><i class="fas fa-calendar-alt text-indigo-400 mr-2"></i>2025 流年數</h4>
+                        <p class="text-sm text-gray-400 mb-2">今年的主題與能量走向</p>
+                        <div class="flex items-baseline gap-2">
+                            <span class="text-2xl font-bold text-indigo-600" id="yearNum">-</span>
+                            <span class="text-sm text-indigo-800" id="yearTheme"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. 深度解析報告區 -->
+            <div class="space-y-8 fade-in-up" style="animation-delay: 0.3s;">
+                
+                <!-- 主命數詳解 -->
+                <div class="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
+                    <!-- Header -->
+                    <div class="bg-gradient-to-r from-mystic-50 to-white p-8 border-b border-gray-100">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-12 h-12 rounded-full bg-mystic-100 flex items-center justify-center text-mystic-600 shadow-sm">
+                                <i class="fas fa-user-astronaut text-2xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-serif font-bold text-gray-800">靈魂角色全息圖</h3>
+                                <div class="text-sm text-gray-400">Life Path Analysis</div>
+                            </div>
+                        </div>
+                        <h4 class="text-xl font-bold text-mystic-800 mb-3" id="roleTitle"></h4>
+                        <div class="flex flex-wrap gap-2" id="roleTags"></div>
+                    </div>
+
+                    <!-- Body -->
+                    <div class="p-8 space-y-8">
+                        
+                        <!-- 靈魂性格與潛在挑戰 -->
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="bg-green-50 p-5 rounded-xl border border-green-100">
+                                <h5 class="font-bold text-green-800 mb-2 flex items-center"><i class="fas fa-sun mr-2"></i>性格優勢</h5>
+                                <p class="text-gray-600 text-sm leading-relaxed" id="roleStrengths"></p>
+                            </div>
+                            <div class="bg-red-50 p-5 rounded-xl border border-red-100">
+                                <h5 class="font-bold text-red-800 mb-2 flex items-center"><i class="fas fa-moon mr-2"></i>潛在盲點</h5>
+                                <p class="text-gray-600 text-sm leading-relaxed" id="roleShadows"></p>
+                            </div>
+                        </div>
+                        
+                        <!-- 成長策略 -->
+                        <div class="bg-gray-50 p-5 rounded-xl border border-gray-200">
+                            <h5 class="font-bold text-gray-700 mb-2 flex items-center"><i class="fas fa-level-up-alt mr-2 text-mystic-500"></i>成長策略 (Action Plan)</h5>
+                            <p class="text-gray-600 text-sm leading-relaxed" id="roleAction"></p>
+                        </div>
+
+                        <!-- 事業與人際 -->
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <h5 class="font-bold text-gray-700 mb-3 border-l-4 border-blue-400 pl-3">職場/創業優勢</h5>
+                                <p class="text-gray-600 text-sm leading-relaxed" id="roleBiz"></p>
+                            </div>
+                            <div>
+                                <h5 class="font-bold text-gray-700 mb-3 border-l-4 border-pink-400 pl-3">人際互動建議</h5>
+                                <p class="text-gray-600 text-sm leading-relaxed" id="roleRelation"></p>
+                            </div>
+                        </div>
+
+                        <!-- 本世人生課題 -->
+                        <div class="bg-gradient-to-r from-mystic-600 to-purple-700 p-6 rounded-2xl text-white shadow-lg">
+                            <h5 class="font-bold text-lg mb-2 flex items-center"><i class="fas fa-star mr-2 text-yellow-300"></i>本世人生課題</h5>
+                            <p class="text-purple-100 italic leading-relaxed" id="roleMission"></p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- 財富機遇 (創業暗示) -->
+                <div class="bg-gradient-to-r from-amber-50 to-white rounded-3xl shadow-xl p-8 border-l-8 border-gold-500">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center text-gold-600">
+                            <i class="fas fa-key text-xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-serif font-bold text-gray-800">財富機遇與轉捩點</h3>
+                    </div>
+                    <div class="prose max-w-none">
+                        <p class="text-gray-600 leading-relaxed mb-4">
+                            每個數字都藏著開啟財富大門的鑰匙。根據你的靈數能量，如果你一直感到被現狀困住，或許是因為你還沒找到那個能放大你天賦的「系統」。
+                        </p>
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-amber-100">
+                            <h5 class="font-bold text-gold-600 mb-2 text-lg"><i class="fas fa-lightbulb mr-2"></i>給你的專屬建議：</h5>
+                            <p class="text-gray-700 font-medium leading-relaxed" id="bizAdvice"></p>
+                            <div class="mt-4 pt-4 border-t border-gray-100 text-sm text-gray-500 italic">
+                                <i class="fas fa-quote-left mr-2 text-gray-300"></i>
+                                當機會出現時，只有準備好改變的人能看見。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 連線與缺數 (併排顯示) -->
+                <!-- 修正：確保 ID 唯一，讓 JS 能正確填入資料 -->
+                <div class="grid lg:grid-cols-2 gap-8">
+                    <!-- 連線 -->
+                    <div class="bg-white rounded-3xl shadow-xl p-8 h-full">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-600">
+                                <i class="fas fa-project-diagram text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-serif font-bold text-gray-800">天賦連線解析</h3>
+                        </div>
+                        <div id="linesContainer" class="space-y-4">
+                            <!-- Dynamic Content -->
+                        </div>
+                    </div>
+                    <!-- 缺數 -->
+                    <div class="bg-white rounded-3xl shadow-xl p-8 border-l-8 border-gray-300 h-full">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600">
+                                <i class="fas fa-tools text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-serif font-bold text-gray-800">靈魂補完計畫 (空缺數)</h3>
+                        </div>
+                        <div id="missingAdviceContainer" class="space-y-4">
+                            <!-- Dynamic Content -->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="mt-12 text-center text-gray-400 text-sm pb-8">
+            <p>© 2025 靈魂地圖計算器 | 耀文行動商城</p>
+        </div>
+
+    </main>
+
+    <script>
+        // ========== 資料庫 Data ========== //
+        
+        const bizMessages = {
+            1: "作為天生的開創者，替別人打工往往限制了你的格局。你擁有獨立創業的靈魂，與其在體制內撞牆，不如建立一個屬於自己的事業系統。尋找一個能讓你「自主」但又能運用槓桿力量的平台，是你通往財富自由的捷徑。",
+            2: "你的財富密碼在於「連結」與「合作」。單打獨鬥不是你的強項，但若你能找到一個強大的團隊系統，透過幫助他人成功來成就自己，你的收穫將是倍增的。你需要的是一個能夠「借力使力」的互助型事業模式。",
+            3: "你的影響力與表達能力就是你的資產。你適合「分享」好東西給他人，而不是傳統的推銷。若能將你的個人品牌與一個成熟的產品系統結合，把「消費」轉化為「收入」，你就能在快樂分享中建立源源不絕的被動現金流。",
+            4: "你追求穩定，但死薪水給不了你真正的安全感。你需要的是一條能長久運作的管道，而非提桶水。建議你利用業餘時間，以低風險的方式構建一個經過驗證的系統，用2-3年的時間打造未來30年的財務護城河。",
+            5: "自由是你的空氣，朝九晚五的打卡生活會讓你窒息。你適合網路型、無國界、時間彈性的事業。尋找一個能讓你邊玩邊賺、不受地點限制的商業模式（如電子商務），讓你的收入跟著你的足跡一起擴展。",
+            6: "你做事的動力往往是為了照顧家人。選擇一個能讓你兼顧家庭、甚至能「傳承」給下一代的事業至關重要。與其用時間換金錢，不如建立一個持續性的收入系統，讓你在陪伴家人的同時，帳戶依然在運作。",
+            7: "你擁有看穿本質的智慧。你清楚知道「時間換錢」的公式有漏洞。你需要的是一個邏輯通透、制度公平的商業模式。運用你的分析能力去研究那些能產生「永續收入」的平台，你的智慧將帶領你找到真正的財富自由。",
+            8: "你天生具備老闆思維，渴望掌握資源與權力。但傳統創業風險高、成本大。聰明的你會懂得運用「微型創業」或「連鎖加盟」的概念，用最小的成本撬動最大的市場。專注於建立系統與複製成功模式，是你擴大版圖的關鍵。",
+            9: "你有救世主的情懷，渴望幫助人改變生命。最適合你的事業，必須建立在「助人」的基礎上。尋找一個只有在「幫助夥伴成功，自己才能成功」的互利共生制度，這不僅能滿足你的物質需求，更能圓滿你的靈魂使命。"
+        };
+
+        const missingData = {
+            1: {
+                trait: "自信不足、依賴性強",
+                desc: "你可能習慣隱藏自己，不敢為自己發聲，總等待別人來做決定。",
+                action: "練習「當責」。試著主導一個小計畫或副業，在安全的環境下練習做決策。當你發現自己能掌控局面時，自信心會大幅提升。"
+            },
+            2: {
+                trait: "忽略細節、較不敏感",
+                desc: "你可能習慣獨來獨往，覺得與人溝通很累，容易忽略他人的感受。",
+                action: "參與「團隊合作」。加入一個重視互助的社群或系統，強迫自己練習傾聽與配合。你會發現，有時候配合別人反而能讓事情更順利。"
+            },
+            3: {
+                trait: "表達壓抑、缺乏創意",
+                desc: "你可能覺得自己很無趣，或者害怕上台說話，有想法卻不知如何表達。",
+                action: "練習「分享」。試著在社群媒體分享你的生活或產品體驗。不用完美，真實就好。透過不斷的輸出來鍛鍊你的表達肌群。"
+            },
+            4: {
+                trait: "缺乏安全感、執行力弱",
+                desc: "你可能做事容易虎頭蛇尾，對未來充滿不確定感，卻又不敢踏出改變的一步。",
+                action: "建立「系統」。不要靠意志力，要靠流程。尋找一個已經被驗證成功的SOP來執行，讓規律帶給你安全感，並轉化為具體成果。"
+            },
+            5: {
+                trait: "害怕改變、生活單調",
+                desc: "你可能過著一成不變的生活，雖然覺得無聊，但更害怕未知。",
+                action: "設定「冒險日」。每週做一件沒做過的事。考慮接觸像電子商務這樣的新趨勢，讓你的生活與世界接軌，打破僵化的舒適圈。"
+            },
+            6: {
+                trait: "情感疏離、責任感淡",
+                desc: "你可能比較自我，覺得別人的事與你無關，或者害怕承擔責任。",
+                action: "練習「付出」。主動去關心你的客戶或夥伴，不求回報地提供價值。你會發現，當你開始為別人負責時，你的生命重量會完全不同。"
+            },
+            7: {
+                trait: "思考淺層、容易輕信",
+                desc: "你可能懶得思考太複雜的事，或者容易被表象迷惑，缺乏判斷力。",
+                action: "深入「研究」。不要只看表面，去研究商業模式背後的邏輯。當你搞懂了遊戲規則，你會發現很多機會其實藏在細節裡。"
+            },
+            8: {
+                trait: "金錢匱乏、缺乏野心",
+                desc: "你可能覺得錢夠用就好，或者潛意識排斥談論金錢與權力。",
+                action: "重塑「財商」。閱讀理財書籍，了解被動收入的概念。承認自己對豐盛的渴望，並開始接觸能創造現金流的工具。"
+            },
+            9: {
+                trait: "現實主義、缺乏夢想",
+                desc: "你可能過於務實，覺得夢想不能當飯吃，對社會議題較為冷感。",
+                action: "尋找「意義」。試著把你的工作與助人連結起來。當你的努力能讓別人的生活變得更好，你會找到前所未有的動力。"
+            }
+        };
+
+        const numberMeanings = {
+            1: {
+                title: "開創者 (The Pioneer)",
+                tags: ["獨立", "開創", "自信", "果斷"],
+                strengths: "你是天生的領袖，擁有強烈的行動力與開創精神。面對新挑戰時，你總是充滿勇氣，不畏艱難。你喜歡主導局面，擁有將「無」變為「有」的創造能量。",
+                shadows: "容易陷入獨斷獨行、過度自我中心，聽不進他人意見。有時會因為太過急躁而顯得侵略性太強，導致人際摩擦。內心深處其實害怕失敗。",
+                action: "練習「積極聆聽」，在做決定前多停三秒鐘。學習將你的領導力轉化為賦能他人的力量，而不是單純的發號施令。",
+                biz: "非常適合**獨立創業、擔任高階主管或專案負責人**。你有能力從零開始建立系統，適合需要「開疆闢土」的商業模式。你的自信能吸引跟隨者，善用這點建立個人品牌。",
+                relation: "在關係中學習柔軟與妥協。你是保護者，但不要變成控制者。給予伴侶或夥伴表達空間，會讓關係更穩固。",
+                mission: "本世的課題是「確立自我價值」。你來這裡是為了學習如何正確運用力量，成為一個不僅能領導自己，也能照亮他人的真領袖。"
+            },
+            2: {
+                title: "協調者 (The Peacemaker)",
+                tags: ["細膩", "協調", "依賴", "敏銳"],
+                strengths: "你是最佳的幕後推手與和平使者。極佳的同理心與感受力讓你擅長察言觀色，是團隊中的潤滑劑。你懂得細節的重要性，能補足他人的粗心。",
+                shadows: "容易優柔寡斷、缺乏主見，為了討好別人而委屈自己。情緒起伏受環境影響大，有時會過度依賴他人給予安全感。",
+                action: "建立自我界線，練習溫柔而堅定地說「不」。學習區分哪些情緒是自己的，哪些是別人的，不要照單全收。",
+                biz: "適合**公關、客服、人資或團隊協作型事業**。在商業中，你是完美的「連結者」(Connector)，善於媒合資源與人脈，適合透過建立團隊槓桿來獲利。",
+                relation: "你很體貼，但要注意不要在關係中失去自我。建立平等的互動模式，不要總是用討好來換取愛。",
+                mission: "本世的課題是「在合作中保有獨立」。你來學習如何在支持他人的同時，也能看見並重視自己的需求，達成真正的平衡。"
+            },
+            3: {
+                title: "表達者 (The Communicator)",
+                tags: ["創意", "樂觀", "表達", "多變"],
+                strengths: "你是天生的表演者，自帶聚光燈。腦袋充滿點子，嘴巴停不下來，總能用幽默化解尷尬。你擁有將複雜事物簡單化、趣味化的天賦。",
+                shadows: "容易三分鐘熱度、虎頭蛇尾。有時會為了效果而誇大其詞，或者用嘻嘻哈哈來逃避深層的情緒問題。注意力容易分散。",
+                action: "學習「聚焦」，把一個創意完整落實到底。練習深層的溝通，而不只是表面的社交辭令。",
+                biz: "適合**行銷、演講、銷售、內容創作或社群經營**。你的影響力就是你的財富，善用「分享」而非「推銷」的方式，能讓你建立龐大的粉絲或客戶群。",
+                relation: "你的熱情很吸引人，但要注意承諾的兌現。在關係中展現真實脆弱的一面，會讓人覺得你更可靠。",
+                mission: "本世的課題是「傳遞快樂與真理」。你來這裡是為了學習如何運用創意的力量，帶給世界正向的影響，並學會對自己的言行負責。"
+            },
+            4: {
+                title: "建設者 (The Builder)",
+                tags: ["穩重", "規律", "務實", "固執"],
+                strengths: "你是社會的基石，最可靠的伙伴。重視規律、程序與穩定，有強大的執行力，能把空中樓閣變成堅固大樓。你做事有條理，讓人很放心。",
+                shadows: "不知變通、過於保守，對未知充滿恐懼。容易因為過度追求安全感而錯失良機。有時會顯得太過嚴肅或固執。",
+                action: "練習接受生活中的「彈性」與「小混亂」。嘗試跳出舒適圈，哪怕只是一點點改變。相信自己有應變的能力。",
+                biz: "適合**系統建立、財務規劃、組織管理或工程領域**。在創業或副業選擇上，你適合有「完整教育系統」與「被動收入模式」的平台，因為你追求的是長遠的穩定。",
+                relation: "給伴侶多一點浪漫與驚喜，不要總是談論柴米油鹽。你的忠誠是優點，但彈性會讓關係更甜蜜。",
+                mission: "本世的課題是「建立內在的安全感」。你來學習物質與心靈的穩定，並明白真正的安全感來自於內心的強大，而非外在的控制。"
+            },
+            5: {
+                title: "冒險者 (The Adventurer)",
+                tags: ["自由", "冒險", "靈活", "魅力"],
+                strengths: "你為自由而生，靈魂裡寫著「不自由毋寧死」。熱愛新鮮事物，適應力極強，口才好且魅力十足，能輕易與各行各業的人打成一片。",
+                shadows: "衝動、博而不精、逃避責任。不喜歡被承諾束縛，容易給人花心或不穩定的印象。過度追求刺激可能導致混亂。",
+                action: "學習「自律」，因為自律才能換來真正的自由。為自己設定階段性目標，練習在承諾中找到自由的空間。",
+                biz: "適合**業務、市場開發、旅遊或跨國事業**。你適合無國界、時間彈性的商業模式。善用你的適應力與口才，在快速變化的市場中搶得先機。",
+                relation: "在關係中，你需要空間，但也需要給對方安全感。學習分享你的冒險，讓伴侶成為你的玩伴而非獄卒。",
+                mission: "本世的課題是「負責任的自由」。你來體驗世界的豐富，並學習如何運用自由意志來創造有意義的人生，而非隨波逐流。"
+            },
+            6: {
+                title: "奉獻者 (The Nurturer)",
+                tags: ["關懷", "責任", "完美", "奉獻"],
+                strengths: "你是愛的代言人，重視家庭與承諾。有強烈的責任感，喜歡照顧別人，具有療癒他人的天賦。你對美與和諧有很高的標準。",
+                shadows: "挑剔、完美主義，容易情感勒索（「我對你這麼好，你怎麼可以...」）。過度犧牲自己後產生怨懟，習慣用付出換取被需要感。",
+                action: "學會「愛自己」，把焦點放回自己身上。接受不完美，明白每個人都有自己的課題，你不需要拯救所有人。",
+                biz: "適合**服務業、教育、醫療、美容或諮詢業**。在商業上，你適合建立以「關懷」與「服務」為核心的團隊，你的用心會為你帶來高忠誠度的客戶與夥伴。",
+                relation: "不要愛得太窒息。給予對方成長的空間，相信對方有能力處理自己的問題。健康的關係是互相支持而非單向依賴。",
+                mission: "本世的課題是「無條件的愛」。先愛自己，再愛他人。學習在付出與接受之間取得平衡，讓愛成為滋養而非負擔。"
+            },
+            7: {
+                title: "探索者 (The Seeker)",
+                tags: ["博學", "理性", "孤高", "直覺"],
+                strengths: "你是天生的思想家，擁有看穿表象的X光眼。喜歡探究本質，邏輯與直覺並重。你享受獨處，精神層次豐富，不隨波逐流。",
+                shadows: "猜忌多疑、冷漠疏離、容易鑽牛角尖。因為標準太高而顯得傲慢，容易切斷與他人的連結，活在自己的象牙塔裡。",
+                action: "練習「信任」與「開放」。試著表達內心的感受，而不只是想法。多接觸大自然，讓腦袋休息，連結身體的感覺。",
+                biz: "適合**分析師、顧問、研究員或專業技術領域**。你有能力看懂複雜的制度與趨勢，適合從事需要「策略佈局」與「專業知識」的事業。",
+                relation: "你需要獨處空間，但別忘了與人連結。找一個能從精神層面與你對話的伴侶。學習展現脆弱，會讓你更真實。",
+                mission: "本世的課題是「追尋真理與信任」。你來探索宇宙的奧秘，並學習將智慧分享給世人，同時在人際中學會信任與溫暖。"
+            },
+            8: {
+                title: "實踐者 (The Powerhouse)",
+                tags: ["霸氣", "掌控", "富足", "野心"],
+                strengths: "你擁有將夢想顯化為物質的能力。天生的老闆格局，對商業與金錢嗅覺敏銳。你意志力堅強，能承受高壓，渴望成功與影響力。",
+                shadows: "唯利是圖、控制狂、給自己和他人過大壓力。容易用金錢衡量一切價值。誠實與道德是你必須堅守的底線。",
+                action: "學習「放鬆」與「授權」。明白真正的力量來自於內心的平靜。將你的野心轉化為造福他人的願景。",
+                biz: "適合**企業家、金融投資、高階管理或系統擁有者**。你適合玩「大遊戲」，善用資源整合與槓桿原理，建立龐大的商業帝國或組織。",
+                relation: "在關係中放下控制欲，展現溫柔的一面。別把伴侶當員工管理。學習欣賞對方的本質，而非外在條件。",
+                mission: "本世的課題是「豐盛與平衡」。你來學習如何正確運用權力與金錢，並明白外在的成就是為了服務內在的圓滿與他人的福祉。"
+            },
+            9: {
+                title: "人道者 (The Humanitarian)",
+                tags: ["慈悲", "智慧", "夢想", "大愛"],
+                strengths: "你是數字的終點，擁有博愛精神與宏觀視野。你關注社會公益，樂於分享，擁有強大的感染力與號召力。你的夢想通常與世界有關。",
+                shadows: "不切實際、空想、濫情。容易承擔不屬於自己的責任，或者因為理想幻滅而變得憤世嫉俗。缺乏金錢觀念。",
+                action: "學習「落地」與「放下」。將遠大的夢想拆解為具體的執行步驟。放下過去的包袱，專注當下的創造。",
+                biz: "適合**公益組織、教育培訓、藝術或激勵導師**。你適合從事「助人成功」的事業，當你的事業能幫助越多人，你的成就就越大。",
+                relation: "不要把伴侶理想化，接受真實的對方。學習在關係中保持界線，不要為了大愛而忽略了身邊最親近的人。",
+                mission: "本世的課題是「服務與放下」。你來學習無私的奉獻，並在服務人群的過程中，完成自己靈魂的進化與圓滿。"
+            },
+             11: {
+                title: "通靈者 (The Illuminator)",
+                tags: ["直覺", "靈感", "啟發", "敏感"],
+                strengths: "作為卓越數，你擁有雙倍的1號能量與2號的特質。直覺力驚人，常能接收到宇宙的訊息。你是精神世界的信差，極具個人魅力。",
+                shadows: "神經質、情緒極度不穩、自我懷疑。容易在自大與自卑之間擺盪。過度敏感導致容易受傷。",
+                action: "學習「情緒接地」。透過運動、接觸自然來穩定能量。相信你的直覺，但用理智去驗證與執行。",
+                biz: "適合**靈性導師、心理學家、發明家或願景領袖**。你適合從事能「啟發人心」的事業，你的直覺能帶領團隊避開風險，看見未來。",
+                relation: "你需要一個能理解你靈性層次的伴侶。學習溝通你內心的直覺感受，而不是期待對方會讀心術。",
+                mission: "本世的課題是「成為光之通道」。將高頻的靈感與智慧落實到地球，啟發他人覺醒，並保持自身的平衡。"
+            },
+            22: {
+                title: "築夢大師 (The Master Builder)",
+                tags: ["實踐", "大願景", "建設", "領導"],
+                strengths: "你有能力將最宏大的夢想變成現實。結合了女性的直覺與男性的實踐力。你的眼光長遠，能規劃跨國界或跨時代的藍圖。",
+                shadows: "壓力過大、過度操勞、為了目的忽略人性。容易被巨大的責任感壓垮，或者因為標準太高而批判他人。",
+                action: "學習「團隊合作」，不要一個人扛下所有責任。保持謙卑，將你的天賦貢獻給群體利益。",
+                biz: "適合**跨國企業家、大型組織領袖或社會改革者**。你有能力建立龐大的系統與架構，適合運作全球性的商業模式。",
+                relation: "別讓工作佔據你所有時間。在關係中展現你的感性面，讓伴侶成為你築夢路上的支持者而非犧牲者。",
+                mission: "本世的課題是「夢想具象化」。你來示範如何將靈性的願景顯化為物質的實相，為世界建立穩固的基礎。"
+            },
+            33: {
+                title: "靈性導師 (The Master Teacher)",
+                tags: ["慈悲", "奉獻", "療癒", "無私"],
+                strengths: "這是最高階的愛的能量。你像菩薩一樣，為了眾生而存在。你的關懷不只在小家，而在大家，擁有強大的療癒氣場。",
+                shadows: "過度犧牲、背負他人業力、情緒崩潰。容易因為無法拯救所有人而感到痛苦。過於理想化而脫離現實。",
+                action: "學習「超然」。保持慈悲心，但不要涉入他人的因果。照顧好凡人的肉身，才能長久地服務眾生。",
+                biz: "適合**精神領袖、大慈善家、醫治者或教育改革家**。你的事業必須與「愛」和「療癒」有關，你的存在本身就是品牌的保證。",
+                relation: "你需要一個能支持你大愛願景的伴侶。學習在服務眾生與照顧家庭之間取得平衡。",
+                mission: "本世的課題是「無私的服務與喜悅」。你來教導世人何謂無條件的愛，並在服務中找到內在的喜悅與平靜。"
+            }
+        };
+
+        const linesData = [
+            { ids: [1, 2, 3], name: "美感藝術線", sub: "體能主線 / 任性線", desc: "擁有強烈的行動力與敏銳感知。你對美感有天生直覺，動靜皆宜。要注意任性可能帶來的衝動，適合藝術、表演或體育領域。", color: "#f687b3" },
+            { ids: [4, 5, 6], name: "完美組織線", sub: "知能主線", desc: "結合穩定、變化與關懷。你追求完美，組織力強，能解決複雜問題。缺點是容易給自己過大壓力，且對他人標準過高。", color: "#4fd1c5" },
+            { ids: [7, 8, 9], name: "權勢靈性線", sub: "貴人線", desc: "擁有靈性與世俗的雙重影響力。通常運氣不錯，有貴人相助。權力越大，責任越大，需注意道德與心靈平衡。", color: "#f6ad55" },
+            { ids: [1, 4, 7], name: "務實物質線", sub: "物質充裕線", desc: "腳踏實地的實踐者。你務實、愛賺錢，追求生活保障。只要肯努力，物質生活通常不虞匱乏。注意不要過於拜金。", color: "#63b3ed" },
+            { ids: [2, 5, 8], name: "熱情公關線", sub: "情緒主線", desc: "擅長人際、靈活與掌控。口才好，情感豐富，適合公關與業務工作。要注意情緒波動大，容易感情用事。", color: "#9f7aea" },
+            { ids: [3, 6, 9], name: "創意智慧線", sub: "靈性智慧線", desc: "創意、關懷與大愛的結合。你聰明、學習力強，有理想色彩。現實中容易感到落差，也就是所謂的「聰明反被聰明誤」，需接地氣。", color: "#fbd38d" },
+            { ids: [1, 5, 9], name: "事業成效線", sub: "工作狂線", desc: "事業心強，閒不下來。擁有強大的執行力與目標感，不斷追求自我突破。容易過勞，記得休息也是工作的一部分。", color: "#fc8181" },
+            { ids: [3, 5, 7], name: "最佳人緣線", sub: "溝通主線", desc: "深受歡迎，善於展現自我魅力。你容易成為團體焦點，也容易獲得他人喜愛。小心不要流於表面功夫，或過度迎合他人。", color: "#68d391" },
+            // 副線
+            { ids: [2, 4], name: "靈巧變通線", sub: "靈活線", desc: "雖然只有兩碼，但代表你在穩定中求變化的能力，做事有彈性，懂得變通。", color: "#cbd5e0", isSub: true },
+            { ids: [4, 8], name: "工作策略線", sub: "穩定執行", desc: "非常會做計畫並執行，是老闆最愛的員工類型，但也容易過於勞碌。", color: "#cbd5e0", isSub: true },
+            { ids: [2, 6], name: "公平正義線", sub: "和平線", desc: "極度重視公平與和諧，適合擔任仲裁或協調的角色。", color: "#cbd5e0", isSub: true },
+            { ids: [6, 8], name: "親切誠懇線", sub: "誠實線", desc: "給人誠懇可靠的感覺，雖然不一定最快成功，但路遙知馬力。", color: "#cbd5e0", isSub: true }
+        ];
+
+        const yearThemes = {
+            1: "播種期：新的開始，適合創業、換工作、設定新目標。",
+            2: "蟄伏期：合作與細節，適合建立關係，放慢腳步。",
+            3: "萌芽期：創意與表達，社交活動多，適合展現自我。",
+            4: "深根期：務實與規律，建立基礎，辛苦但有收穫。",
+            5: "繁衍期：變化與自由，適合旅行、冒險、突破現狀。",
+            6: "孕育期：責任與家庭，關注健康、關懷他人。",
+            7: "重整期：內省與學習，適合進修、獨處、思考未來。",
+            8: "收穫期：權力與因果，過去努力的回收，金錢運強。",
+            9: "休耕期：完結與放下，清理舊物，準備迎接新循環。"
+        };
+
+        // ========== 邏輯 Functions ========== //
+
+        function getZodiacNum(month, day) {
+            if ((month == 1 && day <= 19) || (month == 12 && day >= 22)) return 1; 
+            if ((month == 1 && day >= 20) || (month == 2 && day <= 18)) return 2; 
+            if ((month == 2 && day >= 19) || (month == 3 && day <= 20)) return 3; 
+            if ((month == 3 && day >= 21) || (month == 4 && day <= 19)) return 1; 
+            if ((month == 4 && day >= 20) || (month == 5 && day <= 20)) return 2; 
+            if ((month == 5 && day >= 21) || (month == 6 && day <= 21)) return 3; 
+            if ((month == 6 && day >= 22) || (month == 7 && day <= 22)) return 4; 
+            if ((month == 7 && day >= 23) || (month == 8 && day <= 22)) return 5; 
+            if ((month == 8 && day >= 23) || (month == 9 && day <= 22)) return 6; 
+            if ((month == 9 && day >= 23) || (month == 10 && day <= 23)) return 7; 
+            if ((month == 10 && day >= 24) || (month == 11 && day <= 22)) return 8; 
+            if ((month == 11 && day >= 23) || (month == 12 && day <= 21)) return 9; 
+            return 0;
+        }
+
+        function reduceToSingleOrMaster(num) {
+            while (num > 99) {
+                let sum = 0;
+                String(num).split('').forEach(n => sum += parseInt(n));
+                num = sum;
+            }
+            if (num === 11 || num === 22 || num === 33) return num;
+            while (num > 9 && num !== 11 && num !== 22 && num !== 33) {
+                let sum = 0;
+                String(num).split('').forEach(n => sum += parseInt(n));
+                num = sum;
+            }
+            return num;
+        }
+        
+        function reduceToSingle(num) {
+             while (num > 9) {
+                 let sum = 0;
+                 String(num).split('').forEach(n => sum += parseInt(n));
+                 num = sum;
+             }
+             return num;
+        }
+
+        function calculate() {
+            const dateInput = document.getElementById('birthdate').value;
+            if (!dateInput) {
+                document.getElementById('resultArea').classList.add('hidden');
+                return;
+            }
+
+            const date = new Date(dateInput);
+            const year = date.getFullYear();
+            const month = date.getMonth() + 1;
+            const day = date.getDate();
+
+            // A. 計算核心數字
+            let sumAllDigits = 0;
+            String(year).split('').forEach(n => sumAllDigits += parseInt(n));
+            String(month < 10 ? '0'+month : month).split('').forEach(n => sumAllDigits += parseInt(n));
+            String(day < 10 ? '0'+day : day).split('').forEach(n => sumAllDigits += parseInt(n));
+            
+            let lifePath = reduceToSingleOrMaster(sumAllDigits);
+            
+            let talentArr = [];
+            if (sumAllDigits > 9) {
+                let s = String(sumAllDigits);
+                talentArr.push(parseInt(s[0]));
+                talentArr.push(parseInt(s[1]));
+            } else {
+                talentArr.push(sumAllDigits); 
+            }
+
+            let birthDayNum = reduceToSingle(day);
+            let zodiacNum = getZodiacNum(month, day);
+            
+            // ★ 先天數邏輯：取唯一值、去除0、排序
+            const fullDateStr = `${year}${month < 10 ? '0' + month : month}${day < 10 ? '0' + day : day}`;
+            const innateDigits = [...new Set(fullDateStr.split('')
+                .map(Number)
+                .filter(n => n !== 0))]
+                .sort((a, b) => a - b); 
+            
+            const innateDisplayStr = innateDigits.join(', ');
+            
+            const currentYear = 2025;
+            let yearSum = reduceToSingle(day) + reduceToSingle(month) + reduceToSingle(currentYear);
+            let yearNum = reduceToSingle(yearSum);
+
+            // B. 統計九宮格圈數
+            let counts = {1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0};
+            for (let c of fullDateStr) {
+                let n = parseInt(c);
+                if (n !== 0) counts[n]++;
+            }
+            let baseNum = reduceToSingle(lifePath);
+            counts[baseNum]++;
+            talentArr.forEach(t => { if(t!==0) counts[t]++; });
+            counts[birthDayNum]++;
+            if(zodiacNum !== 0) counts[zodiacNum]++;
+
+            // C. 更新 UI
+            document.getElementById('resultArea').classList.remove('hidden');
+            
+            document.getElementById('mainNum').innerHTML = lifePath + (lifePath > 9 ? `<span class="text-sm text-gray-400 ml-1">(${reduceToSingle(lifePath)})</span>` : "");
+            document.getElementById('birthDayNum').innerText = birthDayNum;
+            document.getElementById('talentNum').innerText = talentArr.join(' , ');
+            document.getElementById('zodiacNum').innerText = zodiacNum;
+            document.getElementById('innateStr').innerText = innateDisplayStr;
+            
+            let missingArr = [];
+            for(let i=1; i<=9; i++) { if(counts[i] === 0) missingArr.push(i); }
+            document.getElementById('missingStr').innerText = missingArr.length > 0 ? missingArr.join(' , ') : "無缺數 (全連線)";
+            
+            document.getElementById('yearNum').innerText = yearNum;
+            document.getElementById('yearTheme').innerText = yearThemes[yearNum].split('：')[0];
+
+            drawGrid(counts);
+            drawLinesAndInfo(counts);
+
+            let lookupKey = lifePath; 
+            if (!numberMeanings[lookupKey]) lookupKey = reduceToSingle(lifePath);
+            
+            const info = numberMeanings[lookupKey];
+            document.getElementById('roleTitle').innerText = `${lifePath} 號人：${info.title}`;
+            document.getElementById('roleTags').innerHTML = info.tags.map(t => `<span class="bg-mystic-100 text-mystic-700 px-3 py-1 rounded-full text-xs font-bold">#${t}</span>`).join('');
+            
+            // 更新詳細分析內容
+            document.getElementById('roleStrengths').innerText = info.strengths;
+            document.getElementById('roleShadows').innerText = info.shadows;
+            document.getElementById('roleAction').innerText = info.action;
+            document.getElementById('roleBiz').innerText = info.biz;
+            document.getElementById('roleRelation').innerText = info.relation;
+            document.getElementById('roleMission').innerText = info.mission;
+            
+
+            // 創業建議
+            const bizKey = reduceToSingle(lifePath); 
+            document.getElementById('bizAdvice').innerText = bizMessages[bizKey];
+
+            const missingContainer = document.getElementById('missingAdviceContainer');
+            missingContainer.innerHTML = '';
+            if (missingArr.length === 0) {
+                missingContainer.innerHTML = `<div class="col-span-2 text-center p-4 text-green-600 font-bold">恭喜！你的能量圓滿，沒有缺數。</div>`;
+            } else {
+                missingArr.forEach(num => {
+                    const data = missingData[num];
+                    missingContainer.innerHTML += `
+                        <div class="bg-gray-50 border border-gray-200 rounded-xl p-5 hover:bg-white hover:shadow-md transition-all">
+                            <div class="flex items-center gap-3 mb-2">
+                                <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center font-bold text-gray-600">${num}</div>
+                                <h5 class="font-bold text-gray-700">空缺課題：${data.trait}</h5>
+                            </div>
+                            <p class="text-sm text-gray-500 mb-3">${data.desc}</p>
+                            <div class="text-sm bg-white p-3 rounded-lg border border-gray-100 text-gray-600">
+                                <i class="fas fa-bolt text-yellow-500 mr-1"></i> <strong>行動建議：</strong>${data.action}
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+        }
+
+        function drawGrid(counts) {
+            for (let i = 1; i <= 9; i++) {
+                const cell = document.getElementById(`cell-${i}`);
+                const count = counts[i];
+                cell.innerHTML = i;
+                cell.className = 'grid-cell'; 
+                if (count > 0) {
+                    cell.classList.add('active');
+                    if (count >= 1) cell.innerHTML += `<div class="circle-ring ring-1"></div>`;
+                    if (count >= 2) cell.innerHTML += `<div class="circle-ring ring-2"></div>`;
+                    if (count >= 3) cell.innerHTML += `<div class="circle-ring ring-3"></div>`;
+                    if (count >= 4) cell.innerHTML += `<div class="circle-ring ring-4"></div>`;
+                }
+            }
+        }
+
+        function drawLinesAndInfo(counts) {
+            const svg = document.getElementById('linesSvg');
+            const listContainer = document.getElementById('linesContainer');
+            svg.innerHTML = ''; 
+            listContainer.innerHTML = ''; 
+
+            const pos = {
+                1: {x: 16.66, y: 16.66}, 4: {x: 50, y: 16.66}, 7: {x: 83.33, y: 16.66},
+                2: {x: 16.66, y: 50},    5: {x: 50, y: 50},    8: {x: 83.33, y: 50},
+                3: {x: 16.66, y: 83.33}, 6: {x: 50, y: 83.33}, 9: {x: 83.33, y: 83.33}
+            };
+
+            let hasMainLines = false;
+
+            linesData.forEach(line => {
+                const hasLine = line.ids.every(id => counts[id] > 0);
+                if (hasLine) {
+                    hasMainLines = true;
+                    const start = pos[line.ids[0]];
+                    const end = pos[line.ids[line.ids.length - 1]];
+                    
+                    const lineEl = document.createElementNS("http://www.w3.org/2000/svg", "line");
+                    lineEl.setAttribute("x1", `${start.x}%`);
+                    lineEl.setAttribute("y1", `${start.y}%`);
+                    lineEl.setAttribute("x2", `${end.x}%`);
+                    lineEl.setAttribute("y2", `${end.y}%`);
+                    lineEl.setAttribute("stroke", line.color);
+                    lineEl.classList.add("connection-line");
+                    svg.appendChild(lineEl);
+
+                    listContainer.innerHTML += `
+                        <div class="bg-white border border-gray-100 p-5 rounded-xl shadow-sm flex gap-4 items-start hover:shadow-md transition-all">
+                            <div class="w-2 h-full rounded-full flex-shrink-0" style="background-color: ${line.color}; height: 50px;"></div>
+                            <div>
+                                <h4 class="text-lg font-bold text-gray-800">${line.name} <span class="text-xs text-gray-400 ml-2">(${line.ids.join('-')})</span></h4>
+                                <p class="text-xs font-bold text-mystic-600 mb-2">${line.sub}</p>
+                                <p class="text-sm text-gray-600 leading-relaxed">${line.desc}</p>
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+
+            if (!hasMainLines) {
+                listContainer.innerHTML = `<div class="col-span-2 text-center p-8 text-gray-400 italic bg-gray-50 rounded-xl">目前沒有形成主要連線，代表你的能量比較分散或具備特殊跳躍性思考。重點發展你的主命數能量即可。</div>`;
+            }
+        }
+    </script>
+</body>
+</html>

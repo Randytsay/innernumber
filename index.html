@@ -186,13 +186,13 @@
 				<div class="relative group w-full max-w-md mx-auto">
 					<div class="absolute -inset-0.5 bg-gradient-to-r from-mystic-400 to-pink-400 rounded-xl blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
 					<input 
-						type="date" 
+						type="text" 
 						id="birthdate" 
-						onchange="calculate()" 
-						oninput="calculate()" 
+						placeholder="請輸入生日 (例：1990-01-15)"
+						maxlength="10"
 						inputmode="numeric"
-						pattern="[0-9]*"
-						class="relative w-full px-6 py-4 rounded-xl border-0 bg-white text-xl text-center shadow-sm ring-1 ring-gray-200 focus:ring-2 focus:ring-mystic-500 outline-none text-gray-700 cursor-pointer placeholder-gray-400">
+						oninput="handleBirthdateInput(this)"
+						class="relative w-full px-6 py-4 rounded-xl border-0 bg-white text-xl text-center shadow-sm ring-1 ring-gray-200 focus:ring-2 focus:ring-mystic-500 outline-none text-gray-700 placeholder-gray-400">
 				</div>
 
                 <div class="text-sm text-gray-400 mt-2">
@@ -409,6 +409,40 @@
     </main>
 
     <script>
+		// ========== 手機輸入處理 ========== //
+		function handleBirthdateInput(input) {
+			// 移除非數字字元
+			let value = input.value.replace(/[^0-9]/g, '');
+			
+			// 自動格式化顯示
+			if (value.length >= 4) {
+				value = value.substring(0, 4) + '-' + value.substring(4);
+			}
+			if (value.length >= 7) {
+				value = value.substring(0, 7) + '-' + value.substring(7, 9);
+			}
+			
+			input.value = value;
+			
+			// 移除分隔符號後檢查長度
+			const pureNumbers = value.replace(/-/g, '');
+			
+			if (pureNumbers.length === 8) {
+				const year = pureNumbers.substring(0, 4);
+				const month = pureNumbers.substring(4, 6);
+				const day = pureNumbers.substring(6, 8);
+				
+				const dateObj = new Date(year, month - 1, day);
+				if (dateObj.getFullYear() == year && 
+					dateObj.getMonth() == month - 1 && 
+					dateObj.getDate() == day) {
+					calculate();
+				} else {
+					alert('日期格式錯誤，請輸入正確的日期（例：1990-01-15）');
+					input.value = '';
+				}
+			}
+		}	
         // ========== 資料庫 Data ========== //
         const bizMessages = {
             1: "作為天生的開創者，替別人打工往往限制了你的格局。你擁有獨立創業的靈魂，與其在體制內撞牆，不如建立一個屬於自己的事業系統。尋找一個能讓你「自主」但又能運用槓桿力量的平台，是你通往財富自由的捷徑。",
@@ -836,16 +870,32 @@
         }
 
         function calculate() {
-            const dateInput = document.getElementById('birthdate').value;
-            if (!dateInput) {
-                document.getElementById('resultArea').classList.add('hidden');
-                return;
-            }
-
-            const date = new Date(dateInput);
-            const year = date.getFullYear();
-            const month = date.getMonth() + 1;
-            const day = date.getDate();
+			const dateInput = document.getElementById('birthdate');
+			let dateValue = dateInput.value;
+			
+			// 移除分隔符號，統一處理
+			const pureNumbers = dateValue.replace(/-/g, '');
+			
+			if (pureNumbers.length !== 8) {
+				document.getElementById('resultArea').classList.add('hidden');
+				return;
+			}
+			
+			// 轉換為標準日期格式
+			const year = parseInt(pureNumbers.substring(0, 4));
+			const month = parseInt(pureNumbers.substring(4, 6));
+			const day = parseInt(pureNumbers.substring(6, 8));
+			
+			const date = new Date(year, month - 1, day);
+			
+			// 驗證日期有效性
+			if (isNaN(date.getTime()) || 
+				date.getFullYear() !== year || 
+				date.getMonth() !== month - 1 || 
+				date.getDate() !== day) {
+				document.getElementById('resultArea').classList.add('hidden');
+				return;
+			}
 
             // A. 計算核心數字
             let sumAllDigits = 0;

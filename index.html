@@ -183,10 +183,18 @@
             <p class="text-gray-500 mb-8 font-light">請選擇出生日期，系統將自動解析</p>
             
             <div class="flex flex-col justify-center items-center gap-4">
-                <div class="relative group w-full max-w-md mx-auto">
-                    <div class="absolute -inset-0.5 bg-gradient-to-r from-mystic-400 to-pink-400 rounded-xl blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
-                    <input type="date" id="birthdate" onchange="calculate()" oninput="calculate()" class="relative w-full px-6 py-4 rounded-xl border-0 bg-white text-xl text-center shadow-sm ring-1 ring-gray-200 focus:ring-2 focus:ring-mystic-500 outline-none text-gray-700 cursor-pointer placeholder-gray-400">
-                </div>
+				<div class="relative group w-full max-w-md mx-auto">
+					<div class="absolute -inset-0.5 bg-gradient-to-r from-mystic-400 to-pink-400 rounded-xl blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
+					<input 
+						type="date" 
+						id="birthdate" 
+						onchange="calculate()" 
+						oninput="calculate()" 
+						inputmode="numeric"
+						pattern="[0-9]*"
+						class="relative w-full px-6 py-4 rounded-xl border-0 bg-white text-xl text-center shadow-sm ring-1 ring-gray-200 focus:ring-2 focus:ring-mystic-500 outline-none text-gray-700 cursor-pointer placeholder-gray-400">
+				</div>
+
                 <div class="text-sm text-gray-400 mt-2">
                     <i class="fas fa-check-circle mr-1"></i> 選擇日期後，下方立即顯示結果
                 </div>
@@ -619,13 +627,13 @@
              return num;
         }
 
-// ★★★ 最終排版修正版 V4：解決文字壓線、優化空間佈局 ★★★
+// ★★★ 最終整合修正版：解決文字顯示與圓圈壓線問題 ★★★
         function drawTriangle(dateObj) {
             const yearStr = dateObj.getFullYear().toString();
             const monthStr = (dateObj.getMonth() + 1).toString().padStart(2, '0');
             const dayStr = dateObj.getDate().toString().padStart(2, '0');
 
-            // 1. 基礎數字 A~H
+            // 1. 基礎數字
             const A = parseInt(dayStr[0]);
             const B = parseInt(dayStr[1]);
             const C = parseInt(monthStr[0]);
@@ -635,17 +643,14 @@
             const G = parseInt(yearStr[2]);
             const H = parseInt(yearStr[3]);
 
-            // 2. 第一層
+            // 2. 計算層級
             const I = reduceToSingle(A + B); 
             const J = reduceToSingle(C + D); 
             const K = reduceToSingle(E + F); 
             const L = reduceToSingle(G + H); 
 
-            // 3. 第二層
             const M = reduceToSingle(I + J); 
             const N = reduceToSingle(K + L); 
-
-            // 4. 第三層
             const O = reduceToSingle(M + N); 
 
             // 5. 進階計算
@@ -661,8 +666,8 @@
             const W = reduceToSingle(L + N);
             const X = reduceToSingle(V + W);
 
-            // --- SVG 畫布設定 (寬度加大至1000以容納兩側文字) ---
-            const w = 1100; 
+            // --- 【修改 1】SVG 畫布設定 (加大) ---
+            const w = 1000; 
             const h = 850; 
             const cx = w / 2;
             const cy = h / 2; 
@@ -688,10 +693,8 @@
                 </style>
             `;
 
-            // --- 幾何座標計算 ---
-            // 六角形半徑稍微縮小，留空間給外圍文字
-            const hr = 290; // 垂直高度半徑 (控制上下尖端)
-            const hw = 360; // ★關鍵修改：水平寬度半徑 (拉寬左右，原約250)
+            // --- 【修改 2】幾何座標 (縮小六角形半徑) ---
+            const hr = 330; // 原320 -> 改290，留空間給外圍文字
             
             // 三角形參數
             const triH = 300; 
@@ -705,18 +708,16 @@
             const yLine2 = yTop + 200; 
 
             // --- 1. 繪製六角形外框 ---
-           
             const hx = [
-                cx, cy - hr,          // 0,1 Top (頂點)
-                cx + hw, cy - hr/2,   // 2,3 Top Right (右上轉折)
-                cx + hw, cy + hr/2,   // 4,5 Bottom Right (右下轉折)
-                cx, cy + hr,          // 6,7 Bottom (底點)
-                cx - hw, cy + hr/2,   // 8,9 Bottom Left (左下轉折)
-                cx - hw, cy - hr/2    // 10,11 Top Left (左上轉折)
+                cx, cy - hr, 
+                cx + hr * 0.866, cy - hr * 0.5, 
+                cx + hr * 0.866, cy + hr * 0.5, 
+                cx, cy + hr, 
+                cx - hr * 0.866, cy + hr * 0.5, 
+                cx - hr * 0.866, cy - hr * 0.5  
             ];
             
             svg += `<polygon points="${hx.join(' ')}" fill="none" stroke="${colorLineGray}" stroke-width="2" />`;
-            // 節點
             for(let i=0; i<12; i+=2) {
                 svg += `<rect x="${hx[i]-8}" y="${hx[i+1]-8}" width="16" height="16" transform="rotate(45 ${hx[i]} ${hx[i+1]})" fill="#e2e8f0" />`;
             }
@@ -750,7 +751,6 @@
             svg += `<text x="${cx + 110}" y="${botTextY}" class="t-font t-num-sm">${L}</text>`;
             svg += `<text x="${cx + 75}" y="${yBot - 15}" class="t-font t-label-gray" style="font-size:16px;">內在性格</text>`;
 
-
             // --- 4. 底部日期方框 ---
             const boxSize = 36; 
             const gapSmall = 8;
@@ -773,11 +773,11 @@
             svg += `<text x="${cx + 95}" y="${labelY}" class="t-font t-label-gray">西元年份</text>`;
 
 
-            // --- 5. 外圍圓圈 (修正：更靠近三角形，避免壓到六角形) ---
-            // 靠內縮距離，原 260 -> 改 220
+            // --- 5. 外圍圓圈 (【修改 3】向內靠攏，避免壓到六角形) ---
+            // 260 -> 220
             const sideOffset = 220; 
 
-            // 上方 (下屬/兒女) - 倒三角
+            // 上方 (下屬/兒女)
             const topBaseY = yTop - 40;
             svg += `<circle cx="${cx}" cy="${topBaseY - 45}" r="22" class="t-circle" />`;
             svg += `<text x="${cx}" y="${topBaseY - 43}" class="t-font t-circle-text">${R}</text>`;
@@ -786,7 +786,7 @@
             svg += `<circle cx="${cx + 35}" cy="${topBaseY}" r="22" class="t-circle" />`;
             svg += `<text x="${cx + 35}" y="${topBaseY + 2}" class="t-font t-circle-text">${P}</text>`;
 
-            // 左側 (工作/朋友) - 正三角
+            // 左側 (工作/朋友)
             const leftCenterX = cx - sideOffset; 
             const leftCenterY = cy + 20;
             svg += `<circle cx="${leftCenterX}" cy="${leftCenterY - 40}" r="22" class="t-circle" />`;
@@ -796,7 +796,7 @@
             svg += `<circle cx="${leftCenterX + 30}" cy="${leftCenterY + 10}" r="22" class="t-circle" />`;
             svg += `<text x="${leftCenterX + 30}" y="${leftCenterY + 12}" class="t-font t-circle-text">${S}</text>`;
 
-            // 右側 (晚年/家庭) - 正三角
+            // 右側 (晚年/家庭)
             const rightCenterX = cx + sideOffset;
             const rightCenterY = cy + 20;
             svg += `<circle cx="${rightCenterX}" cy="${rightCenterY - 40}" r="22" class="t-circle" />`;
@@ -807,33 +807,26 @@
             svg += `<text x="${rightCenterX + 30}" y="${rightCenterY + 12}" class="t-font t-circle-text">${W}</text>`;
 
 
-            // --- 6. 標籤文字 (修正位置) ---
+            // --- 6. 標籤文字 (【修改 4】調整位置與外移) ---
             
-            // 頂端標題 (往上移)
+            // 頂端標題
             svg += `<text x="${cx}" y="${hx[1] - 60}" class="t-font t-label-title">領導力</text>`;
             svg += `<text x="${cx}" y="${hx[1] - 25}" class="t-font t-label-blue">成年中期<tspan x="${cx}" dy="1.2em">40-65 歲</tspan></text>`;
 
-            // 底部標題 (往下移)
+            // 底部標題
             svg += `<text x="${cx}" y="${hx[7] + 40}" class="t-font t-label-blue">學齡初期<tspan x="${cx}" dy="1.2em">3-5 歲</tspan></text>`;
 
-            // ★ 修正：左右側直書標題 (完全移到六角形外側)
-            // 左側 通用力 (x = 100左右)
-            svg += `<text x="${cx - 400}" y="${cy}" class="t-font t-label-red">通用力</text>`;
-            // 右側 專業力 (x = 900左右)
-            svg += `<text x="${cx + 400}" y="${cy}" class="t-font t-label-red">專業力</text>`;
+            // ★ 左右側直書標題 (推到最外側)
+            svg += `<text x="${cx - 320}" y="${cy}" class="t-font t-label-red">通用力</text>`;
+            svg += `<text x="${cx + 320}" y="${cy}" class="t-font t-label-red">專業力</text>`;
 
-            // 六角形頂點文字 (往外推，避免壓線)
-            // 左上
+            // 六角形頂點文字 (確保不壓框)
             svg += `<text x="${hx[10] - 40}" y="${hx[11]}" class="t-font t-label-blue" text-anchor="end">成年早期<tspan x="${hx[10] - 40}" dy="1.2em">18-40 歲</tspan></text>`;
-            // 右上
             svg += `<text x="${hx[2] + 40}" y="${hx[3]}" class="t-font t-label-blue" text-anchor="start">成年晚期<tspan x="${hx[2] + 40}" dy="1.2em">65 歲後</tspan></text>`;
             
-            // 左下 (青年期)
             svg += `<text x="${hx[8] - 40}" y="${hx[9] + 20}" class="t-font t-label-blue" text-anchor="end">青年期<tspan x="${hx[8] - 40}" dy="1.2em">12-18 歲</tspan></text>`;
-            // 右下 (嬰兒期)
             svg += `<text x="${hx[4] + 40}" y="${hx[5] + 20}" class="t-font t-label-blue" text-anchor="start">嬰兒期<tspan x="${hx[4] + 40}" dy="1.2em">0-1 歲</tspan></text>`;
 
-            // 底部兩側 (學齡期/兒童期)
             svg += `<text x="${cx - 240}" y="${hx[7] - 20}" class="t-font t-label-blue" text-anchor="end">學齡期 5-12 歲</text>`;
             svg += `<text x="${cx + 240}" y="${hx[7] - 20}" class="t-font t-label-blue" text-anchor="start">兒童期 1-3 歲</text>`;
 

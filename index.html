@@ -30,6 +30,8 @@
 
   
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 html2canvas 用於截圖 -->
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;900&family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <script>
@@ -277,21 +279,90 @@
             </div>
 
             <!-- ★★★ 新增：生命數字金字塔 (Triangle) ★★★ -->
-            <div class="bg-white rounded-3xl shadow-xl p-8 fade-in-up border border-gray-100" style="animation-delay: 0.25s;">
-                <div class="flex items-center gap-3 mb-6 border-b pb-4">
-                    <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center text-red-600">
-                        <i class="fas fa-pyramid text-xl"></i>
+            <div class="bg-white rounded-3xl shadow-xl p-8 fade-in-up border border-gray-100 relative group" style="animation-delay: 0.25s;">
+                
+                <!-- 頂部工具列：標題 (左) + 功能鍵 (右) -->
+                <div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-4 border-b pb-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center text-red-600">
+                            <i class="fas fa-pyramid text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-serif font-bold text-gray-800">生命金字塔</h3>
+                            <div class="text-sm text-gray-400">人生階段與核心性格分析</div>
+                        </div>
                     </div>
-                    <div>
-                        <h3 class="text-2xl font-serif font-bold text-gray-800">生命金字塔</h3>
-                        <div class="text-sm text-gray-400">人生階段與核心性格分析</div>
+
+                    <!-- 右上角功能按鈕 -->
+                    <div class="flex gap-2 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
+                        <button onclick="copyPyramidImage()" class="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg text-sm font-bold transition-colors">
+                            <i class="fas fa-copy"></i> 複製
+                        </button>
+                        <button onclick="downloadPyramidImage()" class="flex items-center gap-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg text-sm font-bold shadow-md transition-all transform hover:scale-105">
+                            <i class="fas fa-download"></i> 下載圖片
+                        </button>
                     </div>
                 </div>
                 
-					<div class="w-full overflow-x-auto flex justify-center">
-						<!-- SVG Triangle Container -->
-						<div id="triangleContainer" class="min-w-[700px] md:min-w-[900px] px-4"></div>
+	<!-- ★★★ 截圖範圍 (包含姓名與圖形) ★★★ -->
+					<!-- 修改重點：調整 padding-bottom 為 pb-6 減少底部留白 -->
+					<div id="pyramid-capture-area" class="bg-white px-4 pt-10 pb-6 md:px-12 md:pt-12 md:pb-6 rounded-xl border-[1px] border-gray-200 shadow-sm relative overflow-hidden">
+						
+						<!-- 1. 頂部裝飾條 -->
+						<div class="absolute top-0 left-0 w-full h-3 bg-gradient-to-r from-mystic-300 via-pink-300 to-gold-400"></div>
+
+						<!-- 2. 標題區域：(位置交換：先顯示皇冠，再顯示名字) -->
+						<div class="text-center mb-2 mt-4 relative z-10">
+							
+							<!-- Part A: 皇冠與英文標題 (移至最上方) -->
+							<div class="flex flex-col items-center justify-center mb-3">
+								<div class="flex items-center gap-3 text-gold-500 mb-1">
+									<div class="h-[1px] w-8 md:w-12 bg-gray-300"></div>
+									<i class="fas fa-crown text-lg"></i>
+									<div class="h-[1px] w-8 md:w-12 bg-gray-300"></div>
+								</div>
+								<div class="text-[10px] md:text-xs text-gray-400 font-sans tracking-[0.25em] uppercase">Soul Map Exclusive Analysis</div>
+							</div>
+
+							<!-- Part B: 中文姓名句子 (移至下方) -->
+							<div class="inline-flex flex-wrap items-center justify-center gap-2 text-xl md:text-3xl font-serif font-bold text-gray-700 leading-relaxed">
+								<span class="text-gray-500">這是</span>
+								<!-- 姓名輸入框 -->
+								<input type="text" 
+									   placeholder="輸入姓名" 
+									   class="text-center text-mystic-700 border-b-2 border-gray-300 focus:border-mystic-500 outline-none bg-transparent placeholder-gray-300 min-w-[100px] w-auto py-1 transition-colors"
+									   style="max-width: 180px;"
+									   maxlength="10">
+								<span class="text-gray-500">的生命金字塔密碼</span>
+							</div>
+						</div>
+
+						<!-- 3. 圖形容器 -->
+						<div class="w-full overflow-x-auto flex justify-center relative z-10">
+							<div id="triangleContainer" class="min-w-[700px] md:min-w-[900px] px-4"></div>
+						</div>
+
+						<!-- 4. 底部版權浮水印 -->
+						<!-- 修改重點：mt-8 改為 mt-1，大幅減少圖形與底部的距離 -->
+						<div class="mt-1 pt-3 border-t border-gray-100 flex justify-between items-end">
+							<div class="text-left">
+								<div class="text-xl md:text-2xl text-gray-100 font-serif font-black select-none">INNER NUMBER</div>
+							</div>
+							<div class="text-right text-[10px] md:text-xs text-gray-400 font-serif italic">
+								Verified by Randy | Soul Map System
+							</div>
+						</div>
+						
+						<!-- 背景裝飾 -->
+						<div class="absolute bottom-10 right-10 text-9xl text-gray-50 opacity-20 pointer-events-none rotate-12 select-none">
+							<i class="fas fa-seedling"></i>
+						</div>
 					</div>
+                
+                <!-- 提示文字 -->
+                <div class="text-center mt-4 text-xs text-gray-300">
+                    <i class="fas fa-info-circle mr-1"></i> 電腦版滑鼠移入右上角可顯示操作按鈕
+                </div>
             </div>
 
             <!-- 3. 深度解析報告區 -->
@@ -845,8 +916,8 @@
             // --- 6. 標籤文字 (【修改 4】調整位置與外移) ---
             
             // 頂端標題
-            svg += `<text x="${cx}" y="${hx[1] - 60}" class="t-font t-label-title">領導力</text>`;
-            svg += `<text x="${cx}" y="${hx[1] - 25}" class="t-font t-label-blue">成年中期<tspan x="${cx}" dy="1.2em">40-65 歲</tspan></text>`;
+            svg += `<text x="${cx}" y="${hx[1] - 75}" class="t-font t-label-title">領導力</text>`;
+            svg += `<text x="${cx}" y="${hx[1] - 40}" class="t-font t-label-blue">成年中期<tspan x="${cx}" dy="1.2em">40-65 歲</tspan></text>`;
 
             // 底部標題
             svg += `<text x="${cx}" y="${hx[7] + 40}" class="t-font t-label-blue">學齡初期<tspan x="${cx}" dy="1.2em">3-5 歲</tspan></text>`;
@@ -856,8 +927,8 @@
             svg += `<text x="${cx + 320}" y="${cy}" class="t-font t-label-red">專業力</text>`;
 
             // 六角形頂點文字 (確保不壓框)
-            svg += `<text x="${hx[10] - 40}" y="${hx[11]}" class="t-font t-label-blue" text-anchor="end">成年早期<tspan x="${hx[10] - 40}" dy="1.2em">18-40 歲</tspan></text>`;
-            svg += `<text x="${hx[2] + 40}" y="${hx[3]}" class="t-font t-label-blue" text-anchor="start">成年晚期<tspan x="${hx[2] + 40}" dy="1.2em">65 歲後</tspan></text>`;
+            svg += `<text x="${hx[10] - 75}" y="${hx[11]}" class="t-font t-label-blue" text-anchor="end">成年早期<tspan x="${hx[10] - 75}" dy="1.2em">18-40 歲</tspan></text>`;
+            svg += `<text x="${hx[2] + 75}" y="${hx[3]}" class="t-font t-label-blue" text-anchor="start">成年晚期<tspan x="${hx[2] + 75}" dy="1.2em">65 歲後</tspan></text>`;
             
             svg += `<text x="${hx[8] - 40}" y="${hx[9] + 20}" class="t-font t-label-blue" text-anchor="end">青年期<tspan x="${hx[8] - 40}" dy="1.2em">12-18 歲</tspan></text>`;
             svg += `<text x="${hx[4] + 40}" y="${hx[5] + 20}" class="t-font t-label-blue" text-anchor="start">嬰兒期<tspan x="${hx[4] + 40}" dy="1.2em">0-1 歲</tspan></text>`;
@@ -1064,6 +1135,107 @@
             if (!hasMainLines) {
                 listContainer.innerHTML = `<div class="col-span-2 text-center p-8 text-gray-400 italic bg-gray-50 rounded-xl">目前沒有形成主要連線，代表你的能量比較分散或具備特殊跳躍性思考。重點發展你的主命數能量即可。</div>`;
             }
+        }
+
+        // ========== 新增：圖像輸出功能 ========== //
+        
+        // 通用截圖設定
+        const canvasOptions = {
+            scale: 2, // 提高解析度
+            backgroundColor: "#ffffff", // 強制白底
+            useCORS: true, // 允許跨域圖片
+            logging: false
+        };
+
+        // 1. 下載圖片
+		function downloadPyramidImage() {
+					const element = document.getElementById('pyramid-capture-area');
+					// 抓取輸入框
+					const nameInput = element.querySelector('input');
+					const name = nameInput ? nameInput.value.trim() : '';
+					
+					const btn = event.currentTarget;
+					const originalText = btn.innerHTML;
+					
+					// 按鈕變更狀態
+					btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 製作中...';
+					btn.disabled = true;
+
+					// 稍微延遲以確保 UI 渲染完成（特別是字體）
+					setTimeout(() => {
+						html2canvas(element, {
+							scale: 2, // 高解析度
+							backgroundColor: "#ffffff",
+							useCORS: true,
+							logging: false,
+							// 修正：確保文字垂直置中
+							onclone: (clonedDoc) => {
+								const clonedInput = clonedDoc.querySelector('input');
+								if(clonedInput) {
+									// 截圖時強制設定輸入框樣式，確保看起來像純文字
+									clonedInput.style.borderBottom = '2px solid #b84dff'; 
+									clonedInput.style.color = '#7a10c2';
+								}
+							}
+						}).then(canvas => {
+							const link = document.createElement('a');
+							
+							// 產生時間戳記
+							const now = new Date();
+							const timeStr = `${now.getFullYear()}${(now.getMonth()+1).toString().padStart(2,'0')}${now.getDate().toString().padStart(2,'0')}`;
+							
+							// 設定檔名
+							if (name) {
+								link.download = `生命金字塔密碼_${name}_${timeStr}.png`;
+							} else {
+								link.download = `生命金字塔密碼_${timeStr}.png`;
+							}
+			
+							link.href = canvas.toDataURL("image/png");
+							link.click();
+			
+							// 恢復按鈕
+							btn.innerHTML = originalText;
+							btn.disabled = false;
+						}).catch(err => {
+							console.error('截圖失敗:', err);
+							alert('圖片產生失敗，請稍後再試。');
+							btn.innerHTML = originalText;
+							btn.disabled = false;
+						});
+					}, 100);
+				}
+
+        // 2. 複製到剪貼簿
+        function copyPyramidImage() {
+            const element = document.getElementById('pyramid-capture-area');
+            const btn = event.currentTarget;
+            const originalText = btn.innerHTML;
+            
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            btn.disabled = true;
+
+            html2canvas(element, canvasOptions).then(canvas => {
+                canvas.toBlob(blob => {
+                    try {
+                        const item = new ClipboardItem({ 'image/png': blob });
+                        navigator.clipboard.write([item]).then(() => {
+                            btn.innerHTML = '<i class="fas fa-check"></i> 已複製';
+                            btn.classList.add('text-green-600', 'bg-green-50');
+                            setTimeout(() => {
+                                btn.innerHTML = originalText;
+                                btn.classList.remove('text-green-600', 'bg-green-50');
+                                btn.disabled = false;
+                            }, 2000);
+                        });
+                    } catch (err) {
+                        // 瀏覽器不支援 ClipboardItem 的備案
+                        alert('您的瀏覽器不支援直接複製圖片，請使用「下載」功能。');
+                        btn.innerHTML = originalText;
+                        btn.disabled = false;
+                    }
+                });
+            });
         }
     </script>
 </body>

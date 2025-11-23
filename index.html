@@ -327,14 +327,18 @@
 							<!-- Part B: 中文姓名句子 (移至下方) -->
 							<div class="inline-flex flex-wrap items-center justify-center gap-2 text-xl md:text-3xl font-serif font-bold text-gray-700 leading-relaxed">
 								<span class="text-gray-500">這是</span>
-								<!-- 姓名輸入框 -->
+								
+								<!-- ★ 修復：保留 input 可見，移除重複的 display 容器 -->
 								<input type="text" 
+									   id="nameInput"
 									   placeholder="輸入姓名" 
-									   class="text-center text-mystic-700 border-b-2 border-gray-300 focus:border-mystic-500 outline-none bg-transparent placeholder-gray-300 min-w-[100px] w-auto py-1 transition-colors"
+									   class="text-center text-mystic-700 border-b-2 border-gray-300 focus:border-mystic-500 outline-none bg-transparent placeholder-gray-300 min-w-[100px] w-auto py-1 transition-colors font-serif font-bold text-xl md:text-3xl"
 									   style="max-width: 180px;"
 									   maxlength="10">
+								
 								<span class="text-gray-500">的生命金字塔密碼</span>
 							</div>
+
 						</div>
 
 						<!-- 3. 圖形容器 -->
@@ -941,6 +945,7 @@
             document.getElementById('triangleContainer').innerHTML = svg;
         }
 
+
         function calculate() {
 			const dateInput = document.getElementById('birthdate');
 			let dateValue = dateInput.value;
@@ -1147,96 +1152,96 @@
             logging: false
         };
 
-        // 1. 下載圖片
-		function downloadPyramidImage() {
-					const element = document.getElementById('pyramid-capture-area');
-					// 抓取輸入框
-					const nameInput = element.querySelector('input');
-					const name = nameInput ? nameInput.value.trim() : '';
-					
-					const btn = event.currentTarget;
-					const originalText = btn.innerHTML;
-					
-					// 按鈕變更狀態
-					btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 製作中...';
-					btn.disabled = true;
+function downloadPyramidImage() {
+    const element = document.getElementById('pyramid-capture-area');
+    const nameInput = document.getElementById('nameInput');
+    const name = nameInput ? nameInput.value.trim() : '';
+    
+    const btn = event.currentTarget;
+    const originalBtnText = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 製作中...';
+    btn.disabled = true;
 
-					// 稍微延遲以確保 UI 渲染完成（特別是字體）
-					setTimeout(() => {
-						html2canvas(element, {
-							scale: 2, // 高解析度
-							backgroundColor: "#ffffff",
-							useCORS: true,
-							logging: false,
-							// 修正：確保文字垂直置中
-							onclone: (clonedDoc) => {
-								const clonedInput = clonedDoc.querySelector('input');
-								if(clonedInput) {
-									// 截圖時強制設定輸入框樣式，確保看起來像純文字
-									clonedInput.style.borderBottom = '2px solid #b84dff'; 
-									clonedInput.style.color = '#7a10c2';
-								}
-							}
-						}).then(canvas => {
-							const link = document.createElement('a');
-							
-							// 產生時間戳記
-							const now = new Date();
-							const timeStr = `${now.getFullYear()}${(now.getMonth()+1).toString().padStart(2,'0')}${now.getDate().toString().padStart(2,'0')}`;
-							
-							// 設定檔名
-							if (name) {
-								link.download = `生命金字塔密碼_${name}_${timeStr}.png`;
-							} else {
-								link.download = `生命金字塔密碼_${timeStr}.png`;
-							}
-			
-							link.href = canvas.toDataURL("image/png");
-							link.click();
-			
-							// 恢復按鈕
-							btn.innerHTML = originalText;
-							btn.disabled = false;
-						}).catch(err => {
-							console.error('截圖失敗:', err);
-							alert('圖片產生失敗，請稍後再試。');
-							btn.innerHTML = originalText;
-							btn.disabled = false;
-						});
-					}, 100);
-				}
-
-        // 2. 複製到剪貼簿
-        function copyPyramidImage() {
-            const element = document.getElementById('pyramid-capture-area');
-            const btn = event.currentTarget;
-            const originalText = btn.innerHTML;
+    setTimeout(() => {
+        html2canvas(element, {
+            scale: 2, 
+            backgroundColor: "#ffffff",
+            useCORS: true,
+            logging: false,
+            onclone: (clonedDoc) => {
+                // 確保截圖時顯示輸入的文字
+                const clonedInput = clonedDoc.getElementById('nameInput');
+                if(clonedInput && clonedInput.value) {
+                    // 不隱藏，保持原樣
+                    clonedInput.style.color = '#a62bff';
+                    clonedInput.style.fontWeight = 'bold';
+                }
+            }
+        }).then(canvas => {
+            const link = document.createElement('a');
+            const now = new Date();
+            const timeStr = `${now.getFullYear()}${(now.getMonth()+1).toString().padStart(2,'0')}${now.getDate().toString().padStart(2,'0')}`;
             
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-            btn.disabled = true;
+            link.download = name ? `生命金字塔密碼_${name}_${timeStr}.png` : `生命金字塔密碼_${timeStr}.png`;
+            link.href = canvas.toDataURL("image/png");
+            link.click();
 
-            html2canvas(element, canvasOptions).then(canvas => {
-                canvas.toBlob(blob => {
-                    try {
-                        const item = new ClipboardItem({ 'image/png': blob });
-                        navigator.clipboard.write([item]).then(() => {
-                            btn.innerHTML = '<i class="fas fa-check"></i> 已複製';
-                            btn.classList.add('text-green-600', 'bg-green-50');
-                            setTimeout(() => {
-                                btn.innerHTML = originalText;
-                                btn.classList.remove('text-green-600', 'bg-green-50');
-                                btn.disabled = false;
-                            }, 2000);
-                        });
-                    } catch (err) {
-                        // 瀏覽器不支援 ClipboardItem 的備案
-                        alert('您的瀏覽器不支援直接複製圖片，請使用「下載」功能。');
-                        btn.innerHTML = originalText;
-                        btn.disabled = false;
-                    }
-                });
-            });
-        }
+            btn.innerHTML = originalBtnText;
+            btn.disabled = false;
+        }).catch(err => {
+            console.error('截圖失敗:', err);
+            alert('圖片產生失敗，請稍後再試。');
+            btn.innerHTML = originalBtnText;
+            btn.disabled = false;
+        });
+    }, 100);
+}
+
+
+		function copyPyramidImage() {
+			const element = document.getElementById('pyramid-capture-area');
+			const btn = event.currentTarget;
+			const originalBtnText = btn.innerHTML;
+			
+			btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+			btn.disabled = true;
+
+			html2canvas(element, {
+				scale: 2, 
+				backgroundColor: "#ffffff",
+				useCORS: true,
+				logging: false,
+				onclone: (clonedDoc) => {
+					const clonedInput = clonedDoc.querySelector('input');
+					if(clonedInput) {
+						clonedInput.style.display = 'none';
+					}
+				}
+			}).then(canvas => {
+				canvas.toBlob(blob => {
+					try {
+						const item = new ClipboardItem({ 'image/png': blob });
+						navigator.clipboard.write([item]).then(() => {
+							btn.innerHTML = '<i class="fas fa-check"></i> 已複製';
+							btn.classList.add('text-green-600', 'bg-green-50');
+							setTimeout(() => {
+								btn.innerHTML = originalBtnText;
+								btn.classList.remove('text-green-600', 'bg-green-50');
+								btn.disabled = false;
+							}, 2000);
+						});
+					} catch (err) {
+						alert('您的瀏覽器不支援直接複製圖片，請使用「下載」功能。');
+						btn.innerHTML = originalBtnText;
+						btn.disabled = false;
+					}
+				});
+			});
+		}
+
+
+
+
     </script>
 </body>
 </html>

@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生命金字塔完整分析報告 | 靈魂地圖</title>
+    <meta name="description" content="您的專屬生命金字塔數字能量完整分析報告">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        mystic: { 50: '#f5f3ff', 100: '#ede9fe', 200: '#ddd6fe', 300: '#c4b6fc', 400: '#a78bfa', 500: '#8b5cf6', 600: '#7c3aed', 700: '#6d28d9' },
+                        gold: { 400: '#facc15', 500: '#eab308' }
+                    },
+                    fontFamily: { serif: ['"Noto Serif TC"', 'serif'] }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Noto Serif TC', serif;
+            background: linear-gradient(135deg, #fef3c7 0%, #fce7f3 50%, #ede9fe 100%);
+            min-height: 100vh;
+        }
+
+        .report-section {
+            background: white;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
+            color: white;
+            padding: 1.5rem 2rem;
+        }
+
+        .number-badge {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1.25rem;
+        }
+
+        .pyramid-container {
+            overflow-x: auto;
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+
+            .no-print {
+                display: none;
+            }
+
+            .report-section {
+                box-shadow: none;
+                border: 1px solid #e5e7eb;
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+
+<body class="text-gray-700">
+    <!-- 頂部導航 -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
+                <div class="bg-mystic-600 text-white p-2 rounded-lg">
+                    <i class="fas fa-arrow-left"></i>
+                </div>
+                <span class="font-bold text-gray-700">返回計算結果</span>
+            </a>
+        </div>
+    </nav>
+
+    <main class="max-w-5xl mx-auto px-4 py-8">
+        <!-- 報告標題 -->
+        <div class="text-center mb-8">
+            <div
+                class="inline-flex items-center gap-2 bg-mystic-100 text-mystic-700 px-4 py-2 rounded-full text-sm font-bold mb-4">
+                <i class="fas fa-crown text-gold-500"></i>
+                專屬分析報告
+            </div>
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-2">
+                <span id="reportName">您</span>的生命金字塔密碼
+            </h1>
+            <p class="text-gray-400">報告生成日期：<span id="reportDate"></span></p>
+        </div>
+
+        <!-- 1. 執行摘要 -->
+        <section class="report-section">
+            <div class="section-header">
+                <h2 class="text-xl font-bold flex items-center gap-3">
+                    <i class="fas fa-star"></i> 執行摘要
+                </h2>
+            </div>
+            <div class="p-6 md:p-8">
+                <h3 class="text-lg font-bold text-gray-800 mb-4">您的核心數字一覽</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-4 py-3 text-left font-bold text-gray-600">數字類型</th>
+                                <th class="px-4 py-3 text-center font-bold text-gray-600">數值</th>
+                                <th class="px-4 py-3 text-left font-bold text-gray-600">能量特質</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100">
+                            <tr>
+                                <td class="px-4 py-3 font-medium">生命數（頂端 O）</td>
+                                <td class="px-4 py-3 text-center"><span id="summaryO"
+                                        class="number-badge bg-red-500 text-white inline-flex">-</span></td>
+                                <td class="px-4 py-3" id="summaryOTrait">-</td>
+                            </tr>
+                            <tr class="bg-gray-50">
+                                <td class="px-4 py-3 font-medium">內在性格數（N）</td>
+                                <td class="px-4 py-3 text-center"><span id="summaryN"
+                                        class="number-badge bg-orange-400 text-white inline-flex">-</span></td>
+                                <td class="px-4 py-3" id="summaryNTrait">-</td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-3 font-medium">外在性格數（M）</td>
+                                <td class="px-4 py-3 text-center"><span id="summaryM"
+                                        class="number-badge bg-blue-500 text-white inline-flex">-</span></td>
+                                <td class="px-4 py-3" id="summaryMTrait">-</td>
+                            </tr>
+                            <tr class="bg-gray-50">
+                                <td class="px-4 py-3 font-medium">領導力數（R）40-65歲</td>
+                                <td class="px-4 py-3 text-center"><span id="summaryR"
+                                        class="number-badge bg-purple-500 text-white inline-flex">-</span></td>
+                                <td class="px-4 py-3" id="summaryRTrait">-</td>
+                            </tr>
+                            <tr>
+                                <td class="px-4 py-3 font-medium">通用力數（U）18-40歲</td>
+                                <td class="px-4 py-3 text-center"><span id="summaryU"
+                                        class="number-badge bg-green-500 text-white inline-flex">-</span></td>
+                                <td class="px-4 py-3" id="summaryUTrait">-</td>
+                            </tr>
+                            <tr class="bg-gray-50">
+                                <td class="px-4 py-3 font-medium">專業力數（X）65歲後</td>
+                                <td class="px-4 py-3 text-center"><span id="summaryX"
+                                        class="number-badge bg-teal-500 text-white inline-flex">-</span></td>
+                                <td class="px-4 py-3" id="summaryXTrait">-</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="mt-6 p-4 bg-mystic-50 rounded-xl border border-mystic-100">
+                    <h4 class="font-bold text-mystic-700 mb-2"><i class="fas fa-lightbulb mr-2"></i>您的人格特質精華</h4>
+                    <p class="text-gray-600" id="personalitySummary">載入中...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. 生命金字塔全圖 -->
+        <section class="report-section">
+            <div class="section-header">
+                <h2 class="text-xl font-bold flex items-center gap-3">
+                    <i class="fas fa-pyramid"></i> 您的生命金字塔全圖
+                </h2>
+            </div>
+            <div class="p-6 md:p-8">
+                <p class="text-sm text-gray-400 mb-2 md:hidden"><i class="fas fa-arrows-left-right mr-1"></i>左右滑動查看完整圖形
+                </p>
+                <div class="pyramid-container bg-gray-50 rounded-xl p-4 mb-6">
+                    <div id="pyramidContainer" style="width: 100%; max-width: 1100px; margin: 0 auto;"></div>
+                </div>
+                <div class="grid md:grid-cols-3 gap-4 text-sm">
+                    <div class="bg-red-50 p-4 rounded-xl border border-red-100">
+                        <h4 class="font-bold text-red-700 mb-2"><i class="fas fa-star mr-2"></i>三角形內部</h4>
+                        <p class="text-gray-600">核心性格區域，包含生命數(O)、外顯綜合(M)、內在綜合(N)及底層基礎數字。</p>
+                    </div>
+                    <div class="bg-blue-50 p-4 rounded-xl border border-blue-100">
+                        <h4 class="font-bold text-blue-700 mb-2"><i class="fas fa-circle mr-2"></i>藍色圓圈</h4>
+                        <p class="text-gray-600">人生階段能量，包含領導力(R)、通用力(U)、專業力(X)及各輔助數字。</p>
+                    </div>
+                    <div class="bg-gray-100 p-4 rounded-xl">
+                        <h4 class="font-bold text-gray-700 mb-2"><i class="fas fa-calendar-day mr-2"></i>底部方框</h4>
+                        <p class="text-gray-600">生日原始數據(A-H)，是所有能量計算的基礎來源。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. 生命數解析 -->
+        <section class="report-section">
+            <div class="section-header bg-gradient-to-r from-red-500 to-orange-400">
+                <h2 class="text-xl font-bold flex items-center gap-3">
+                    <i class="fas fa-sun"></i> 第一部分：生命數解析（金字塔頂端 O）
+                </h2>
+            </div>
+            <div class="p-6 md:p-8">
+                <div class="flex items-center gap-4 mb-6">
+                    <span id="lifeNumBadge" class="number-badge bg-red-500 text-white text-2xl w-16 h-16">-</span>
+                    <div>
+                        <h3 class="text-2xl font-bold text-gray-800" id="lifeNumTitle">-</h3>
+                        <div id="lifeNumTags" class="flex flex-wrap gap-2 mt-2"></div>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6 mb-6">
+                    <div class="bg-green-50 p-5 rounded-xl border border-green-100">
+                        <h4 class="font-bold text-green-700 mb-3"><i class="fas fa-sparkles mr-2"></i>您的天賦優勢</h4>
+                        <p class="text-gray-600 leading-relaxed" id="lifeNumStrengths">-</p>
+                    </div>
+                    <div class="bg-amber-50 p-5 rounded-xl border border-amber-100">
+                        <h4 class="font-bold text-amber-700 mb-3"><i
+                                class="fas fa-exclamation-triangle mr-2"></i>需要留意的挑戰</h4>
+                        <p class="text-gray-600 leading-relaxed" id="lifeNumShadows">-</p>
+                    </div>
+                </div>
+
+                <div class="bg-mystic-50 p-5 rounded-xl border border-mystic-100 mb-6">
+                    <h4 class="font-bold text-mystic-700 mb-3"><i class="fas fa-bullseye mr-2"></i>生命課題</h4>
+                    <p class="text-gray-600 leading-relaxed" id="lifeNumMission">-</p>
+                </div>
+
+                <div class="bg-blue-50 p-5 rounded-xl border border-blue-100">
+                    <h4 class="font-bold text-blue-700 mb-3"><i class="fas fa-rocket mr-2"></i>行動建議</h4>
+                    <p class="text-gray-600 leading-relaxed" id="lifeNumAction">-</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. 內在性格數解析 -->
+        <section class="report-section">
+            <div class="section-header bg-gradient-to-r from-orange-400 to-yellow-400">
+                <h2 class="text-xl font-bold flex items-center gap-3">
+                    <i class="fas fa-heart"></i> 內在性格數解析（金字塔左側 N）
+                </h2>
+            </div>
+            <div class="p-6 md:p-8">
+                <div class="bg-orange-50 p-5 rounded-xl border border-orange-100 mb-6">
+                    <h4 class="font-bold text-orange-700 mb-3">什麼是內在性格？</h4>
+                    <p class="text-gray-600">內在性格數代表<strong>真實的你</strong>：獨處時的狀態、內心真實的想法與感受、核心價值觀與信念、最舒適自在的樣子。</p>
+                </div>
+                <div class="flex items-center gap-4 mb-4">
+                    <span id="innerNumBadge" class="number-badge bg-orange-400 text-white text-xl w-14 h-14">-</span>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-800">內在性格數：<span id="innerNumValue">-</span></h3>
+                        <p class="text-gray-500 text-sm">來自 K + L 的能量組合</p>
+                    </div>
+                </div>
+                <div class="bg-white border border-gray-200 p-5 rounded-xl">
+                    <h4 class="font-bold text-gray-700 mb-3"><i class="fas fa-gem mr-2 text-orange-400"></i>內在能量特質</h4>
+                    <p class="text-gray-600 leading-relaxed" id="innerNumDesc">-</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. 外在性格數解析 -->
+        <section class="report-section">
+            <div class="section-header bg-gradient-to-r from-blue-500 to-cyan-400">
+                <h2 class="text-xl font-bold flex items-center gap-3">
+                    <i class="fas fa-user-tie"></i> 外在性格數解析（金字塔右側 M）
+                </h2>
+            </div>
+            <div class="p-6 md:p-8">
+                <div class="bg-blue-50 p-5 rounded-xl border border-blue-100 mb-6">
+                    <h4 class="font-bold text-blue-700 mb-3">什麼是外在性格？</h4>
+                    <p class="text-gray-600">外在性格數代表<strong>他人眼中的你</strong>：社交場合的表現、給人的第一印象、對外展現的形象、處理外在事務的方式。</p>
+                </div>
+                <div class="flex items-center gap-4 mb-4">
+                    <span id="outerNumBadge" class="number-badge bg-blue-500 text-white text-xl w-14 h-14">-</span>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-800">外在性格數：<span id="outerNumValue">-</span></h3>
+                        <p class="text-gray-500 text-sm">來自 I + J 的能量組合</p>
+                    </div>
+                </div>
+                <div class="bg-white border border-gray-200 p-5 rounded-xl">
+                    <h4 class="font-bold text-gray-700 mb-3"><i
+                            class="fas fa-masks-theater mr-2 text-blue-500"></i>外在能量特質</h4>
+                    <p class="text-gray-600 leading-relaxed" id="outerNumDesc">-</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. 內外性格對比 -->
+        <section class="report-section">
+            <div class="section-header bg-gradient-to-r from-purple-500 to-pink-400">
+                <h2 class="text-xl font-bold flex items-center gap-3">
+                    <i class="fas fa-balance-scale"></i> 內外性格對比分析
+                </h2>
+            </div>
+            <div class="p-6 md:p-8">
+                <div class="flex items-center justify-center gap-8 mb-6">
+                    <div class="text-center">
+                        <span id="compareM"
+                            class="number-badge bg-blue-500 text-white text-2xl w-16 h-16 mx-auto mb-2">-</span>
+                        <p class="text-sm font-bold text-gray-600">外在性格 M</p>
+                    </div>
+                    <div class="text-3xl text-gray-300"><i class="fas fa-arrows-left-right"></i></div>
+                    <div class="text-center">
+                        <span id="compareN"
+                            class="number-badge bg-orange-400 text-white text-2xl w-16 h-16 mx-auto mb-2">-</span>
+                        <p class="text-sm font-bold text-gray-600">內在性格 N</p>
+                    </div>
+                </div>
+                <div class="bg-gradient-to-r from-purple-50 to-pink-50 p-5 rounded-xl border border-purple-100">
+                    <h4 class="font-bold text-purple-700 mb-3"><i class="fas fa-lightbulb mr-2"></i>一致性分析</h4>
+                    <p class="text-gray-600 leading-relaxed" id="compareAnalysis">-</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. 領導力數 -->
+        <section class="report-section">
+            <div class="section-header bg-gradient-to-r from-purple-600 to-indigo-500">
+                <h2 class="text-xl font-bold flex items-center gap-3">
+                    <i class="fas fa-crown"></i> 第二部分：領導力數（R）成年中期 40-65歲
+                </h2>
+            </div>
+            <div class="p-6 md:p-8">
+                <div class="flex items-center gap-4 mb-6">
+                    <span id="leaderNumBadge" class="number-badge bg-purple-600 text-white text-2xl w-16 h-16">-</span>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-800">領導力數：<span id="leaderNumValue">-</span></h3>
+                        <p class="text-gray-500">輔助數字：<span id="leaderHelpers">P, Q</span></p>
+                    </div>
+                </div>
+                <div class="bg-purple-50 p-5 rounded-xl border border-purple-100">
+                    <h4 class="font-bold text-purple-700 mb-3">這個階段的生命主題</h4>
+                    <p class="text-gray-600 leading-relaxed" id="leaderDesc">
+                        40-65歲是人生的巔峰期，此時你的領導力數顯示了你如何在事業、家庭和社會中發揮影響力。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. 通用力數 -->
+        <section class="report-section">
+            <div class="section-header bg-gradient-to-r from-green-500 to-emerald-400">
+                <h2 class="text-xl font-bold flex items-center gap-3">
+                    <i class="fas fa-seedling"></i> 通用力數（U）成年早期 18-40歲
+                </h2>
+            </div>
+            <div class="p-6 md:p-8">
+                <div class="flex items-center gap-4 mb-6">
+                    <span id="generalNumBadge" class="number-badge bg-green-500 text-white text-2xl w-16 h-16">-</span>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-800">通用力數：<span id="generalNumValue">-</span></h3>
+                        <p class="text-gray-500">輔助數字：<span id="generalHelpers">T, S</span></p>
+                    </div>
+                </div>
+                <div class="bg-green-50 p-5 rounded-xl border border-green-100">
+                    <h4 class="font-bold text-green-700 mb-3">這個階段的生命主題</h4>
+                    <p class="text-gray-600 leading-relaxed" id="generalDesc">
+                        18-40歲是建立基礎的時期，此時你的通用力數影響著事業發展、人際關係和學習成長的模式。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 9. 專業力數 -->
+        <section class="report-section">
+            <div class="section-header bg-gradient-to-r from-teal-500 to-cyan-400">
+                <h2 class="text-xl font-bold flex items-center gap-3">
+                    <i class="fas fa-trophy"></i> 專業力數（X）成年晚期 65歲後
+                </h2>
+            </div>
+            <div class="p-6 md:p-8">
+                <div class="flex items-center gap-4 mb-6">
+                    <span id="expertNumBadge" class="number-badge bg-teal-500 text-white text-2xl w-16 h-16">-</span>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-800">專業力數：<span id="expertNumValue">-</span></h3>
+                        <p class="text-gray-500">輔助數字：<span id="expertHelpers">V, W</span></p>
+                    </div>
+                </div>
+                <div class="bg-teal-50 p-5 rounded-xl border border-teal-100">
+                    <h4 class="font-bold text-teal-700 mb-3">這個階段的生命主題</h4>
+                    <p class="text-gray-600 leading-relaxed" id="expertDesc">
+                        65歲後是收穫與傳承的時期，此時你的專業力數顯示了你如何將人生智慧傳遞給下一代，以及晚年的身心安頓方式。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 頁尾 -->
+        <div class="text-center text-gray-400 text-sm pb-8">
+            <p>© 2026 靈魂地圖計算器 | 耀文行動商城</p>
+            <p class="mt-2">本報告由系統自動生成，僅供參考</p>
+        </div>
+    </main>
+
+    <script>
+        // ========== 數字含義資料庫 ========== //
+        const pyramidMeanings = {
+            1: { core: "開創與獨立", title: "開創者", tags: ["獨立", "開創", "自信", "果斷"], desc: "你在這個位置需要學習如何獨立自主、勇於開拓新局。領導力與自信心是你的主課題。" },
+            2: { core: "合作與敏感", title: "協調者", tags: ["合作", "敏感", "平衡", "外交"], desc: "這個位置需要你學習與人協調、培養同理心。你可能較依賴他人，需找到自我與合作的平衡。" },
+            3: { core: "表達與創意", title: "表達者", tags: ["創意", "樂觀", "社交", "藝術"], desc: "此處強調創意表達與社交能力。你需要學習將想法清楚傳達，並保持樂觀的態度。" },
+            4: { core: "穩定與務實", title: "建造者", tags: ["穩定", "務實", "紀律", "耐心"], desc: "這個位置代表你需要建立穩固的基礎。紀律、規劃與務實的執行力是你的學習課題。" },
+            5: { core: "自由與變化", title: "冒險者", tags: ["自由", "冒險", "靈活", "魅力"], desc: "你在這個位置需要擁抱變化、追求自由。適應力與冒險精神是你的天賦與課題。" },
+            6: { core: "責任與關懷", title: "奉獻者", tags: ["關懷", "責任", "完美", "奉獻"], desc: "此處強調對家庭與他人的責任感。你需要學習無條件的愛，同時避免過度犧牲。" },
+            7: { core: "探索與內省", title: "探索者", tags: ["博學", "理性", "孤高", "直覺"], desc: "這個位置需要你向內探索、追求智慧。獨處與深度思考是你能量恢復的方式。" },
+            8: { core: "權力與豐盛", title: "實踐者", tags: ["霸氣", "掌控", "富足", "野心"], desc: "此處代表物質與權力的課題。你需要學習平衡野心與慈悲，正確運用手上的資源。" },
+            9: { core: "博愛與完結", title: "人道者", tags: ["慈悲", "智慧", "夢想", "大愛"], desc: "你在這個位置需要學習放下與服務。用更宏觀的視野看待人生，完成靈魂的圓滿。" }
+        };
+
+        const numberMeanings = {
+            1: { title: "開創者 (The Pioneer)", tags: ["獨立", "開創", "自信", "果斷"], strengths: "你是天生的領袖，擁有強烈的行動力與開創精神。面對新挑戰時，你總是充滿勇氣，不畏艱難。", shadows: "容易陷入獨斷獨行、過度自我中心，聽不進他人意見。有時會因為太過急躁而顯得侵略性太強。", action: "練習「積極聆聽」，在做決定前多停三秒鐘。學習將你的領導力轉化為賦能他人的力量。", mission: "本世的課題是「確立自我價值」。你來這裡是為了學習如何正確運用力量，成為真正的領袖。" },
+            2: { title: "協調者 (The Mediator)", tags: ["合作", "敏感", "平衡", "外交"], strengths: "你天生具有同理心，能夠感知他人的情緒與需求。在團隊中，你是最佳的協調者與和平使者。", shadows: "過度依賴他人認可，容易陷入優柔寡斷。有時會為了維持和諧而壓抑自己的需求。", action: "練習表達自己的真實想法。建立健康的界限，學會說「不」也是一種愛。", mission: "本世的課題是「平衡自我與他人」。你來學習在關係中保持自我，同時與人和諧共處。" },
+            3: { title: "表達者 (The Communicator)", tags: ["創意", "樂觀", "社交", "藝術"], strengths: "你擁有極佳的表達天賦和創意能力。樂觀開朗的你，總能為周圍帶來歡樂與靈感。", shadows: "容易分心、三分鐘熱度。有時會過度在意外在形象，或用幽默掩飾真實情緒。", action: "選擇一項創意領域深耕，將天馬行空的想法落實為具體作品。", mission: "本世的課題是「真實表達」。你來學習如何將內在的創意與情感，真誠地與世界分享。" },
+            4: { title: "建造者 (The Builder)", tags: ["穩定", "務實", "紀律", "耐心"], strengths: "你是最可靠的執行者，能夠將抽象概念轉化為具體成果。踏實務實，擁有極強的耐力。", shadows: "過於固執保守，難以接受新觀念。容易陷入工作狂模式，忽略生活的樂趣。", action: "練習接受「彈性」與「小混亂」。嘗試跳出舒適圈，哪怕只是一點點改變。", mission: "本世的課題是「建立內在的安全感」。你來學習物質與心靈的穩定，明白安全感來自內心。" },
+            5: { title: "冒險者 (The Adventurer)", tags: ["自由", "冒險", "靈活", "魅力"], strengths: "你為自由而生，熱愛新鮮事物，適應力極強，口才好且魅力十足。", shadows: "衝動、博而不精、逃避責任。不喜歡被承諾束縛，容易給人不穩定的印象。", action: "學習「自律」，因為自律才能換來真正的自由。為自己設定階段性目標。", mission: "本世的課題是「負責任的自由」。你來體驗世界的豐富，學習如何運用自由意志。" },
+            6: { title: "奉獻者 (The Nurturer)", tags: ["關懷", "責任", "完美", "奉獻"], strengths: "你是愛的代言人，重視家庭與承諾。有強烈的責任感，具有療癒他人的天賦。", shadows: "挑剔、完美主義，容易情感勒索。過度犧牲自己後產生怨懟。", action: "學會「愛自己」，把焦點放回自己身上。接受不完美。", mission: "本世的課題是「無條件的愛」。先愛自己，再愛他人，學習在付出與接受之間取得平衡。" },
+            7: { title: "探索者 (The Seeker)", tags: ["博學", "理性", "孤高", "直覺"], strengths: "你是天生的思想家，擁有看穿表象的能力。喜歡探究本質，邏輯與直覺並重。", shadows: "猜忌多疑、冷漠疏離、容易鑽牛角尖。標準太高而顯得傲慢。", action: "練習「信任」與「開放」。試著表達內心的感受，多接觸大自然。", mission: "本世的課題是「追尋真理與信任」。你來探索宇宙的奧秘，並學習將智慧分享給世人。" },
+            8: { title: "實踐者 (The Powerhouse)", tags: ["霸氣", "掌控", "富足", "野心"], strengths: "你擁有將夢想顯化為物質的能力。天生的老闆格局，對商業與金錢嗅覺敏銳。", shadows: "唯利是圖、控制狂、給自己和他人過大壓力。容易用金錢衡量一切。", action: "學習「放鬆」與「授權」。將你的野心轉化為造福他人的願景。", mission: "本世的課題 is 「豐盛與平衡」。你來學習如何正確運用權力與金錢。" },
+            9: { title: "人道者 (The Humanitarian)", tags: ["慈悲", "智慧", "夢夢想", "大愛"], strengths: "你是數字的終點，擁有博愛精神與宏觀視野。關注社會公益，擁有強大的感染力。", shadows: "不切實際、空想、濫情。容易因為理想幻滅而變得憤世嫉俗。", action: "學習「落地」與「放下」。將遠大的夢想拆解為具體的執行步驟。", mission: "本世的課題 is 「圓滿與服務」。你來完成靈魂的最終課題，服務人類整體。" }
+        };
+
+        // ========== 頁面初始化 ========== //
+        document.addEventListener('DOMContentLoaded', function () {
+            // 設定報告日期
+            const now = new Date();
+            document.getElementById('reportDate').textContent = `${now.getFullYear()}年${now.getMonth() + 1}月${now.getDate()}日`;
+
+            // 讀取 localStorage 資料
+            const dataStr = localStorage.getItem('pyramidData');
+            if (!dataStr) {
+                alert('無法取得計算資料，請先在首頁輸入生日進行計算。');
+                window.location.href = 'index.html';
+                return;
+            }
+
+            const data = JSON.parse(dataStr);
+            console.log('載入資料:', data);
+
+            // 填充報告內容
+            populateReport(data);
+        });
+
+        function reduceToSingle(n) {
+            while (n > 9) { n = String(n).split('').reduce((a, b) => a + parseInt(b), 0); }
+            return n;
+        }
+
+        function populateReport(data) {
+            const { name, O, M, N, I, J, K, L, R, P, Q, U, T, S, X, V, W, lifePath } = data;
+
+            // 報告名稱
+            if (name) document.getElementById('reportName').textContent = name;
+
+            // 執行摘要表格
+            document.getElementById('summaryO').textContent = O;
+            document.getElementById('summaryOTrait').textContent = pyramidMeanings[O].core;
+            document.getElementById('summaryN').textContent = N;
+            document.getElementById('summaryNTrait').textContent = pyramidMeanings[N].core;
+            document.getElementById('summaryM').textContent = M;
+            document.getElementById('summaryMTrait').textContent = pyramidMeanings[M].core;
+            document.getElementById('summaryR').textContent = R;
+            document.getElementById('summaryRTrait').textContent = pyramidMeanings[R].core;
+            document.getElementById('summaryU').textContent = U;
+            document.getElementById('summaryUTrait').textContent = pyramidMeanings[U].core;
+            document.getElementById('summaryX').textContent = X;
+            document.getElementById('summaryXTrait').textContent = pyramidMeanings[X].core;
+
+            // 人格特質精華
+            const info = numberMeanings[O];
+            document.getElementById('personalitySummary').textContent =
+                `您是${O}號人「${info.title}」。${info.strengths.substring(0, 60)}... 內在渴望${pyramidMeanings[N].core}，外在展現${pyramidMeanings[M].core}的特質。`;
+
+            // 生命數解析
+            document.getElementById('lifeNumBadge').textContent = O;
+            document.getElementById('lifeNumTitle').textContent = `${O} 號人：${info.title}`;
+            document.getElementById('lifeNumTags').innerHTML = info.tags.map(t =>
+                `<span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-bold">#${t}</span>`
+            ).join('');
+            document.getElementById('lifeNumStrengths').textContent = info.strengths;
+            document.getElementById('lifeNumShadows').textContent = info.shadows;
+            document.getElementById('lifeNumMission').textContent = info.mission;
+            document.getElementById('lifeNumAction').textContent = info.action;
+
+            // 內在性格數
+            document.getElementById('innerNumBadge').textContent = N;
+            document.getElementById('innerNumValue').textContent = `${N} (來自 ${K} + ${L})`;
+            document.getElementById('innerNumDesc').textContent = pyramidMeanings[N].desc;
+
+            // 外在性格數
+            document.getElementById('outerNumBadge').textContent = M;
+            document.getElementById('outerNumValue').textContent = `${M} (來自 ${I} + ${J})`;
+            document.getElementById('outerNumDesc').textContent = pyramidMeanings[M].desc;
+
+            // 內外對比
+            document.getElementById('compareM').textContent = M;
+            document.getElementById('compareN').textContent = N;
+            let compareText = '';
+            if (M === N) {
+                compareText = `您的外在形象與內心驅動力一致（皆為${M}號能量），表裡如一，行動與意圖高度同步。這代表你在人群中展現的樣子，就是你內心真實的狀態，可以放心做自己。`;
+            } else {
+                compareText = `外在展現${M}號的「${pyramidMeanings[M].core}」特質，內心卻渴望${N}號的「${pyramidMeanings[N].core}」。這種差異可能帶來內在張力——你可能覺得外在形象不完全代表真實的你。建議花時間獨處，與內在的自己對話，找到整合內外的方式。`;
+            }
+            document.getElementById('compareAnalysis').textContent = compareText;
+
+            // 領導力數
+            document.getElementById('leaderNumBadge').textContent = R;
+            document.getElementById('leaderNumValue').textContent = R;
+            document.getElementById('leaderHelpers').textContent = `${P}, ${Q}`;
+            document.getElementById('leaderDesc').textContent =
+                `在40-65歲的人生巔峰期，你的能量展現為${R}號的「${pyramidMeanings[R].core}」。${pyramidMeanings[R].desc}`;
+
+            // 通用力數
+            document.getElementById('generalNumBadge').textContent = U;
+            document.getElementById('generalNumValue').textContent = U;
+            document.getElementById('generalHelpers').textContent = `${T}, ${S}`;
+            document.getElementById('generalDesc').textContent =
+                `在18-40歲的成長期，你的能量展現為${U}號的「${pyramidMeanings[U].core}」。${pyramidMeanings[U].desc}`;
+
+            // 專業力數
+            document.getElementById('expertNumBadge').textContent = X;
+            document.getElementById('expertNumValue').textContent = X;
+            document.getElementById('expertHelpers').textContent = `${V}, ${W}`;
+            document.getElementById('expertDesc').textContent =
+                `在65歲後的智慧期，你的能量展現為${X}號的「${pyramidMeanings[X].core}」。${pyramidMeanings[X].desc}`;
+
+            // 繪製金字塔
+            drawPyramid(data);
+        }
+
+        function drawPyramid(data) {
+            const { A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X } = data;
+
+            // --- SVG 畫布設定 ---
+            const w = 1100;
+            const h = 950;
+            const cx = w / 2;
+            const cy = h / 2;
+
+            const colorRed = "#b91c1c";
+            const colorText = "#2d3748";
+            const colorLineGray = "#cbd5e0";
+
+            const extraWidth = 250;
+            let svg = `<svg width="100%" height="100%" viewBox="-${extraWidth / 2} 0 ${w + extraWidth} ${h}" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">`;
+
+            svg += `
+                <style>
+                    .t-font { font-family: 'Noto Serif TC', serif; text-anchor: middle; dominant-baseline: middle; }
+                    .t-num-lg { font-size: 64px; font-weight: 900; fill: ${colorText}; }
+                    .t-num-md { font-size: 52px; font-weight: 900; fill: ${colorText}; }
+                    .t-num-sm { font-size: 48px; font-weight: 900; fill: ${colorText}; }
+                    .t-label-red { font-size: 32px; fill: ${colorRed}; font-weight: bold; writing-mode: vertical-rl; text-orientation: upright; }
+                    .t-label-title { font-size: 36px; fill: #9b2c2c; font-weight: bold; }
+                    .t-label-blue { font-size: 24px; fill: #3182ce; font-weight: bold; }
+                    .t-label-gray { font-size: 14px; fill: #718096; }
+                    .t-circle-text { font-size: 24px; fill: #2c5282; font-weight: bold;}
+                    .t-circle { fill: #ebf8ff; stroke: #4299e1; stroke-width: 1.5; }
+                </style>
+            `;
+
+            const hr = 330;
+
+            // 三角形參數
+            const triH = 300;
+            const triBaseHalf = 200;
+            const yTop = cy - 150;
+            const yBot = cy + 150;
+            const triLeftX = cx - triBaseHalf;
+            const triRightX = cx + triBaseHalf;
+
+            const yLine1 = yTop + 100;
+            const yLine2 = yTop + 200;
+
+            // --- 1. 六角形 ---
+            const hx = [
+                cx, cy - hr,
+                cx + hr * 0.866, cy - hr * 0.5,
+                cx + hr * 0.866, cy + hr * 0.5,
+                cx, cy + hr,
+                cx - hr * 0.866, cy + hr * 0.5,
+                cx - hr * 0.866, cy - hr * 0.5
+            ];
+            svg += `<polygon points="${hx.join(' ')}" fill="none" stroke="${colorLineGray}" stroke-width="2" />`;
+            for (let i = 0; i < 12; i += 2) {
+                svg += `<rect x="${hx[i] - 8}" y="${hx[i + 1] - 8}" width="16" height="16" transform="rotate(45 ${hx[i]} ${hx[i + 1]})" fill="#e2e8f0" />`;
+            }
+
+            // --- 2. 三角形 ---
+            svg += `<path d="M${cx} ${yTop} L${triLeftX} ${yBot} L${triRightX} ${yBot} Z" fill="#fff5f5" stroke="${colorRed}" stroke-width="6" stroke-linejoin="round" />`;
+
+            const wLine1 = (yLine1 - yTop) * (triBaseHalf / triH);
+            const wLine2 = (yLine2 - yTop) * (triBaseHalf / triH);
+            svg += `<line x1="${cx - wLine1}" y1="${yLine1}" x2="${cx + wLine1}" y2="${yLine1}" stroke="${colorRed}" stroke-width="6" />`;
+            svg += `<line x1="${cx - wLine2}" y1="${yLine2}" x2="${cx + wLine2}" y2="${yLine2}" stroke="${colorRed}" stroke-width="6" />`;
+            svg += `<line x1="${cx}" y1="${yLine1}" x2="${cx}" y2="${yBot}" stroke="${colorRed}" stroke-width="6" />`;
+
+            // --- 3. 填入數字與 O, M, N, I, J, K, L ---
+            // O
+            svg += `<text x="${cx}" y="${yTop + 60}" class="t-font t-num-lg">${O}</text>`;
+            svg += `<text x="${cx}" y="${yTop + 95}" class="t-font t-label-gray"><tspan style="font-weight:bold; fill:${colorRed}">O</tspan> 主要性格</text>`;
+
+            const midTextY = (yLine1 + yLine2) / 2 + 5;
+            // M, N
+            svg += `<text x="${cx - 60}" y="${midTextY}" class="t-font t-num-md">${M}</text>`;
+            svg += `<text x="${cx - 60}" y="${midTextY + 35}" class="t-font t-label-gray"><tspan style="font-weight:bold; fill:${colorRed}">M</tspan> 外顯</text>`;
+            svg += `<text x="${cx + 60}" y="${midTextY}" class="t-font t-num-md">${N}</text>`;
+            svg += `<text x="${cx + 60}" y="${midTextY + 35}" class="t-font t-label-gray"><tspan style="font-weight:bold; fill:${colorRed}">N</tspan> 內在</text>`;
+
+            const botTextY = (yLine2 + yBot) / 2;
+            // I, J, K, L
+            svg += `<text x="${cx - 110}" y="${botTextY}" class="t-font t-num-sm">${I}</text>`;
+            svg += `<text x="${cx - 110}" y="${botTextY + 32}" class="t-font t-label-gray" style="font-weight:bold; fill:${colorRed}">I</text>`;
+            svg += `<text x="${cx - 40}" y="${botTextY}" class="t-font t-num-sm">${J}</text>`;
+            svg += `<text x="${cx - 40}" y="${botTextY + 32}" class="t-font t-label-gray" style="font-weight:bold; fill:${colorRed}">J</text>`;
+            svg += `<text x="${cx + 40}" y="${botTextY}" class="t-font t-num-sm">${K}</text>`;
+            svg += `<text x="${cx + 40}" y="${botTextY + 32}" class="t-font t-label-gray" style="font-weight:bold; fill:${colorRed}">K</text>`;
+            svg += `<text x="${cx + 110}" y="${botTextY}" class="t-font t-num-sm">${L}</text>`;
+            svg += `<text x="${cx + 110}" y="${botTextY + 32}" class="t-font t-label-gray" style="font-weight:bold; fill:${colorRed}">L</text>`;
+
+            svg += `<text x="${cx - 75}" y="${yBot - 15}" class="t-font t-label-gray" style="font-size:16px;">外顯性格</text>`;
+            svg += `<text x="${cx + 75}" y="${yBot - 15}" class="t-font t-label-gray" style="font-size:16px;">內在性格</text>`;
+
+            // --- 4. 底部日期 ---
+            const boxSize = 36;
+            const boxStartY = yBot + 40; // 往下移一點
+            let currentX = cx - 190;
+            const dateNums = [A, B, C, D, E, F, G, H];
+            const dateLetters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+            dateNums.forEach((n, i) => {
+                svg += `<rect x="${currentX}" y="${boxStartY}" width="${boxSize}" height="${boxSize}" fill="none" stroke="#2d3748" stroke-width="1.5" />`;
+                svg += `<text x="${currentX + boxSize / 2}" y="${boxStartY + boxSize / 2 + 2}" class="t-font" style="font-size:20px; fill:#2b6cb0;">${n}</text>`;
+                svg += `<text x="${currentX + boxSize / 2}" y="${boxStartY + boxSize + 15}" class="t-font t-label-gray">${dateLetters[i]}</text>`;
+                currentX += boxSize;
+                if (i === 1 || i === 3) currentX += 26;
+                else currentX += 8;
+            });
+
+            // --- 5. 外圍標籤 ---
+            // 上
+            svg += `<text x="${cx}" y="${hx[1] - 80}" class="t-font t-label-title" style="font-size:48px; fill:${colorRed}">領 導 力</text>`;
+            svg += `<text x="${cx}" y="${hx[1] - 40}" class="t-font t-label-blue" style="font-size:24px">成年中期 (40-65歲)</text>`;
+            const topBaseY = yTop - 40;
+            svg += `<circle cx="${cx}" cy="${topBaseY - 45}" r="22" class="t-circle" />`;
+            svg += `<text x="${cx}" y="${topBaseY - 43}" class="t-font t-circle-text">${R}</text>`;
+            svg += `<text x="${cx}" y="${topBaseY - 80}" class="t-font t-label-gray" style="font-weight:bold; fill:${colorRed}">R</text>`;
+
+            svg += `<circle cx="${cx - 35}" cy="${topBaseY}" r="22" class="t-circle" />`;
+            svg += `<text x="${cx - 35}" y="${topBaseY + 2}" class="t-font t-circle-text">${Q}</text>`;
+            svg += `<text x="${cx - 35}" y="${topBaseY + 30}" class="t-font t-label-gray" style="font-weight:bold; fill:${colorRed}">Q</text>`;
+
+            svg += `<circle cx="${cx + 35}" cy="${topBaseY}" r="22" class="t-circle" />`;
+            svg += `<text x="${cx + 35}" y="${topBaseY + 2}" class="t-font t-circle-text">${P}</text>`;
+            svg += `<text x="${cx + 35}" y="${topBaseY + 30}" class="t-font t-label-gray" style="font-weight:bold; fill:${colorRed}">P</text>`;
+
+            // 左
+            svg += `<text x="${hx[8] - 120}" y="${cy}" class="t-font t-label-red" style="font-size:32px">通用力</text>`;
+            svg += `<text x="${hx[10] - 130}" y="${hx[11]}" class="t-font t-label-blue" text-anchor="end" style="font-size:24px">成年早期 (18-40歲)</text>`;
+            svg += `<text x="${hx[8] - 50}" y="${hx[9] + 30}" class="t-font t-label-blue" text-anchor="end" style="font-size:24px">青年期 (12-18歲)</text>`;
+            svg += `<text x="${cx - 300}" y="${hx[7] - 30}" class="t-font t-label-blue" text-anchor="end" style="font-size:24px">學齡期 (5-12 歲)</text>`;
+
+            const leftCenterX = cx - 220;
+            const leftCenterY = cy + 20;
+            svg += `<circle cx="${leftCenterX}" cy="${leftCenterY - 40}" r="22" class="t-circle" />`;
+            svg += `<text x="${leftCenterX}" y="${leftCenterY - 38}" class="t-font t-circle-text">${U}</text>`;
+            svg += `<text x="${leftCenterX}" y="${leftCenterY - 80}" class="t-font t-label-gray" style="font-weight:bold; fill:${colorRed}">U</text>`;
+
+            svg += `<circle cx="${leftCenterX - 30}" cy="${leftCenterY + 10}" r="22" class="t-circle" />`;
+            svg += `<text x="${leftCenterX - 30}" y="${leftCenterY + 12}" class="t-font t-circle-text">${T}</text>`;
+            svg += `<text x="${leftCenterX - 30}" y="${leftCenterY + 45}" class="t-font t-label-gray" style="font-weight:bold; fill:${colorRed}">T</text>`;
+
+            svg += `<circle cx="${leftCenterX + 30}" cy="${leftCenterY + 10}" r="22" class="t-circle" />`;
+            svg += `<text x="${leftCenterX + 30}" y="${leftCenterY + 12}" class="t-font t-circle-text">${S}</text>`;
+            svg += `<text x="${leftCenterX + 30}" y="${leftCenterY + 45}" class="t-font t-label-gray" style="font-weight:bold; fill:${colorRed}">S</text>`;
+
+            // 右
+            svg += `<text x="${hx[2] + 120}" y="${cy}" class="t-font t-label-red" style="font-size:32px">專業力</text>`;
+            svg += `<text x="${hx[2] + 130}" y="${hx[3]}" class="t-font t-label-blue" text-anchor="start" style="font-size:24px">成年晚期 (65歲後)</text>`;
+            svg += `<text x="${hx[4] + 50}" y="${hx[5] + 30}" class="t-font t-label-blue" text-anchor="start" style="font-size:24px">嬰兒期 (0-1 歲)</text>`;
+            svg += `<text x="${cx + 300}" y="${hx[7] - 30}" class="t-font t-label-blue" text-anchor="start" style="font-size:24px">兒童期 (1-3 歲)</text>`;
+
+            const rightCenterX = cx + 220;
+            const rightCenterY = cy + 20;
+            svg += `<circle cx="${rightCenterX}" cy="${rightCenterY - 40}" r="22" class="t-circle" />`;
+            svg += `<text x="${rightCenterX}" y="${rightCenterY - 38}" class="t-font t-circle-text">${X}</text>`;
+            svg += `<text x="${rightCenterX}" y="${rightCenterY - 80}" class="t-font t-label-gray" style="font-weight:bold; fill:${colorRed}">X</text>`;
+
+            svg += `<circle cx="${rightCenterX - 30}" cy="${rightCenterY + 10}" r="22" class="t-circle" />`;
+            svg += `<text x="${rightCenterX - 30}" y="${rightCenterY + 12}" class="t-font t-circle-text">${V}</text>`;
+            svg += `<text x="${rightCenterX - 30}" y="${rightCenterY + 45}" class="t-font t-label-gray" style="font-weight:bold; fill:${colorRed}">V</text>`;
+
+            svg += `<circle cx="${rightCenterX + 30}" cy="${rightCenterY + 10}" r="22" class="t-circle" />`;
+            svg += `<text x="${rightCenterX + 30}" y="${rightCenterY + 12}" class="t-font t-circle-text">${W}</text>`;
+            svg += `<text x="${rightCenterX + 30}" y="${rightCenterY + 45}" class="t-font t-label-gray" style="font-weight:bold; fill:${colorRed}">W</text>`;
+
+            // 底
+            svg += `<text x="${cx}" y="${cy + hr + 50}" class="t-font t-label-blue" style="font-size:24px">學齡初期 (3-5 歲)</text>`;
+
+            svg += `</svg>`;
+
+            document.getElementById('pyramidContainer').innerHTML = svg;
+        }
+    </script>
+</body>
+
+</html>

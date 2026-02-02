@@ -194,73 +194,6 @@
 
 <body class="text-gray-700">
 
-    <!-- 生命金字塔 Modal -->
-    <div id="pyramidModal" class="fixed inset-0 bg-black bg-opacity-50 z-[100] hidden items-center justify-center p-4"
-        onclick="closePyramidModal(event)">
-        <div class="bg-white rounded-3xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto relative"
-            onclick="event.stopPropagation()">
-            <button onclick="closePyramidModal()"
-                class="absolute top-4 right-4 w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center text-gray-500 hover:text-gray-700 transition-colors z-10">
-                <i class="fas fa-times text-xl"></i>
-            </button>
-            <div class="p-8">
-                <h2 class="text-2xl font-serif font-bold text-gray-800 mb-6 flex items-center gap-3">
-                    <i class="fas fa-pyramid text-red-500"></i> 生命金字塔完整解讀
-                </h2>
-
-                <!-- 金字塔圖形 -->
-                <div class="bg-gray-50 rounded-xl p-4 mb-6 overflow-x-auto">
-                    <div id="modalTriangleContainer" class="min-w-[600px]"></div>
-                </div>
-
-                <!-- 數字位置解釋 -->
-                <div class="space-y-6">
-                    <div class="bg-red-50 p-5 rounded-xl border border-red-100">
-                        <h3 class="font-bold text-red-700 text-lg mb-3"><i class="fas fa-star mr-2"></i>三角形內部 (核心性格)
-                        </h3>
-                        <div class="grid md:grid-cols-2 gap-4 text-sm">
-                            <div class="bg-white p-3 rounded-lg"><strong class="text-red-600">O
-                                    (主要性格)</strong>：你人生的核心課題與天命，是三角形頂點與靈魂的最高指導原則。</div>
-                            <div class="bg-white p-3 rounded-lg"><strong class="text-red-600">M
-                                    (外顯綜合)</strong>：你在社會中展現的綜合能量，別人最容易看到的特質。</div>
-                            <div class="bg-white p-3 rounded-lg"><strong class="text-red-600">N
-                                    (內在綜合)</strong>：你內心深處的綜合能量，是驅動你行為的潛意識力量。</div>
-                            <div class="bg-white p-3 rounded-lg"><strong class="text-red-600">I, J
-                                    (外顯底層)</strong>：外顯性格的基礎，表達方式與社交風格。</div>
-                            <div class="bg-white p-3 rounded-lg"><strong class="text-red-600">K, L
-                                    (內在底層)</strong>：內在性格的基礎，情感需求與安全感來源。</div>
-                        </div>
-                    </div>
-
-                    <div class="bg-blue-50 p-5 rounded-xl border border-blue-100">
-                        <h3 class="font-bold text-blue-700 text-lg mb-3"><i class="fas fa-circle mr-2"></i>藍色圓圈 (人生階段)
-                        </h3>
-                        <div class="grid md:grid-cols-3 gap-4 text-sm">
-                            <div class="bg-white p-3 rounded-lg"><strong class="text-blue-600">R
-                                    (領導力-成年中期)</strong>：40-65歲的人生巔峰，主導議題與領導風格。</div>
-                            <div class="bg-white p-3 rounded-lg"><strong class="text-blue-600">P,
-                                    Q</strong>：輔助領導力的能量，左右手的智慧。</div>
-                            <div class="bg-white p-3 rounded-lg"><strong class="text-blue-600">U
-                                    (工作/朋友)</strong>：成年早期(18-40歲)的社交與事業能量。</div>
-                            <div class="bg-white p-3 rounded-lg"><strong class="text-blue-600">T, S</strong>：工作與友情的細分能量。
-                            </div>
-                            <div class="bg-white p-3 rounded-lg"><strong class="text-blue-600">X
-                                    (家庭/晚年)</strong>：成年晚期(65歲後)的家庭與身心安頓。</div>
-                            <div class="bg-white p-3 rounded-lg"><strong class="text-blue-600">V, W</strong>：家庭關係的細分能量。
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-gray-100 p-5 rounded-xl">
-                        <h3 class="font-bold text-gray-700 text-lg mb-3"><i class="fas fa-calendar-day mr-2"></i>底部日期方框
-                            (A-H)</h3>
-                        <p class="text-sm text-gray-600">依序代表你生日的每一個數字，是所有能量計算的基礎。前兩位為日期，中間兩位為月份，後四位為西元年份。</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <nav class="bg-white shadow-sm sticky top-0 z-50">
         <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
             <div class="flex items-center gap-3">
@@ -396,11 +329,11 @@
                         </div>
                         <div>
                             <h3 class="text-2xl font-serif font-bold text-gray-800">
-                                <a href="javascript:void(0)" onclick="openPyramidModal()"
+                                <a href="pyramid-report.html"
                                     class="hover:text-red-600 transition-colors underline decoration-dotted decoration-red-300 underline-offset-4">生命金字塔</a>
                             </h3>
                             <div class="text-sm text-gray-400">人生階段與核心性格分析 <span
-                                    class="text-red-400 ml-1">(點擊查看完整解讀)</span></div>
+                                    class="text-red-400 ml-1">(點擊查看完整報告)</span></div>
                         </div>
                     </div>
 
@@ -719,6 +652,23 @@
     </main>
 
     <script>
+        // ========== 頁面載入時自動恢復狀態 ========== //
+        document.addEventListener('DOMContentLoaded', function () {
+            const savedData = localStorage.getItem('pyramidData');
+            const savedDate = localStorage.getItem('lastBirthdate');
+            if (savedData && savedDate) {
+                // 恢復輸入值並重新計算
+                const birthdateInput = document.getElementById('birthdate');
+                if (birthdateInput) {
+                    birthdateInput.value = savedDate;
+                    // 稍微延遲以確保 DOM 準備好
+                    setTimeout(() => {
+                        calculate();
+                    }, 100);
+                }
+            }
+        });
+
         // ========== 手機輸入處理 ========== //
         function handleBirthdateInput(input) {
             // 移除非數字字元
@@ -1235,6 +1185,20 @@
 
             // 更新金字塔解讀區塊
             updatePyramidInterpretation(O, M, N, R, U, X);
+
+            // 儲存資料供報告頁面使用
+            const nameInput = document.getElementById('nameInput');
+            localStorage.setItem('pyramidData', JSON.stringify({
+                name: nameInput ? nameInput.value : '',
+                A, B, C, D, E, F, G, H,
+                I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X,
+                lifePath: O
+            }));
+            // 同時儲存生日，用於返回時恢復狀態
+            const birthdateInputVal = document.getElementById('birthdate');
+            if (birthdateInputVal) {
+                localStorage.setItem('lastBirthdate', birthdateInputVal.value);
+            }
         }
 
 

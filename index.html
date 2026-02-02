@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>靈魂地圖｜全方位生命靈數解析</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔮</text></svg>">
-    
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔮</text></svg>">
+
     <!-- SEO Meta Tags -->
     <meta name="description" content="透過生命靈數、九宮格命盤與星座數，深度解析你的靈魂藍圖、天賦連線與人生課題。探索專屬於你的財富機遇與成長策略。">
     <meta name="keywords" content="生命靈數,靈數計算,九宮格,命盤,星座數,天賦數,流年運勢,numerology">
     <meta name="author" content="靈魂地圖">
-    
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://randytsay.github.io/innernumber/">
@@ -20,7 +22,7 @@
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:locale" content="zh_TW">
-    
+
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://randytsay.github.io/innernumber/">
@@ -28,12 +30,14 @@
     <meta name="twitter:description" content="透過生命靈數、九宮格命盤與星座數，深度解析你的靈魂藍圖、天賦連線與人生課題。">
     <meta name="twitter:image" content="https://randytsay.github.io/innernumber/img/number.png">
 
-  
+
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- 引入 html2canvas 用於截圖 -->
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;900&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;900&family=Lato:wght@400;700&display=swap"
+        rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
@@ -76,7 +80,7 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             grid-template-rows: repeat(3, 1fr);
-            grid-auto-flow: column; 
+            grid-auto-flow: column;
             gap: 1.5rem;
             position: relative;
             max-width: 320px;
@@ -119,10 +123,30 @@
             pointer-events: none;
             opacity: 0.6;
         }
-        .ring-1 { width: 120%; height: 120%; border-color: #f687b3; }
-        .ring-2 { width: 140%; height: 140%; border-color: #f6ad55; }
-        .ring-3 { width: 160%; height: 160%; border-color: #63b3ed; }
-        .ring-4 { width: 180%; height: 180%; border-color: #68d391; }
+
+        .ring-1 {
+            width: 120%;
+            height: 120%;
+            border-color: #f687b3;
+        }
+
+        .ring-2 {
+            width: 140%;
+            height: 140%;
+            border-color: #f6ad55;
+        }
+
+        .ring-3 {
+            width: 160%;
+            height: 160%;
+            border-color: #63b3ed;
+        }
+
+        .ring-4 {
+            width: 180%;
+            height: 180%;
+            border-color: #68d391;
+        }
 
         .lines-overlay {
             position: absolute;
@@ -140,9 +164,11 @@
             opacity: 0;
             animation: drawLine 1.5s forwards ease-in-out;
         }
-        
+
         @keyframes drawLine {
-            to { opacity: 0.5; }
+            to {
+                opacity: 0.5;
+            }
         }
 
         .fade-in-up {
@@ -150,9 +176,12 @@
             opacity: 0;
             transform: translateY(20px);
         }
-        
+
         @keyframes fadeInUp {
-            to { opacity: 1; transform: translateY(0); }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .glass-card {
@@ -160,10 +189,77 @@
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.5);
         }
-
     </style>
 </head>
+
 <body class="text-gray-700">
+
+    <!-- 生命金字塔 Modal -->
+    <div id="pyramidModal" class="fixed inset-0 bg-black bg-opacity-50 z-[100] hidden items-center justify-center p-4"
+        onclick="closePyramidModal(event)">
+        <div class="bg-white rounded-3xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto relative"
+            onclick="event.stopPropagation()">
+            <button onclick="closePyramidModal()"
+                class="absolute top-4 right-4 w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center text-gray-500 hover:text-gray-700 transition-colors z-10">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+            <div class="p-8">
+                <h2 class="text-2xl font-serif font-bold text-gray-800 mb-6 flex items-center gap-3">
+                    <i class="fas fa-pyramid text-red-500"></i> 生命金字塔完整解讀
+                </h2>
+
+                <!-- 金字塔圖形 -->
+                <div class="bg-gray-50 rounded-xl p-4 mb-6 overflow-x-auto">
+                    <div id="modalTriangleContainer" class="min-w-[600px]"></div>
+                </div>
+
+                <!-- 數字位置解釋 -->
+                <div class="space-y-6">
+                    <div class="bg-red-50 p-5 rounded-xl border border-red-100">
+                        <h3 class="font-bold text-red-700 text-lg mb-3"><i class="fas fa-star mr-2"></i>三角形內部 (核心性格)
+                        </h3>
+                        <div class="grid md:grid-cols-2 gap-4 text-sm">
+                            <div class="bg-white p-3 rounded-lg"><strong class="text-red-600">O
+                                    (主要性格)</strong>：你人生的核心課題與天命，是三角形頂點與靈魂的最高指導原則。</div>
+                            <div class="bg-white p-3 rounded-lg"><strong class="text-red-600">M
+                                    (外顯綜合)</strong>：你在社會中展現的綜合能量，別人最容易看到的特質。</div>
+                            <div class="bg-white p-3 rounded-lg"><strong class="text-red-600">N
+                                    (內在綜合)</strong>：你內心深處的綜合能量，是驅動你行為的潛意識力量。</div>
+                            <div class="bg-white p-3 rounded-lg"><strong class="text-red-600">I, J
+                                    (外顯底層)</strong>：外顯性格的基礎，表達方式與社交風格。</div>
+                            <div class="bg-white p-3 rounded-lg"><strong class="text-red-600">K, L
+                                    (內在底層)</strong>：內在性格的基礎，情感需求與安全感來源。</div>
+                        </div>
+                    </div>
+
+                    <div class="bg-blue-50 p-5 rounded-xl border border-blue-100">
+                        <h3 class="font-bold text-blue-700 text-lg mb-3"><i class="fas fa-circle mr-2"></i>藍色圓圈 (人生階段)
+                        </h3>
+                        <div class="grid md:grid-cols-3 gap-4 text-sm">
+                            <div class="bg-white p-3 rounded-lg"><strong class="text-blue-600">R
+                                    (領導力-成年中期)</strong>：40-65歲的人生巔峰，主導議題與領導風格。</div>
+                            <div class="bg-white p-3 rounded-lg"><strong class="text-blue-600">P,
+                                    Q</strong>：輔助領導力的能量，左右手的智慧。</div>
+                            <div class="bg-white p-3 rounded-lg"><strong class="text-blue-600">U
+                                    (工作/朋友)</strong>：成年早期(18-40歲)的社交與事業能量。</div>
+                            <div class="bg-white p-3 rounded-lg"><strong class="text-blue-600">T, S</strong>：工作與友情的細分能量。
+                            </div>
+                            <div class="bg-white p-3 rounded-lg"><strong class="text-blue-600">X
+                                    (家庭/晚年)</strong>：成年晚期(65歲後)的家庭與身心安頓。</div>
+                            <div class="bg-white p-3 rounded-lg"><strong class="text-blue-600">V, W</strong>：家庭關係的細分能量。
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-100 p-5 rounded-xl">
+                        <h3 class="font-bold text-gray-700 text-lg mb-3"><i class="fas fa-calendar-day mr-2"></i>底部日期方框
+                            (A-H)</h3>
+                        <p class="text-sm text-gray-600">依序代表你生日的每一個數字，是所有能量計算的基礎。前兩位為日期，中間兩位為月份，後四位為西元年份。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <nav class="bg-white shadow-sm sticky top-0 z-50">
         <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
@@ -171,31 +267,31 @@
                 <div class="bg-mystic-600 text-white p-2 rounded-lg">
                     <i class="fas fa-star-and-crescent text-xl"></i>
                 </div>
-                <h1 class="text-xl md:text-2xl font-serif font-bold text-gray-800 tracking-wide">靈魂地圖 <span class="text-xs text-mystic-500 font-sans ml-1">Inner Number</span></h1>
+                <h1 class="text-xl md:text-2xl font-serif font-bold text-gray-800 tracking-wide">靈魂地圖 <span
+                        class="text-xs text-mystic-500 font-sans ml-1">Inner Number</span></h1>
             </div>
         </div>
     </nav>
 
     <main class="max-w-5xl mx-auto px-4 py-10">
-        
+
         <!-- Input Section -->
-        <div class="glass-card rounded-3xl shadow-xl p-8 mb-10 text-center border-t-4 border-mystic-500 relative overflow-hidden">
-            <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-pink-400 via-mystic-500 to-blue-400"></div>
+        <div
+            class="glass-card rounded-3xl shadow-xl p-8 mb-10 text-center border-t-4 border-mystic-500 relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-pink-400 via-mystic-500 to-blue-400">
+            </div>
             <h2 class="text-3xl font-serif font-bold mb-3 text-gray-800">探索你的靈魂藍圖</h2>
             <p class="text-gray-500 mb-8 font-light">請選擇出生日期，系統將自動解析</p>
-            
+
             <div class="flex flex-col justify-center items-center gap-4">
-				<div class="relative group w-full max-w-md mx-auto">
-					<div class="absolute -inset-0.5 bg-gradient-to-r from-mystic-400 to-pink-400 rounded-xl blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
-					<input 
-						type="text" 
-						id="birthdate" 
-						placeholder="請輸入生日 (例：1990-01-15)"
-						maxlength="10"
-						inputmode="numeric"
-						oninput="handleBirthdateInput(this)"
-						class="relative w-full px-6 py-4 rounded-xl border-0 bg-white text-xl text-center shadow-sm ring-1 ring-gray-200 focus:ring-2 focus:ring-mystic-500 outline-none text-gray-700 placeholder-gray-400">
-				</div>
+                <div class="relative group w-full max-w-md mx-auto">
+                    <div
+                        class="absolute -inset-0.5 bg-gradient-to-r from-mystic-400 to-pink-400 rounded-xl blur opacity-25 group-hover:opacity-75 transition duration-1000 group-hover:duration-200">
+                    </div>
+                    <input type="text" id="birthdate" placeholder="請輸入生日 (例：1990-01-15)" maxlength="10"
+                        inputmode="numeric" oninput="handleBirthdateInput(this)"
+                        class="relative w-full px-6 py-4 rounded-xl border-0 bg-white text-xl text-center shadow-sm ring-1 ring-gray-200 focus:ring-2 focus:ring-mystic-500 outline-none text-gray-700 placeholder-gray-400">
+                </div>
 
                 <div class="text-sm text-gray-400 mt-2">
                     <i class="fas fa-check-circle mr-1"></i> 選擇日期後，下方立即顯示結果
@@ -205,25 +301,29 @@
 
         <!-- Result Section -->
         <div id="resultArea" class="hidden space-y-12 transition-all duration-500">
-            
+
             <!-- 1. 核心數字卡片 -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 fade-in-up" style="animation-delay: 0.1s;">
-                <div class="bg-white p-5 rounded-2xl shadow-md border-b-4 border-mystic-500 text-center hover:shadow-lg transition-shadow">
+                <div
+                    class="bg-white p-5 rounded-2xl shadow-md border-b-4 border-mystic-500 text-center hover:shadow-lg transition-shadow">
                     <div class="text-xs text-gray-400 uppercase tracking-wider mb-1">Life Path Number</div>
                     <div class="text-sm font-bold text-gray-600 mb-2">生命靈數</div>
                     <div class="text-4xl font-serif font-black text-mystic-600" id="mainNum">-</div>
                 </div>
-                <div class="bg-white p-5 rounded-2xl shadow-md border-b-4 border-pink-400 text-center hover:shadow-lg transition-shadow">
+                <div
+                    class="bg-white p-5 rounded-2xl shadow-md border-b-4 border-pink-400 text-center hover:shadow-lg transition-shadow">
                     <div class="text-xs text-gray-400 uppercase tracking-wider mb-1">Birthday Number</div>
                     <div class="text-sm font-bold text-gray-600 mb-2">生日數</div>
                     <div class="text-4xl font-serif font-black text-pink-500" id="birthDayNum">-</div>
                 </div>
-                <div class="bg-white p-5 rounded-2xl shadow-md border-b-4 border-blue-400 text-center hover:shadow-lg transition-shadow">
+                <div
+                    class="bg-white p-5 rounded-2xl shadow-md border-b-4 border-blue-400 text-center hover:shadow-lg transition-shadow">
                     <div class="text-xs text-gray-400 uppercase tracking-wider mb-1">Talent Number</div>
                     <div class="text-sm font-bold text-gray-600 mb-2">天賦數</div>
                     <div class="text-4xl font-serif font-black text-blue-500" id="talentNum">-</div>
                 </div>
-                <div class="bg-white p-5 rounded-2xl shadow-md border-b-4 border-yellow-400 text-center hover:shadow-lg transition-shadow">
+                <div
+                    class="bg-white p-5 rounded-2xl shadow-md border-b-4 border-yellow-400 text-center hover:shadow-lg transition-shadow">
                     <div class="text-xs text-gray-400 uppercase tracking-wider mb-1">Zodiac Number</div>
                     <div class="text-sm font-bold text-gray-600 mb-2">星座數</div>
                     <div class="text-4xl font-serif font-black text-yellow-500" id="zodiacNum">-</div>
@@ -233,8 +333,11 @@
             <!-- 2. 九宮格與基礎資訊 -->
             <div class="grid md:grid-cols-2 gap-8 fade-in-up" style="animation-delay: 0.2s;">
                 <!-- Left: Grid -->
-                <div class="bg-white rounded-3xl shadow-xl p-6 md:p-10 flex flex-col items-center justify-center relative">
-                    <h3 class="text-xl font-serif font-bold text-gray-800 mb-6 absolute top-6 left-8 border-l-4 border-mystic-500 pl-3">能量命盤</h3>
+                <div
+                    class="bg-white rounded-3xl shadow-xl p-6 md:p-10 flex flex-col items-center justify-center relative">
+                    <h3
+                        class="text-xl font-serif font-bold text-gray-800 mb-6 absolute top-6 left-8 border-l-4 border-mystic-500 pl-3">
+                        能量命盤</h3>
                     <div class="numerology-grid mt-8" id="gridContainer">
                         <svg class="lines-overlay" id="linesSvg"></svg>
                         <div class="grid-cell" id="cell-1">1</div>
@@ -248,7 +351,7 @@
                         <div class="grid-cell" id="cell-9">9</div>
                     </div>
                     <div class="mt-6 text-xs text-gray-400 bg-gray-50 py-2 px-4 rounded-full">
-                        <i class="fas fa-info-circle mr-1"></i> 
+                        <i class="fas fa-info-circle mr-1"></i>
                         圈數來源：先天數、生命靈數、天賦數、生日數、星座數
                     </div>
                 </div>
@@ -256,19 +359,22 @@
                 <!-- Right: Details -->
                 <div class="space-y-4">
                     <div class="bg-white p-6 rounded-2xl shadow-md border-l-4 border-green-400">
-                        <h4 class="text-lg font-bold text-gray-700 mb-1"><i class="fas fa-seedling text-green-400 mr-2"></i>先天數 (Innate)</h4>
+                        <h4 class="text-lg font-bold text-gray-700 mb-1"><i
+                                class="fas fa-seedling text-green-400 mr-2"></i>先天數 (Innate)</h4>
                         <p class="text-sm text-gray-400 mb-2">來自出生日期的原始能量</p>
                         <div class="text-xl font-mono text-gray-800 tracking-widest break-words" id="innateStr">-</div>
                     </div>
 
                     <div class="bg-white p-6 rounded-2xl shadow-md border-l-4 border-gray-400">
-                        <h4 class="text-lg font-bold text-gray-700 mb-1"><i class="fas fa-ghost text-gray-400 mr-2"></i>空缺數 (Missing)</h4>
+                        <h4 class="text-lg font-bold text-gray-700 mb-1"><i
+                                class="fas fa-ghost text-gray-400 mr-2"></i>空缺數 (Missing)</h4>
                         <p class="text-sm text-gray-400 mb-2">今生需要修煉的隱藏課題</p>
                         <div class="text-gray-600 font-bold tracking-widest" id="missingStr">無</div>
                     </div>
 
                     <div class="bg-white p-6 rounded-2xl shadow-md border-l-4 border-indigo-400">
-                        <h4 class="text-lg font-bold text-gray-700 mb-1"><i class="fas fa-calendar-alt text-indigo-400 mr-2"></i>2026 流年數</h4>
+                        <h4 class="text-lg font-bold text-gray-700 mb-1"><i
+                                class="fas fa-calendar-alt text-indigo-400 mr-2"></i>2026 流年數</h4>
                         <p class="text-sm text-gray-400 mb-2">今年的主題與能量走向</p>
                         <div class="flex items-baseline gap-2">
                             <span class="text-2xl font-bold text-indigo-600" id="yearNum">-</span>
@@ -279,8 +385,9 @@
             </div>
 
             <!-- ★★★ 新增：生命數字金字塔 (Triangle) ★★★ -->
-            <div class="bg-white rounded-3xl shadow-xl p-8 fade-in-up border border-gray-100 relative group" style="animation-delay: 0.25s;">
-                
+            <div class="bg-white rounded-3xl shadow-xl p-8 fade-in-up border border-gray-100 relative group"
+                style="animation-delay: 0.25s;">
+
                 <!-- 頂部工具列：標題 (左) + 功能鍵 (右) -->
                 <div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-4 border-b pb-4">
                     <div class="flex items-center gap-3">
@@ -288,96 +395,178 @@
                             <i class="fas fa-pyramid text-xl"></i>
                         </div>
                         <div>
-                            <h3 class="text-2xl font-serif font-bold text-gray-800">生命金字塔</h3>
-                            <div class="text-sm text-gray-400">人生階段與核心性格分析</div>
+                            <h3 class="text-2xl font-serif font-bold text-gray-800">
+                                <a href="javascript:void(0)" onclick="openPyramidModal()"
+                                    class="hover:text-red-600 transition-colors underline decoration-dotted decoration-red-300 underline-offset-4">生命金字塔</a>
+                            </h3>
+                            <div class="text-sm text-gray-400">人生階段與核心性格分析 <span
+                                    class="text-red-400 ml-1">(點擊查看完整解讀)</span></div>
                         </div>
                     </div>
 
                     <!-- 右上角功能按鈕 -->
-                    <div class="flex gap-2 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
-                        <button onclick="copyPyramidImage()" class="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg text-sm font-bold transition-colors">
+                    <div
+                        class="flex gap-2 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
+                        <button onclick="copyPyramidImage()"
+                            class="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg text-sm font-bold transition-colors">
                             <i class="fas fa-copy"></i> 複製
                         </button>
-                        <button onclick="downloadPyramidImage()" class="flex items-center gap-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg text-sm font-bold shadow-md transition-all transform hover:scale-105">
+                        <button onclick="downloadPyramidImage()"
+                            class="flex items-center gap-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg text-sm font-bold shadow-md transition-all transform hover:scale-105">
                             <i class="fas fa-download"></i> 下載圖片
                         </button>
                     </div>
                 </div>
-                
-	<!-- ★★★ 截圖範圍 (包含姓名與圖形) ★★★ -->
-					<!-- 修改重點：調整 padding-bottom 為 pb-6 減少底部留白 -->
-					<div id="pyramid-capture-area" class="bg-white px-8 pt-24 pb-6 md:px-12 md:pt-12 md:pb-6 rounded-xl border-[1px] border-gray-200 shadow-sm relative ">
-						
-						<!-- 1. 頂部裝飾條 -->
-						<div class="absolute top-0 left-0 w-full h-3 bg-gradient-to-r from-mystic-300 via-pink-300 to-gold-400"></div>
 
-						<!-- 2. 標題區域：(位置交換：先顯示皇冠，再顯示名字) -->
-						<div class="text-center mb-2 mt-4 relative z-10">
-							
-							<!-- Part A: 皇冠與英文標題 (移至最上方) -->
-							<div class="flex flex-col items-center justify-center mb-3">
-								<div class="flex items-center gap-3 text-gold-500 mb-1">
-									<div class="h-[1px] w-8 md:w-12 bg-gray-300"></div>
-									<i class="fas fa-crown text-lg"></i>
-									<div class="h-[1px] w-8 md:w-12 bg-gray-300"></div>
-								</div>
-								<div class="text-[10px] md:text-xs text-gray-400 font-sans tracking-[0.25em] uppercase">Soul Map Exclusive Analysis</div>
-							</div>
+                <!-- ★★★ 截圖範圍 (包含姓名與圖形) ★★★ -->
+                <!-- 修改重點：調整 padding-bottom 為 pb-6 減少底部留白 -->
+                <div id="pyramid-capture-area"
+                    class="bg-white px-8 pt-24 pb-6 md:px-12 md:pt-12 md:pb-6 rounded-xl border-[1px] border-gray-200 shadow-sm relative ">
 
-							<!-- Part B: 中文姓名句子 (移至下方) -->
-							<div class="inline-flex flex-wrap items-center justify-center gap-2 text-xl md:text-3xl font-serif font-bold text-gray-700 leading-relaxed">
-								<span class="text-gray-500">這是</span>
-								
-								<!-- ★ 修復：保留 input 可見，移除重複的 display 容器 -->
-								<input type="text" 
-									   id="nameInput"
-									   placeholder="輸入姓名" 
-									   class="text-center text-mystic-700 border-b-2 border-gray-300 focus:border-mystic-500 outline-none bg-transparent placeholder-gray-300 min-w-[100px] w-auto py-1 transition-colors font-serif font-bold text-xl md:text-3xl"
-									   style="max-width: 180px;"
-									   maxlength="10">
-								
-								<span class="text-gray-500">的生命金字塔密碼</span>
-							</div>
+                    <!-- 1. 頂部裝飾條 -->
+                    <div
+                        class="absolute top-0 left-0 w-full h-3 bg-gradient-to-r from-mystic-300 via-pink-300 to-gold-400">
+                    </div>
 
-						</div>
+                    <!-- 2. 標題區域：(位置交換：先顯示皇冠，再顯示名字) -->
+                    <div class="text-center mb-2 mt-4 relative z-10">
 
-						<!-- 3. 圖形容器 -->
-						<div class="w-full overflow-x-auto flex justify-center relative z-10">
-							<div id="triangleContainer" class="min-w-[700px] md:min-w-[900px] px-4"></div>
-						</div>
+                        <!-- Part A: 皇冠與英文標題 (移至最上方) -->
+                        <div class="flex flex-col items-center justify-center mb-3">
+                            <div class="flex items-center gap-3 text-gold-500 mb-1">
+                                <div class="h-[1px] w-8 md:w-12 bg-gray-300"></div>
+                                <i class="fas fa-crown text-lg"></i>
+                                <div class="h-[1px] w-8 md:w-12 bg-gray-300"></div>
+                            </div>
+                            <div class="text-[10px] md:text-xs text-gray-400 font-sans tracking-[0.25em] uppercase">Soul
+                                Map Exclusive Analysis</div>
+                        </div>
 
-						<!-- 4. 底部版權浮水印 -->
-						<!-- 修改重點：mt-8 改為 mt-1，大幅減少圖形與底部的距離 -->
-						<div class="mt-1 pt-3 border-t border-gray-100 flex justify-between items-end">
-							<div class="text-left">
-								<div class="text-xl md:text-2xl text-gray-100 font-serif font-black select-none">INNER NUMBER</div>
-							</div>
-							<div class="text-right text-[10px] md:text-xs text-gray-400 font-serif italic">
-								Verified by Randy | Soul Map System
-							</div>
-						</div>
-						
-						<!-- 背景裝飾 -->
-						<div class="absolute bottom-10 right-10 text-9xl text-gray-50 opacity-20 pointer-events-none rotate-12 select-none">
-							<i class="fas fa-seedling"></i>
-						</div>
-					</div>
-                
+                        <!-- Part B: 中文姓名句子 (移至下方) -->
+                        <div
+                            class="inline-flex flex-wrap items-center justify-center gap-2 text-xl md:text-3xl font-serif font-bold text-gray-700 leading-relaxed">
+                            <span class="text-gray-500">這是</span>
+
+                            <!-- ★ 修復：保留 input 可見，移除重複的 display 容器 -->
+                            <input type="text" id="nameInput" placeholder="輸入姓名"
+                                class="text-center text-mystic-700 border-b-2 border-gray-300 focus:border-mystic-500 outline-none bg-transparent placeholder-gray-300 min-w-[100px] w-auto py-1 transition-colors font-serif font-bold text-xl md:text-3xl"
+                                style="max-width: 180px;" maxlength="10">
+
+                            <span class="text-gray-500">的生命金字塔密碼</span>
+                        </div>
+
+                    </div>
+
+                    <!-- 3. 圖形容器 -->
+                    <div class="w-full overflow-x-auto flex justify-center relative z-10">
+                        <div id="triangleContainer" class="min-w-[700px] md:min-w-[900px] px-4"></div>
+                    </div>
+
+                    <!-- 4. 底部版權浮水印 -->
+                    <!-- 修改重點：mt-8 改為 mt-1，大幅減少圖形與底部的距離 -->
+                    <div class="mt-1 pt-3 border-t border-gray-100 flex justify-between items-end">
+                        <div class="text-left">
+                            <div class="text-xl md:text-2xl text-gray-100 font-serif font-black select-none">INNER
+                                NUMBER</div>
+                        </div>
+                        <div class="text-right text-[10px] md:text-xs text-gray-400 font-serif italic">
+                            Verified by Randy | Soul Map System
+                        </div>
+                    </div>
+
+                    <!-- 背景裝飾 -->
+                    <div
+                        class="absolute bottom-10 right-10 text-9xl text-gray-50 opacity-20 pointer-events-none rotate-12 select-none">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                </div>
+
                 <!-- 提示文字 -->
                 <div class="text-center mt-4 text-xs text-gray-300">
                     <i class="fas fa-info-circle mr-1"></i> 電腦版滑鼠移入右上角可顯示操作按鈕
                 </div>
             </div>
 
+            <!-- ★★★ 生命金字塔深度解讀 ★★★ -->
+            <div class="bg-gradient-to-br from-red-50 to-orange-50 rounded-3xl shadow-xl p-8 fade-in-up border border-red-100"
+                style="animation-delay: 0.28s;">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center text-red-600">
+                        <i class="fas fa-fire text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-serif font-bold text-gray-800">金字塔能量解讀</h3>
+                        <div class="text-sm text-gray-400">基於你的生命金字塔計算結果</div>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-6">
+                    <!-- 主要性格 O -->
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border-t-4 border-red-500">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span
+                                class="w-8 h-8 rounded-full bg-red-500 text-white flex items-center justify-center font-bold"
+                                id="pyramidO">-</span>
+                            <h4 class="font-bold text-gray-800">主要性格 (O)</h4>
+                        </div>
+                        <p class="text-sm text-gray-600 leading-relaxed" id="pyramidODesc">靈魂的最高指導原則</p>
+                    </div>
+                    <!-- 領導力 R -->
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border-t-4 border-blue-500">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span
+                                class="w-8 h-8 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold"
+                                id="pyramidR">-</span>
+                            <h4 class="font-bold text-gray-800">領導力 (R)</h4>
+                        </div>
+                        <p class="text-sm text-gray-600 leading-relaxed" id="pyramidRDesc">40-65歲的人生巔峰</p>
+                    </div>
+                    <!-- 通用力 U -->
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border-t-4 border-green-500">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span
+                                class="w-8 h-8 rounded-full bg-green-500 text-white flex items-center justify-center font-bold"
+                                id="pyramidU">-</span>
+                            <h4 class="font-bold text-gray-800">通用力 (U)</h4>
+                        </div>
+                        <p class="text-sm text-gray-600 leading-relaxed" id="pyramidUDesc">18-40歲的事業與社交</p>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6 mt-6">
+                    <!-- 專業力 X -->
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border-l-4 border-purple-500">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span
+                                class="w-8 h-8 rounded-full bg-purple-500 text-white flex items-center justify-center font-bold"
+                                id="pyramidX">-</span>
+                            <h4 class="font-bold text-gray-800">專業力 (X) - 家庭/晚年</h4>
+                        </div>
+                        <p class="text-sm text-gray-600 leading-relaxed" id="pyramidXDesc">65歲後的身心安頓</p>
+                    </div>
+                    <!-- 外顯 vs 內在 -->
+                    <div class="bg-white p-5 rounded-2xl shadow-sm border-l-4 border-orange-400">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span
+                                class="w-8 h-8 rounded-full bg-orange-400 text-white flex items-center justify-center font-bold text-xs">M/N</span>
+                            <h4 class="font-bold text-gray-800">外顯 <span id="pyramidM">-</span> vs 內在 <span
+                                    id="pyramidN">-</span></h4>
+                        </div>
+                        <p class="text-sm text-gray-600 leading-relaxed" id="pyramidMNDesc">社會形象與內心驅動力</p>
+                    </div>
+                </div>
+            </div>
+
             <!-- 3. 深度解析報告區 -->
             <div class="space-y-8 fade-in-up" style="animation-delay: 0.3s;">
-                
+
                 <!-- 主命數詳解 -->
                 <div class="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
                     <!-- Header -->
                     <div class="bg-gradient-to-r from-mystic-50 to-white p-8 border-b border-gray-100">
                         <div class="flex items-center gap-3 mb-4">
-                            <div class="w-12 h-12 rounded-full bg-mystic-100 flex items-center justify-center text-mystic-600 shadow-sm">
+                            <div
+                                class="w-12 h-12 rounded-full bg-mystic-100 flex items-center justify-center text-mystic-600 shadow-sm">
                                 <i class="fas fa-user-astronaut text-2xl"></i>
                             </div>
                             <div>
@@ -394,18 +583,21 @@
                         <!-- 靈魂性格與潛在挑戰 -->
                         <div class="grid md:grid-cols-2 gap-6">
                             <div class="bg-green-50 p-5 rounded-xl border border-green-100">
-                                <h5 class="font-bold text-green-800 mb-2 flex items-center"><i class="fas fa-sun mr-2"></i>性格優勢</h5>
+                                <h5 class="font-bold text-green-800 mb-2 flex items-center"><i
+                                        class="fas fa-sun mr-2"></i>性格優勢</h5>
                                 <p class="text-gray-600 text-sm leading-relaxed" id="roleStrengths"></p>
                             </div>
                             <div class="bg-red-50 p-5 rounded-xl border border-red-100">
-                                <h5 class="font-bold text-red-800 mb-2 flex items-center"><i class="fas fa-moon mr-2"></i>潛在盲點</h5>
+                                <h5 class="font-bold text-red-800 mb-2 flex items-center"><i
+                                        class="fas fa-moon mr-2"></i>潛在盲點</h5>
                                 <p class="text-gray-600 text-sm leading-relaxed" id="roleShadows"></p>
                             </div>
                         </div>
-                        
+
                         <!-- 成長策略 -->
                         <div class="bg-gray-50 p-5 rounded-xl border border-gray-200">
-                            <h5 class="font-bold text-gray-700 mb-2 flex items-center"><i class="fas fa-level-up-alt mr-2 text-mystic-500"></i>成長策略 (Action Plan)</h5>
+                            <h5 class="font-bold text-gray-700 mb-2 flex items-center"><i
+                                    class="fas fa-level-up-alt mr-2 text-mystic-500"></i>成長策略 (Action Plan)</h5>
                             <p class="text-gray-600 text-sm leading-relaxed" id="roleAction"></p>
                         </div>
 
@@ -422,31 +614,72 @@
                         </div>
 
                         <!-- 本世人生課題 -->
-                        <div class="bg-gradient-to-r from-mystic-600 to-purple-700 p-6 rounded-2xl text-white shadow-lg">
-                            <h5 class="font-bold text-lg mb-2 flex items-center"><i class="fas fa-star mr-2 text-yellow-300"></i>本世人生課題</h5>
+                        <div
+                            class="bg-gradient-to-r from-mystic-600 to-purple-700 p-6 rounded-2xl text-white shadow-lg">
+                            <h5 class="font-bold text-lg mb-2 flex items-center"><i
+                                    class="fas fa-star mr-2 text-yellow-300"></i>本世人生課題</h5>
                             <p class="text-purple-100 italic leading-relaxed" id="roleMission"></p>
+                        </div>
+
+                        <!-- 靈魂充電站 (回能系統) -->
+                        <div class="bg-indigo-50 p-6 rounded-2xl border border-indigo-100 mt-6">
+                            <div class="flex items-center gap-3 mb-4">
+                                <div
+                                    class="w-10 h-10 rounded-full bg-indigo-200 flex items-center justify-center text-indigo-700">
+                                    <i class="fas fa-battery-three-quarters text-xl"></i>
+                                </div>
+                                <h5 class="font-bold text-indigo-900 text-lg">靈魂充電站：頻率恢復指南</h5>
+                            </div>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div class="bg-white p-4 rounded-xl shadow-sm">
+                                    <h6 class="font-bold text-indigo-700 text-sm mb-2 flex items-center"><i
+                                            class="fas fa-leaf mr-2"></i>回能方式</h6>
+                                    <p class="text-gray-600 text-sm" id="recoveryMethod"></p>
+                                </div>
+                                <div class="bg-white p-4 rounded-xl shadow-sm">
+                                    <h6 class="font-bold text-indigo-700 text-sm mb-2 flex items-center"><i
+                                            class="fas fa-mountain mr-2"></i>理想環境</h6>
+                                    <p class="text-gray-600 text-sm" id="recoveryEnv"></p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- 財富機遇 (創業暗示) -->
-                <div class="bg-gradient-to-r from-amber-50 to-white rounded-3xl shadow-xl p-8 border-l-8 border-gold-500">
+                <!-- 財富機遇 (與限制性信念) -->
+                <div
+                    class="bg-gradient-to-r from-amber-50 to-white rounded-3xl shadow-xl p-8 border-l-8 border-gold-500">
                     <div class="flex items-center gap-3 mb-6">
                         <div class="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center text-gold-600">
                             <i class="fas fa-key text-xl"></i>
                         </div>
-                        <h3 class="text-2xl font-serif font-bold text-gray-800">財富機遇與轉捩點</h3>
+                        <h3 class="text-2xl font-serif font-bold text-gray-800">財富機遇與心靈天花板</h3>
                     </div>
                     <div class="prose max-w-none">
-                        <p class="text-gray-600 leading-relaxed mb-4">
-                            每個數字都藏著開啟財富大門的鑰匙。根據你的靈數能量，如果你一直感到被現狀困住，或許是因為你還沒找到那個能放大你天賦的「系統」。
+                        <p class="text-gray-600 leading-relaxed mb-6">
+                            財富不僅是數字的累積，更是內在信念的顯化。如果你感到事業停滯，往往是因為潛意識中的「限制性信念」正在煞車。
                         </p>
+
+                        <div class="grid md:grid-cols-2 gap-6 mb-6">
+                            <div class="bg-white p-6 rounded-xl shadow-sm border border-red-100">
+                                <h5 class="font-bold text-red-600 mb-2 text-lg"><i class="fas fa-lock mr-2"></i>限制性信念
+                                    (限制財運的原因)</h5>
+                                <p class="text-gray-700 leading-relaxed text-sm" id="limitingBelief"></p>
+                            </div>
+                            <div class="bg-white p-6 rounded-xl shadow-sm border border-green-100">
+                                <h5 class="font-bold text-green-600 mb-2 text-lg"><i
+                                        class="fas fa-unlock mr-2"></i>轉化與建議</h5>
+                                <p class="text-gray-700 leading-relaxed text-sm" id="beliefAdvice"></p>
+                            </div>
+                        </div>
+
                         <div class="bg-white p-6 rounded-xl shadow-sm border border-amber-100">
-                            <h5 class="font-bold text-gold-600 mb-2 text-lg"><i class="fas fa-lightbulb mr-2"></i>給你的專屬建議：</h5>
+                            <h5 class="font-bold text-gold-600 mb-2 text-lg"><i
+                                    class="fas fa-lightbulb mr-2"></i>給你的事業建議：</h5>
                             <p class="text-gray-700 font-medium leading-relaxed" id="bizAdvice"></p>
                             <div class="mt-4 pt-4 border-t border-gray-100 text-sm text-gray-500 italic">
                                 <i class="fas fa-quote-left mr-2 text-gray-300"></i>
-                                當機會出現時，只有準備好改變的人能看見。
+                                當你打破內在的柵欄，外在的荒野將任你馳騁。
                             </div>
                         </div>
                     </div>
@@ -456,7 +689,8 @@
                 <div class="grid lg:grid-cols-2 gap-8">
                     <div class="bg-white rounded-3xl shadow-xl p-8 h-full">
                         <div class="flex items-center gap-3 mb-6">
-                            <div class="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-600">
+                            <div
+                                class="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-600">
                                 <i class="fas fa-project-diagram text-xl"></i>
                             </div>
                             <h3 class="text-xl font-serif font-bold text-gray-800">天賦連線解析</h3>
@@ -465,7 +699,8 @@
                     </div>
                     <div class="bg-white rounded-3xl shadow-xl p-8 border-l-8 border-gray-300 h-full">
                         <div class="flex items-center gap-3 mb-6">
-                            <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600">
+                            <div
+                                class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600">
                                 <i class="fas fa-tools text-xl"></i>
                             </div>
                             <h3 class="text-xl font-serif font-bold text-gray-800">靈魂補完計畫 (空缺數)</h3>
@@ -478,46 +713,46 @@
         </div>
 
         <div class="mt-12 text-center text-gray-400 text-sm pb-8">
-            <p>© 2025 靈魂地圖計算器 | 耀文行動商城 </p>
+            <p>© 2026 靈魂地圖計算器 | 耀文行動商城 </p>
         </div>
 
     </main>
 
     <script>
-		// ========== 手機輸入處理 ========== //
-		function handleBirthdateInput(input) {
-			// 移除非數字字元
-			let value = input.value.replace(/[^0-9]/g, '');
-			
-			// 自動格式化顯示
-			if (value.length >= 4) {
-				value = value.substring(0, 4) + '-' + value.substring(4);
-			}
-			if (value.length >= 7) {
-				value = value.substring(0, 7) + '-' + value.substring(7, 9);
-			}
-			
-			input.value = value;
-			
-			// 移除分隔符號後檢查長度
-			const pureNumbers = value.replace(/-/g, '');
-			
-			if (pureNumbers.length === 8) {
-				const year = pureNumbers.substring(0, 4);
-				const month = pureNumbers.substring(4, 6);
-				const day = pureNumbers.substring(6, 8);
-				
-				const dateObj = new Date(year, month - 1, day);
-				if (dateObj.getFullYear() == year && 
-					dateObj.getMonth() == month - 1 && 
-					dateObj.getDate() == day) {
-					calculate();
-				} else {
-					alert('日期格式錯誤，請輸入正確的日期（例：1990-01-15）');
-					input.value = '';
-				}
-			}
-		}	
+        // ========== 手機輸入處理 ========== //
+        function handleBirthdateInput(input) {
+            // 移除非數字字元
+            let value = input.value.replace(/[^0-9]/g, '');
+
+            // 自動格式化顯示
+            if (value.length >= 4) {
+                value = value.substring(0, 4) + '-' + value.substring(4);
+            }
+            if (value.length >= 7) {
+                value = value.substring(0, 7) + '-' + value.substring(7, 9);
+            }
+
+            input.value = value;
+
+            // 移除分隔符號後檢查長度
+            const pureNumbers = value.replace(/-/g, '');
+
+            if (pureNumbers.length === 8) {
+                const year = pureNumbers.substring(0, 4);
+                const month = pureNumbers.substring(4, 6);
+                const day = pureNumbers.substring(6, 8);
+
+                const dateObj = new Date(year, month - 1, day);
+                if (dateObj.getFullYear() == year &&
+                    dateObj.getMonth() == month - 1 &&
+                    dateObj.getDate() == day) {
+                    calculate();
+                } else {
+                    alert('日期格式錯誤，請輸入正確的日期（例：1990-01-15）');
+                    input.value = '';
+                }
+            }
+        }
         // ========== 資料庫 Data ========== //
         const bizMessages = {
             1: "作為天生的開創者，替別人打工往往限制了你的格局。你擁有獨立創業的靈魂，與其在體制內撞牆，不如建立一個屬於自己的事業系統。尋找一個能讓你「自主」但又能運用槓桿力量的平台，是你通往財富自由的捷徑。",
@@ -536,11 +771,64 @@
             2: { trait: "忽略細節、較不敏感", desc: "你可能習慣獨來獨往，覺得與人溝通很累，容易忽略他人的感受。", action: "參與「團隊合作」。加入一個重視互助的社群或系統，強迫自己練習傾聽與配合。你會發現，有時候配合別人反而能讓事情更順利。" },
             3: { trait: "表達壓抑、缺乏創意", desc: "你可能覺得自己很無趣，或者害怕上台說話，有想法卻不知如何表達。", action: "練習「分享」。試著在社群媒體分享你的生活或產品體驗。不用完美，真實就好。透過不斷的輸出來鍛鍊你的表達肌群。" },
             4: { trait: "缺乏安全感、執行力弱", desc: "你可能做事容易虎頭蛇尾，對未來充滿不確定感，卻又不敢踏出改變的一步。", action: "建立「系統」。不要靠意志力，要靠流程。尋找一個已經被驗證成功的SOP來執行，讓規律帶給你安全感，並轉化為具體成果。" },
-            5: { trait: "害怕改變、生活單調", desc: "你可能過著一成不變的生活，雖然覺得無聊，但更害怕未知。", action: "設定「冒險日」。每週做一件沒做過的事。考慮接觸像電子商務這樣的新趨勢，讓你的生活與世界接軌，打破僵化的舒適圈。" },
+            5: {
+                trait: "害怕改變、生活單調", desc: "你可能過著一成不變的生活，雖然覺得無聊，但更害怕未知。", action: "設定「冒險日」。每週做一件沒做過的事。考慮接觸像電子商務這樣的新趨勢，讓你的生活與世界接軌，打破僵化的舒適圈。",
+            },
             6: { trait: "情感疏離、責任感淡", desc: "你可能比較自我，覺得別人的事與你無關，或者害怕承擔責任。", action: "練習「付出」。主動去關心你的客戶或夥伴，不求回報地提供價值。你會發現，當你開始為別人負責時，你的生命重量會完全不同。" },
             7: { trait: "思考淺層、容易輕信", desc: "你可能懶得思考太複雜的事，或者容易被表象迷惑，缺乏判斷力。", action: "深入「研究」。不要只看表面，去研究商業模式背後的邏輯。當你搞懂了遊戲規則，你會發現很多機會其實藏在細節裡。" },
             8: { trait: "金錢匱乏、缺乏野心", desc: "你可能覺得錢夠用就好，或者潛意識排斥談論金錢與權力。", action: "重塑「財商」。閱讀理財書籍，了解被動收入的概念。承認自己對豐盛的渴望，並開始接觸能創造現金流的工具。" },
-            9: { trait: "現實主義、缺乏夢想", desc: "你可能過於務實，覺得夢想不能當飯吃，對社會議題較為冷感。", action: "尋找「意義」。試著把你的工作與助人連結起來。當你的努力能讓別人的生活變得更好，你會找到前所未有的動力。" }
+            9: { trait: "現實主義、缺乏夢夢想", desc: "你可能過於務實，覺得夢想不能當飯吃，對社會議題較為冷感。", action: "尋找「意義」。試著把你的工作與助人連結起來。當你的努力能讓別人的生活變得更好，你會找到前所未有的動力。" }
+        };
+
+        const wealthBeliefs = {
+            1: {
+                limiting: "「我要一個人扛下所有責任，求助是軟弱的表現。」這種信念讓你在事業中容易過勞，且難以建立規模化的團隊。",
+                advice: "接受「共創」的力量。財富來自於系統的槓桿，而不僅是你的個人體力。學會授權，讓別人幫助你成功。"
+            },
+            2: {
+                limiting: "「談錢會傷感情，我不好意思開口要求回報。」這讓你常成為付出最多但拿得最少的人，導致金錢流失。",
+                advice: "建立「價值交換」的觀念。你提供服務是為了幫助他人，合理的收費是能量的守恆，更是對專業的尊重。"
+            },
+            3: {
+                limiting: "「我不夠專業，我的點子只是小聰明，不值錢。」這讓你不敢將創意轉化為正式的商業模式，錯失先行者優勢。",
+                advice: "你的創意是解決問題的捷徑。找個行政強的夥伴幫你把點子落地，專注於品牌形象與市場溝通。"
+            },
+            4: {
+                limiting: "「世界很危險，我必須守住每一分錢，不敢變動。」過度的匱乏感讓你抗拒投資與轉型，被鎖死在低效的現狀。",
+                advice: "金錢是流動的能量。練習「有感投資」，設定一筆小預算去嘗試新事物，讓你的資源開始「呼吸」。"
+            },
+            5: {
+                limiting: "「承諾就是束縛，我害怕事業做大後會失去自由。」這讓你習慣半途而廢，事業總在起飛前夕自動降溫。",
+                advice: "定義「系統化的自由」。建立一個能自動運行的系統，正是為了讓你擁有不需要打卡也能有收入的極高自由。"
+            },
+            6: {
+                limiting: "「我不配擁有比家人/他人更多的財富。」隱形的內疚感會讓你不知不覺把賺來的錢花掉或借給別人。",
+                advice: "你擁有越多，才能照顧越多人。將致富視為一種「社會責任」，你的豐盛將成為周圍人的守護力量。"
+            },
+            7: {
+                limiting: "「凡事必須搞懂所有細節才能開始。」這種過度分析導致行動癱瘓，眼睜睜看著財富時機溜走。",
+                advice: "先上路，再導航。在變動中修正邏輯，比在靜止中空想更有力量。相信你的直覺，大腦是用來輔助而非主導的。"
+            },
+            8: {
+                limiting: "「金錢是有害的/邪惡的，會讓人變壞。」或是過度追求數字而忽視人際與健康，導致財來財去。",
+                advice: "金錢是能量的放大器。如果你是善良的人，錢只會讓你做更多善事。回歸內在的平衡，追求「圓滿的豐盛」。"
+            },
+            9: {
+                limiting: "「我不該談現實的事，靈性與金錢是互斥的。」這種想法讓你雖然有大理想，生活卻總在經濟壓力中掙扎。",
+                advice: "接地氣是顯化的第一步。你的理想需要物質支撐才能擴大影響力。把金錢視為實現夢想的「顯化工具」。"
+            }
+        };
+
+        const recoverySystem = {
+            1: { method: "單獨進行的高強度運動，或是短暫的獨處。重新拿回生活的主導權。", env: "健身房、高處（如樓頂或山巔）、極簡風格的個人工作室。" },
+            2: { method: "深度放鬆的 SPA、與知心好友安靜喝茶，或是進行冥想。聽輕柔的音樂。", env: "溫暖的客廳、充滿植物的角落、水邊或清靜的湖畔。" },
+            3: { method: "隨興的藝術創作（畫畫、唱歌）、與充滿能量的人聚會，或是看一場喜劇。", env: "色彩鮮麗的咖啡館、藝文展演空間、充滿陽光與聲音的戶外。" },
+            4: { method: "整理房間、按造清單完成小任務，或是進行長途步行。閱讀規律的歷史書。", env: "整潔的書房、傳統的圖書館、充滿泥土氣息的郊山步道。" },
+            5: { method: "說走就走的微旅行、嘗試全新口味的食物，或是開車跑山。極限運動。", env: "機場大廳、不熟悉的城市街道、空曠無邊的大草原或海邊。" },
+            6: { method: "親手做一頓飯、照顧盆栽或寵物，或是陪伴家人。進行舒緩的精油按摩。", env: "乾淨溫馨的廚房、自家的院子、溫暖且充滿香氣的室內空間。" },
+            7: { method: "沉浸式研究感興趣的領域、進行深度冥想，或是寫日記探究內心。", env: "深夜的書桌、遠離人煙的深山小木屋、神聖的宗教或精神場所。" },
+            8: { method: "欣賞高品質的高奢品、在高檔餐廳用餐、做整體的理財規劃或是權力社交。", env: "高級行政走廊、視野遼闊的貴賓室、設計現代且繁華的商業區。" },
+            9: { method: "參與志願服務、接觸自然生態、進行整合性的瑜珈或是長時間的睡眠。", env: "廣大的森林、海邊沙灘、能看見地平線或星空的視野開闊處。" }
         };
 
         const numberMeanings = {
@@ -697,18 +985,18 @@
         // ========== 邏輯 Functions ========== //
 
         function getZodiacNum(month, day) {
-            if ((month == 1 && day <= 19) || (month == 12 && day >= 22)) return 1; 
-            if ((month == 1 && day >= 20) || (month == 2 && day <= 18)) return 2; 
-            if ((month == 2 && day >= 19) || (month == 3 && day <= 20)) return 3; 
-            if ((month == 3 && day >= 21) || (month == 4 && day <= 19)) return 1; 
-            if ((month == 4 && day >= 20) || (month == 5 && day <= 20)) return 2; 
-            if ((month == 5 && day >= 21) || (month == 6 && day <= 21)) return 3; 
-            if ((month == 6 && day >= 22) || (month == 7 && day <= 22)) return 4; 
-            if ((month == 7 && day >= 23) || (month == 8 && day <= 22)) return 5; 
-            if ((month == 8 && day >= 23) || (month == 9 && day <= 22)) return 6; 
-            if ((month == 9 && day >= 23) || (month == 10 && day <= 23)) return 7; 
-            if ((month == 10 && day >= 24) || (month == 11 && day <= 22)) return 8; 
-            if ((month == 11 && day >= 23) || (month == 12 && day <= 21)) return 9; 
+            if ((month == 1 && day <= 19) || (month == 12 && day >= 22)) return 1;
+            if ((month == 1 && day >= 20) || (month == 2 && day <= 18)) return 2;
+            if ((month == 2 && day >= 19) || (month == 3 && day <= 20)) return 3;
+            if ((month == 3 && day >= 21) || (month == 4 && day <= 19)) return 1;
+            if ((month == 4 && day >= 20) || (month == 5 && day <= 20)) return 2;
+            if ((month == 5 && day >= 21) || (month == 6 && day <= 21)) return 3;
+            if ((month == 6 && day >= 22) || (month == 7 && day <= 22)) return 4;
+            if ((month == 7 && day >= 23) || (month == 8 && day <= 22)) return 5;
+            if ((month == 8 && day >= 23) || (month == 9 && day <= 22)) return 6;
+            if ((month == 9 && day >= 23) || (month == 10 && day <= 23)) return 7;
+            if ((month == 10 && day >= 24) || (month == 11 && day <= 22)) return 8;
+            if ((month == 11 && day >= 23) || (month == 12 && day <= 21)) return 9;
             return 0;
         }
 
@@ -726,17 +1014,17 @@
             }
             return num;
         }
-        
+
         function reduceToSingle(num) {
-             while (num > 9) {
-                 let sum = 0;
-                 String(num).split('').forEach(n => sum += parseInt(n));
-                 num = sum;
-             }
-             return num;
+            while (num > 9) {
+                let sum = 0;
+                String(num).split('').forEach(n => sum += parseInt(n));
+                num = sum;
+            }
+            return num;
         }
 
-// ★★★ 最終整合修正版：解決文字顯示與圓圈壓線問題 ★★★
+        // ★★★ 最終整合修正版：解決文字顯示與圓圈壓線問題 ★★★
         function drawTriangle(dateObj) {
             const yearStr = dateObj.getFullYear().toString();
             const monthStr = (dateObj.getMonth() + 1).toString().padStart(2, '0');
@@ -753,14 +1041,14 @@
             const H = parseInt(yearStr[3]);
 
             // 2. 計算層級
-            const I = reduceToSingle(A + B); 
-            const J = reduceToSingle(C + D); 
-            const K = reduceToSingle(E + F); 
-            const L = reduceToSingle(G + H); 
+            const I = reduceToSingle(A + B);
+            const J = reduceToSingle(C + D);
+            const K = reduceToSingle(E + F);
+            const L = reduceToSingle(G + H);
 
-            const M = reduceToSingle(I + J); 
-            const N = reduceToSingle(K + L); 
-            const O = reduceToSingle(M + N); 
+            const M = reduceToSingle(I + J);
+            const N = reduceToSingle(K + L);
+            const O = reduceToSingle(M + N);
 
             // 5. 進階計算
             const Q = reduceToSingle(N + O);
@@ -776,19 +1064,19 @@
             const X = reduceToSingle(V + W);
 
             // --- 【修改 1】SVG 畫布設定 (加大) ---
-            const w = 1100; 
-            const h = 900; 
+            const w = 1100;
+            const h = 900;
             const cx = w / 2;
-            const cy = h / 2; 
-            
-            const colorRed = "#b91c1c"; 
-            const colorText = "#2d3748"; 
-            const colorLineGray = "#cbd5e0"; 
+            const cy = h / 2;
 
-			const extraWidth = 250; // 額外寬度
-			let svg = `<svg width="100%" height="100%" viewBox="-${extraWidth/2} 0 ${w + extraWidth} ${h}" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">`;
+            const colorRed = "#b91c1c";
+            const colorText = "#2d3748";
+            const colorLineGray = "#cbd5e0";
 
-            
+            const extraWidth = 250; // 額外寬度
+            let svg = `<svg width="100%" height="100%" viewBox="-${extraWidth / 2} 0 ${w + extraWidth} ${h}" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">`;
+
+
             svg += `
                 <style>
                     .t-font { font-family: 'Noto Serif TC', serif; text-anchor: middle; dominant-baseline: middle; }
@@ -806,37 +1094,37 @@
 
             // --- 【修改 2】幾何座標 (縮小六角形半徑) ---
             const hr = 330; // 原320 -> 改290，留空間給外圍文字
-            
+
             // 三角形參數
-            const triH = 300; 
-            const triBaseHalf = 200; 
-            const yTop = cy - 150; 
-            const yBot = cy + 150; 
+            const triH = 300;
+            const triBaseHalf = 200;
+            const yTop = cy - 150;
+            const yBot = cy + 150;
             const triLeftX = cx - triBaseHalf;
             const triRightX = cx + triBaseHalf;
 
-            const yLine1 = yTop + 100; 
-            const yLine2 = yTop + 200; 
+            const yLine1 = yTop + 100;
+            const yLine2 = yTop + 200;
 
             // --- 1. 繪製六角形外框 ---
             const hx = [
-                cx, cy - hr, 
-                cx + hr * 0.866, cy - hr * 0.5, 
-                cx + hr * 0.866, cy + hr * 0.5, 
-                cx, cy + hr, 
-                cx - hr * 0.866, cy + hr * 0.5, 
-                cx - hr * 0.866, cy - hr * 0.5  
+                cx, cy - hr,
+                cx + hr * 0.866, cy - hr * 0.5,
+                cx + hr * 0.866, cy + hr * 0.5,
+                cx, cy + hr,
+                cx - hr * 0.866, cy + hr * 0.5,
+                cx - hr * 0.866, cy - hr * 0.5
             ];
-            
+
             svg += `<polygon points="${hx.join(' ')}" fill="none" stroke="${colorLineGray}" stroke-width="2" />`;
-            for(let i=0; i<12; i+=2) {
-                svg += `<rect x="${hx[i]-8}" y="${hx[i+1]-8}" width="16" height="16" transform="rotate(45 ${hx[i]} ${hx[i+1]})" fill="#e2e8f0" />`;
+            for (let i = 0; i < 12; i += 2) {
+                svg += `<rect x="${hx[i] - 8}" y="${hx[i + 1] - 8}" width="16" height="16" transform="rotate(45 ${hx[i]} ${hx[i + 1]})" fill="#e2e8f0" />`;
             }
 
             // --- 2. 繪製紅色三角形 ---
             svg += `<path d="M${cx} ${yTop} L${triLeftX} ${yBot} L${triRightX} ${yBot} Z" 
                      fill="#fff5f5" stroke="${colorRed}" stroke-width="6" stroke-linejoin="round" />`;
-            
+
             // 內部線條
             const wLine1 = (yLine1 - yTop) * (triBaseHalf / triH);
             const wLine2 = (yLine2 - yTop) * (triBaseHalf / triH);
@@ -863,21 +1151,21 @@
             svg += `<text x="${cx + 75}" y="${yBot - 15}" class="t-font t-label-gray" style="font-size:16px;">內在性格</text>`;
 
             // --- 4. 底部日期方框 ---
-            const boxSize = 36; 
+            const boxSize = 36;
             const gapSmall = 8;
-            const gapBig = 26; 
-            const boxStartY = yBot + 15; 
-            let currentX = cx - 190; 
+            const gapBig = 26;
+            const boxStartY = yBot + 15;
+            let currentX = cx - 190;
 
             const dateNums = [A, B, C, D, E, F, G, H];
             dateNums.forEach((n, i) => {
                 svg += `<rect x="${currentX}" y="${boxStartY}" width="${boxSize}" height="${boxSize}" fill="none" stroke="#2d3748" stroke-width="1.5" />`;
-                svg += `<text x="${currentX + boxSize/2}" y="${boxStartY + boxSize/2 + 2}" class="t-font" style="font-size:20px; fill:#2b6cb0;">${n}</text>`;
+                svg += `<text x="${currentX + boxSize / 2}" y="${boxStartY + boxSize / 2 + 2}" class="t-font" style="font-size:20px; fill:#2b6cb0;">${n}</text>`;
                 currentX += boxSize;
-                if (i === 1 || i === 3) currentX += gapBig; 
+                if (i === 1 || i === 3) currentX += gapBig;
                 else currentX += gapSmall;
             });
-            
+
             const labelY = boxStartY + boxSize + 15;
             svg += `<text x="${cx - 148}" y="${labelY}" class="t-font t-label-gray">日期</text>`;
             svg += `<text x="${cx - 43}" y="${labelY}" class="t-font t-label-gray">月份</text>`;
@@ -886,7 +1174,7 @@
 
             // --- 5. 外圍圓圈 (【修改 3】向內靠攏，避免壓到六角形) ---
             // 260 -> 220
-            const sideOffset = 220; 
+            const sideOffset = 220;
 
             // 上方 (下屬/兒女)
             const topBaseY = yTop - 40;
@@ -898,7 +1186,7 @@
             svg += `<text x="${cx + 35}" y="${topBaseY + 2}" class="t-font t-circle-text">${P}</text>`;
 
             // 左側 (工作/朋友)
-            const leftCenterX = cx - sideOffset; 
+            const leftCenterX = cx - sideOffset;
             const leftCenterY = cy + 20;
             svg += `<circle cx="${leftCenterX}" cy="${leftCenterY - 40}" r="22" class="t-circle" />`;
             svg += `<text x="${leftCenterX}" y="${leftCenterY - 38}" class="t-font t-circle-text">${U}</text>`;
@@ -919,7 +1207,7 @@
 
 
             // --- 6. 標籤文字 (【修改 4】調整位置與外移) ---
-            
+
             // 頂端標題
             svg += `<text x="${cx}" y="${hx[1] - 75}" class="t-font t-label-title">領導力</text>`;
             svg += `<text x="${cx}" y="${hx[1] - 40}" class="t-font t-label-blue">成年中期<tspan x="${cx}" dy="1.2em">40-65 歲</tspan></text>`;
@@ -934,7 +1222,7 @@
             // 六角形頂點文字 (確保不壓框)
             svg += `<text x="${hx[10] - 75}" y="${hx[11]}" class="t-font t-label-blue" text-anchor="end">成年早期<tspan x="${hx[10] - 75}" dy="1.2em">18-40 歲</tspan></text>`;
             svg += `<text x="${hx[2] + 75}" y="${hx[3]}" class="t-font t-label-blue" text-anchor="start">成年晚期<tspan x="${hx[2] + 75}" dy="1.2em">65 歲後</tspan></text>`;
-            
+
             svg += `<text x="${hx[8] - 40}" y="${hx[9] + 20}" class="t-font t-label-blue" text-anchor="end">青年期<tspan x="${hx[8] - 40}" dy="1.2em">12-18 歲</tspan></text>`;
             svg += `<text x="${hx[4] + 40}" y="${hx[5] + 20}" class="t-font t-label-blue" text-anchor="start">嬰兒期<tspan x="${hx[4] + 40}" dy="1.2em">0-1 歲</tspan></text>`;
 
@@ -942,110 +1230,113 @@
             svg += `<text x="${cx + 240}" y="${hx[7] - 20}" class="t-font t-label-blue" text-anchor="start">兒童期 1-3 歲</text>`;
 
             svg += `</svg>`;
-            
+
             document.getElementById('triangleContainer').innerHTML = svg;
+
+            // 更新金字塔解讀區塊
+            updatePyramidInterpretation(O, M, N, R, U, X);
         }
 
 
         function calculate() {
-			const dateInput = document.getElementById('birthdate');
-			let dateValue = dateInput.value;
-			
-			// 移除分隔符號，統一處理
-			const pureNumbers = dateValue.replace(/-/g, '');
-			
-			if (pureNumbers.length !== 8) {
-				document.getElementById('resultArea').classList.add('hidden');
-				return;
-			}
-			
-			// 轉換為標準日期格式
-			const year = parseInt(pureNumbers.substring(0, 4));
-			const month = parseInt(pureNumbers.substring(4, 6));
-			const day = parseInt(pureNumbers.substring(6, 8));
-			
-			const date = new Date(year, month - 1, day);
-			
-			// 驗證日期有效性
-			if (isNaN(date.getTime()) || 
-				date.getFullYear() !== year || 
-				date.getMonth() !== month - 1 || 
-				date.getDate() !== day) {
-				document.getElementById('resultArea').classList.add('hidden');
-				return;
-			}
+            const dateInput = document.getElementById('birthdate');
+            let dateValue = dateInput.value;
+
+            // 移除分隔符號，統一處理
+            const pureNumbers = dateValue.replace(/-/g, '');
+
+            if (pureNumbers.length !== 8) {
+                document.getElementById('resultArea').classList.add('hidden');
+                return;
+            }
+
+            // 轉換為標準日期格式
+            const year = parseInt(pureNumbers.substring(0, 4));
+            const month = parseInt(pureNumbers.substring(4, 6));
+            const day = parseInt(pureNumbers.substring(6, 8));
+
+            const date = new Date(year, month - 1, day);
+
+            // 驗證日期有效性
+            if (isNaN(date.getTime()) ||
+                date.getFullYear() !== year ||
+                date.getMonth() !== month - 1 ||
+                date.getDate() !== day) {
+                document.getElementById('resultArea').classList.add('hidden');
+                return;
+            }
 
             // A. 計算核心數字
             let sumAllDigits = 0;
             String(year).split('').forEach(n => sumAllDigits += parseInt(n));
-            String(month < 10 ? '0'+month : month).split('').forEach(n => sumAllDigits += parseInt(n));
-            String(day < 10 ? '0'+day : day).split('').forEach(n => sumAllDigits += parseInt(n));
-            
+            String(month < 10 ? '0' + month : month).split('').forEach(n => sumAllDigits += parseInt(n));
+            String(day < 10 ? '0' + day : day).split('').forEach(n => sumAllDigits += parseInt(n));
+
             let lifePath = reduceToSingleOrMaster(sumAllDigits);
-            
+
             let talentArr = [];
             if (sumAllDigits > 9) {
                 let s = String(sumAllDigits);
                 talentArr.push(parseInt(s[0]));
                 talentArr.push(parseInt(s[1]));
             } else {
-                talentArr.push(sumAllDigits); 
+                talentArr.push(sumAllDigits);
             }
 
             let birthDayNum = reduceToSingle(day);
             let zodiacNum = getZodiacNum(month, day);
-            
+
             const fullDateStr = `${year}${month < 10 ? '0' + month : month}${day < 10 ? '0' + day : day}`;
             const innateDigits = [...new Set(fullDateStr.split('')
                 .map(Number)
                 .filter(n => n !== 0))]
-                .sort((a, b) => a - b); 
-            
+                .sort((a, b) => a - b);
+
             const innateDisplayStr = innateDigits.join(', ');
-            
+
             const currentYear = 2025;
             let yearSum = reduceToSingle(day) + reduceToSingle(month) + reduceToSingle(currentYear);
             let yearNum = reduceToSingle(yearSum);
 
             // B. 統計九宮格圈數
-            let counts = {1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0};
+            let counts = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0 };
             for (let c of fullDateStr) {
                 let n = parseInt(c);
                 if (n !== 0) counts[n]++;
             }
             let baseNum = reduceToSingle(lifePath);
             counts[baseNum]++;
-            talentArr.forEach(t => { if(t!==0) counts[t]++; });
+            talentArr.forEach(t => { if (t !== 0) counts[t]++; });
             counts[birthDayNum]++;
-            if(zodiacNum !== 0) counts[zodiacNum]++;
+            if (zodiacNum !== 0) counts[zodiacNum]++;
 
             // C. 更新 UI
             document.getElementById('resultArea').classList.remove('hidden');
-            
+
             document.getElementById('mainNum').innerHTML = lifePath + (lifePath > 9 ? `<span class="text-sm text-gray-400 ml-1">(${reduceToSingle(lifePath)})</span>` : "");
             document.getElementById('birthDayNum').innerText = birthDayNum;
             document.getElementById('talentNum').innerText = talentArr.join(' , ');
             document.getElementById('zodiacNum').innerText = zodiacNum;
             document.getElementById('innateStr').innerText = innateDisplayStr;
-            
+
             let missingArr = [];
-            for(let i=1; i<=9; i++) { if(counts[i] === 0) missingArr.push(i); }
+            for (let i = 1; i <= 9; i++) { if (counts[i] === 0) missingArr.push(i); }
             document.getElementById('missingStr').innerText = missingArr.length > 0 ? missingArr.join(' , ') : "無缺數 (全連線)";
-            
+
             document.getElementById('yearNum').innerText = yearNum;
             document.getElementById('yearTheme').innerText = yearThemes[yearNum].split('：')[0];
 
             drawGrid(counts);
             drawLinesAndInfo(counts);
-            drawTriangle(date); 
+            drawTriangle(date);
 
-            let lookupKey = lifePath; 
+            let lookupKey = lifePath;
             if (!numberMeanings[lookupKey]) lookupKey = reduceToSingle(lifePath);
-            
+
             const info = numberMeanings[lookupKey];
             document.getElementById('roleTitle').innerText = `${lifePath} 號人：${info.title}`;
             document.getElementById('roleTags').innerHTML = info.tags.map(t => `<span class="bg-mystic-100 text-mystic-700 px-3 py-1 rounded-full text-xs font-bold">#${t}</span>`).join('');
-            
+
             document.getElementById('roleStrengths').innerText = info.strengths;
             document.getElementById('roleShadows').innerText = info.shadows;
             document.getElementById('roleAction').innerText = info.action;
@@ -1053,7 +1344,17 @@
             document.getElementById('roleRelation').innerText = info.relation;
             document.getElementById('roleMission').innerText = info.mission;
 
-            const bizKey = reduceToSingle(lifePath); 
+            // 新增：限制性信念與恢復系統更新
+            const coreKey = reduceToSingle(lifePath);
+            const belief = wealthBeliefs[coreKey];
+            document.getElementById('limitingBelief').innerText = belief.limiting;
+            document.getElementById('beliefAdvice').innerText = belief.advice;
+
+            const recovery = recoverySystem[coreKey];
+            document.getElementById('recoveryMethod').innerText = recovery.method;
+            document.getElementById('recoveryEnv').innerText = recovery.env;
+
+            const bizKey = reduceToSingle(lifePath);
             document.getElementById('bizAdvice').innerText = bizMessages[bizKey];
 
             const missingContainer = document.getElementById('missingAdviceContainer');
@@ -1084,7 +1385,7 @@
                 const cell = document.getElementById(`cell-${i}`);
                 const count = counts[i];
                 cell.innerHTML = i;
-                cell.className = 'grid-cell'; 
+                cell.className = 'grid-cell';
                 if (count > 0) {
                     cell.classList.add('active');
                     if (count >= 1) cell.innerHTML += `<div class="circle-ring ring-1"></div>`;
@@ -1098,13 +1399,13 @@
         function drawLinesAndInfo(counts) {
             const svg = document.getElementById('linesSvg');
             const listContainer = document.getElementById('linesContainer');
-            svg.innerHTML = ''; 
-            listContainer.innerHTML = ''; 
+            svg.innerHTML = '';
+            listContainer.innerHTML = '';
 
             const pos = {
-                1: {x: 16.66, y: 16.66}, 4: {x: 50, y: 16.66}, 7: {x: 83.33, y: 16.66},
-                2: {x: 16.66, y: 50},    5: {x: 50, y: 50},    8: {x: 83.33, y: 50},
-                3: {x: 16.66, y: 83.33}, 6: {x: 50, y: 83.33}, 9: {x: 83.33, y: 83.33}
+                1: { x: 16.66, y: 16.66 }, 4: { x: 50, y: 16.66 }, 7: { x: 83.33, y: 16.66 },
+                2: { x: 16.66, y: 50 }, 5: { x: 50, y: 50 }, 8: { x: 83.33, y: 50 },
+                3: { x: 16.66, y: 83.33 }, 6: { x: 50, y: 83.33 }, 9: { x: 83.33, y: 83.33 }
             };
 
             let hasMainLines = false;
@@ -1115,7 +1416,7 @@
                     hasMainLines = true;
                     const start = pos[line.ids[0]];
                     const end = pos[line.ids[line.ids.length - 1]];
-                    
+
                     const lineEl = document.createElementNS("http://www.w3.org/2000/svg", "line");
                     lineEl.setAttribute("x1", `${start.x}%`);
                     lineEl.setAttribute("y1", `${start.y}%`);
@@ -1144,7 +1445,7 @@
         }
 
         // ========== 新增：圖像輸出功能 ========== //
-        
+
         // 通用截圖設定
         const canvasOptions = {
             scale: 2, // 提高解析度
@@ -1153,96 +1454,156 @@
             logging: false
         };
 
-function downloadPyramidImage() {
-    const element = document.getElementById('pyramid-capture-area');
-    const nameInput = document.getElementById('nameInput');
-    const name = nameInput ? nameInput.value.trim() : '';
-    
-    const btn = event.currentTarget;
-    const originalBtnText = btn.innerHTML;
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 製作中...';
-    btn.disabled = true;
+        function downloadPyramidImage() {
+            const element = document.getElementById('pyramid-capture-area');
+            const nameInput = document.getElementById('nameInput');
+            const name = nameInput ? nameInput.value.trim() : '';
 
-    setTimeout(() => {
-        html2canvas(element, {
-            scale: 2, 
-            backgroundColor: "#ffffff",
-            useCORS: true,
-            logging: false,
-            onclone: (clonedDoc) => {
-                // 確保截圖時顯示輸入的文字
-                const clonedInput = clonedDoc.getElementById('nameInput');
-                if(clonedInput && clonedInput.value) {
-                    // 不隱藏，保持原樣
-                    clonedInput.style.color = '#a62bff';
-                    clonedInput.style.fontWeight = 'bold';
+            const btn = event.currentTarget;
+            const originalBtnText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 製作中...';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                html2canvas(element, {
+                    scale: 2,
+                    backgroundColor: "#ffffff",
+                    useCORS: true,
+                    logging: false,
+                    onclone: (clonedDoc) => {
+                        // 確保截圖時顯示輸入的文字
+                        const clonedInput = clonedDoc.getElementById('nameInput');
+                        if (clonedInput && clonedInput.value) {
+                            // 不隱藏，保持原樣
+                            clonedInput.style.color = '#a62bff';
+                            clonedInput.style.fontWeight = 'bold';
+                        }
+                    }
+                }).then(canvas => {
+                    const link = document.createElement('a');
+                    const now = new Date();
+                    const timeStr = `${now.getFullYear()}${(now.getMonth() + 1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}`;
+
+                    link.download = name ? `生命金字塔密碼_${name}_${timeStr}.png` : `生命金字塔密碼_${timeStr}.png`;
+                    link.href = canvas.toDataURL("image/png");
+                    link.click();
+
+                    btn.innerHTML = originalBtnText;
+                    btn.disabled = false;
+                }).catch(err => {
+                    console.error('截圖失敗:', err);
+                    alert('圖片產生失敗，請稍後再試。');
+                    btn.innerHTML = originalBtnText;
+                    btn.disabled = false;
+                });
+            }, 100);
+        }
+
+
+        function copyPyramidImage() {
+            const element = document.getElementById('pyramid-capture-area');
+            const btn = event.currentTarget;
+            const originalBtnText = btn.innerHTML;
+
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            btn.disabled = true;
+
+            html2canvas(element, {
+                scale: 2,
+                backgroundColor: "#ffffff",
+                useCORS: true,
+                logging: false,
+                onclone: (clonedDoc) => {
+                    const clonedInput = clonedDoc.querySelector('input');
+                    if (clonedInput) {
+                        clonedInput.style.display = 'none';
+                    }
                 }
+            }).then(canvas => {
+                canvas.toBlob(blob => {
+                    try {
+                        const item = new ClipboardItem({ 'image/png': blob });
+                        navigator.clipboard.write([item]).then(() => {
+                            btn.innerHTML = '<i class="fas fa-check"></i> 已複製';
+                            btn.classList.add('text-green-600', 'bg-green-50');
+                            setTimeout(() => {
+                                btn.innerHTML = originalBtnText;
+                                btn.classList.remove('text-green-600', 'bg-green-50');
+                                btn.disabled = false;
+                            }, 2000);
+                        });
+                    } catch (err) {
+                        alert('您的瀏覽器不支援直接複製圖片，請使用「下載」功能。');
+                        btn.innerHTML = originalBtnText;
+                        btn.disabled = false;
+                    }
+                });
+            });
+        }
+
+
+
+
+        // ========== 金字塔位置解讀資料庫 ========== //
+        const pyramidMeanings = {
+            1: { core: "開創與獨立", desc: "你在這個位置需要學習如何獨立自主、勇於開拓新局。領導力與自信心是你的主課題。" },
+            2: { core: "合作與敏感", desc: "這個位置需要你學習與人協調、培養同理心。你可能較依賴他人，需找到自我與合作的平衡。" },
+            3: { core: "表達與創意", desc: "此處強調創意表達與社交能力。你需要學習將想法清楚傳達，並保持樂觀的態度。" },
+            4: { core: "穩定與務實", desc: "這個位置代表你需要建立穩固的基礎。紀律、規劃與務實的執行力是你的學習課題。" },
+            5: { core: "自由與變化", desc: "你在這個位置需要擁抱變化、追求自由。適應力與冒險精神是你的天賦與課題。" },
+            6: { core: "責任與關懷", desc: "此處強調對家庭與他人的責任感。你需要學習無條件的愛，同時避免過度犧牲。" },
+            7: { core: "探索與內省", desc: "這個位置需要你向內探索、追求智慧。獨處與深度思考是你能量恢復的方式。" },
+            8: { core: "權力與豐盛", desc: "此處代表物質與權力的課題。你需要學習平衡野心與慈悲，正確運用手上的資源。" },
+            9: { core: "博愛與完結", desc: "你在這個位置需要學習放下與服務。用更宏觀的視野看待人生，完成靈魂的圓滿。" }
+        };
+
+        // ========== Modal 控制函數 ========== //
+        function openPyramidModal() {
+            const modal = document.getElementById('pyramidModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+
+            // 複製主圖到 modal
+            const mainTriangle = document.getElementById('triangleContainer').innerHTML;
+            document.getElementById('modalTriangleContainer').innerHTML = mainTriangle;
+        }
+
+        function closePyramidModal(event) {
+            if (event && event.target !== event.currentTarget) return;
+            const modal = document.getElementById('pyramidModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = '';
+        }
+
+        // ========== 更新金字塔解讀區塊 ========== //
+        function updatePyramidInterpretation(O, M, N, R, U, X) {
+            document.getElementById('pyramidO').innerText = O;
+            document.getElementById('pyramidODesc').innerText = pyramidMeanings[O].core + '：' + pyramidMeanings[O].desc;
+
+            document.getElementById('pyramidR').innerText = R;
+            document.getElementById('pyramidRDesc').innerText = pyramidMeanings[R].core + '：' + pyramidMeanings[R].desc;
+
+            document.getElementById('pyramidU').innerText = U;
+            document.getElementById('pyramidUDesc').innerText = pyramidMeanings[U].core + '：' + pyramidMeanings[U].desc;
+
+            document.getElementById('pyramidX').innerText = X;
+            document.getElementById('pyramidXDesc').innerText = pyramidMeanings[X].core + '：' + pyramidMeanings[X].desc;
+
+            document.getElementById('pyramidM').innerText = M;
+            document.getElementById('pyramidN').innerText = N;
+
+            let mnDesc = '';
+            if (M === N) {
+                mnDesc = `你的外在形象與內心驅動力一致 (皆為${M}號能量)，表裡如一，行動與意圖高度同步。`;
+            } else {
+                mnDesc = `外在展現${M}號的${pyramidMeanings[M].core}特質，內心卻渴望${pyramidMeanings[N].core}。這種差異可能帶來內在張力，但也是成長的動力。`;
             }
-        }).then(canvas => {
-            const link = document.createElement('a');
-            const now = new Date();
-            const timeStr = `${now.getFullYear()}${(now.getMonth()+1).toString().padStart(2,'0')}${now.getDate().toString().padStart(2,'0')}`;
-            
-            link.download = name ? `生命金字塔密碼_${name}_${timeStr}.png` : `生命金字塔密碼_${timeStr}.png`;
-            link.href = canvas.toDataURL("image/png");
-            link.click();
-
-            btn.innerHTML = originalBtnText;
-            btn.disabled = false;
-        }).catch(err => {
-            console.error('截圖失敗:', err);
-            alert('圖片產生失敗，請稍後再試。');
-            btn.innerHTML = originalBtnText;
-            btn.disabled = false;
-        });
-    }, 100);
-}
-
-
-		function copyPyramidImage() {
-			const element = document.getElementById('pyramid-capture-area');
-			const btn = event.currentTarget;
-			const originalBtnText = btn.innerHTML;
-			
-			btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-			btn.disabled = true;
-
-			html2canvas(element, {
-				scale: 2, 
-				backgroundColor: "#ffffff",
-				useCORS: true,
-				logging: false,
-				onclone: (clonedDoc) => {
-					const clonedInput = clonedDoc.querySelector('input');
-					if(clonedInput) {
-						clonedInput.style.display = 'none';
-					}
-				}
-			}).then(canvas => {
-				canvas.toBlob(blob => {
-					try {
-						const item = new ClipboardItem({ 'image/png': blob });
-						navigator.clipboard.write([item]).then(() => {
-							btn.innerHTML = '<i class="fas fa-check"></i> 已複製';
-							btn.classList.add('text-green-600', 'bg-green-50');
-							setTimeout(() => {
-								btn.innerHTML = originalBtnText;
-								btn.classList.remove('text-green-600', 'bg-green-50');
-								btn.disabled = false;
-							}, 2000);
-						});
-					} catch (err) {
-						alert('您的瀏覽器不支援直接複製圖片，請使用「下載」功能。');
-						btn.innerHTML = originalBtnText;
-						btn.disabled = false;
-					}
-				});
-			});
-		}
-
-
-
+            document.getElementById('pyramidMNDesc').innerText = mnDesc;
+        }
 
     </script>
 </body>
+
 </html>
